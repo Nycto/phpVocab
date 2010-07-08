@@ -112,8 +112,13 @@ class Parser implements \vc\iface\Tokens\Reader
 
         $new = array_shift( $this->tokens );
 
-        if ( !is_array($new) )
-        {
+        if ( is_array($new) ) {
+            $this->current = \vc\Tokens\Token::fromArray($new);
+        }
+        else if ( $new instanceof \vc\Tokens\Token ) {
+            $this->current = $new;
+        }
+        else {
             if ( !isset(self::$tokenMap[$new]) )
                 throw new \r8\Exception\Data($new, "Token", "Unrecognized Token");
 
@@ -128,12 +133,29 @@ class Parser implements \vc\iface\Tokens\Reader
                 $line++;
             }
 
-            $new = array(self::$tokenMap[$new], $new, $line );
+            $this->current = new \vc\Tokens\Token(
+                self::$tokenMap[$new], $new, $line
+            );
         }
 
-        $this->current = \vc\Tokens\Token::fromArray($new);
 
         return $this->current;
+    }
+
+    /**
+     * Pushes the current token back onto the end of the reader so it will be
+     * returned the next time someone calls nextToken
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function reinstateToken ()
+    {
+        if ( !$this->current )
+            return $this;
+
+        array_unshift( $this->tokens, $this->current );
+
+        return $this;
     }
 
 }

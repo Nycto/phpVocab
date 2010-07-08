@@ -133,6 +133,38 @@ class test_Tokens_Parser extends PHPUnit_Framework_TestCase
         $this->assertNull( $parser->nextToken() );
     }
 
+    public function testReinstateToken_CalledBeforeAnyTokensAreRead ()
+    {
+        $parser = new \vc\Tokens\Parser(
+            new \r8\Stream\In\String(
+                "<?php echo 'content';?>"
+            )
+        );
+
+        $this->assertSame( $parser, $parser->reinstateToken() );
+
+        $this->assertTrue( $parser->hasToken() );
+        $this->assertEquals(
+            new \vc\Tokens\Token(368, '<?php ', 1),
+            $parser->nextToken()
+        );
+    }
+
+    public function testReinstateToken_ShiftsTokenBackOntoList ()
+    {
+        $parser = new \vc\Tokens\Parser(
+            new \r8\Stream\In\String(
+                "<?php echo 'content';?>"
+            )
+        );
+
+        $token = $parser->nextToken();
+        $this->assertEquals( new \vc\Tokens\Token(368, '<?php ', 1), $token );
+
+        $this->assertSame( $parser, $parser->reinstateToken() );
+        $this->assertSame( $token, $parser->nextToken() );
+    }
+
 }
 
 ?>

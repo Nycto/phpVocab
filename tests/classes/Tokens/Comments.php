@@ -57,6 +57,15 @@ class test_Tokens_Comments extends PHPUnit_Framework_TestCase
         $this->assertNull( $comments->getComment() );
     }
 
+    public function testReinstateToken ()
+    {
+        $inner = $this->getMock('\vc\iface\Tokens\Reader');
+        $inner->expects( $this->once() )->method( "reinstateToken" );
+
+        $comments = new \vc\Tokens\Comments( $inner );
+        $this->assertSame( $comments, $comments->reinstateToken() );
+    }
+
 }
 
 ?>

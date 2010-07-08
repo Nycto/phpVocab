@@ -82,6 +82,18 @@ class Comments implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Comments
     }
 
     /**
+     * Pushes the current token back onto the end of the reader so it will be
+     * returned the next time someone calls nextToken
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function reinstateToken ()
+    {
+        $this->inner->reinstateToken();
+        return $this;
+    }
+
+    /**
      * Returns the block comment associated with the current context
      *
      * @return String
