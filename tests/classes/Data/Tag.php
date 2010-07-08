@@ -27,29 +27,14 @@ require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 /**
  * Unit test
  */
-class test_Data_Comment extends PHPUnit_Framework_TestCase
+class test_Data_Tag extends PHPUnit_Framework_TestCase
 {
 
     public function testAccessors ()
     {
-        $comment = new \vc\Data\Comment("quip", "info");
-
-        $this->assertSame( "quip", $comment->getSummary() );
-        $this->assertSame( "info", $comment->getDetails() );
-    }
-
-    public function testTags ()
-    {
-        $comment = new \vc\Data\Comment("quip", "info");
-        $this->assertSame( array(), $comment->getTags() );
-
-        $tag1 = new \vc\Data\Tag("note", "details");
-        $this->assertSame( $comment, $comment->addTag($tag1) );
-        $this->assertSame( array($tag1), $comment->getTags() );
-
-        $tag2 = new \vc\Data\Tag("note", "details");
-        $this->assertSame( $comment, $comment->addTag($tag2) );
-        $this->assertSame( array($tag1, $tag2), $comment->getTags() );
+        $comment = new \vc\Data\Tag("note", "details");
+        $this->assertSame( "note", $comment->getName() );
+        $this->assertSame( "details", $comment->getContent() );
     }
 
 }

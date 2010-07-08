@@ -22,34 +22,58 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
+namespace vc\Data;
 
 /**
- * Unit test
+ * A doc comment
  */
-class test_Data_Comment extends PHPUnit_Framework_TestCase
+class Tag
 {
 
-    public function testAccessors ()
-    {
-        $comment = new \vc\Data\Comment("quip", "info");
+    /**
+     * The name of this tag
+     *
+     * @var String
+     */
+    private $name;
 
-        $this->assertSame( "quip", $comment->getSummary() );
-        $this->assertSame( "info", $comment->getDetails() );
+    /**
+     * The content of this tag
+     *
+     * @var String
+     */
+    private $content;
+
+    /**
+     * Constructor...
+     *
+     * @param String $name The name of this tag
+     * @param String $content The content of this tag
+     */
+    public function __construct ( $name, $content )
+    {
+        $this->name = (string) $name;
+        $this->content = (string) $content;
     }
 
-    public function testTags ()
+    /**
+     * Returns the Name of this tag
+     *
+     * @return String
+     */
+    public function getName ()
     {
-        $comment = new \vc\Data\Comment("quip", "info");
-        $this->assertSame( array(), $comment->getTags() );
+        return $this->name;
+    }
 
-        $tag1 = new \vc\Data\Tag("note", "details");
-        $this->assertSame( $comment, $comment->addTag($tag1) );
-        $this->assertSame( array($tag1), $comment->getTags() );
-
-        $tag2 = new \vc\Data\Tag("note", "details");
-        $this->assertSame( $comment, $comment->addTag($tag2) );
-        $this->assertSame( array($tag1, $tag2), $comment->getTags() );
+    /**
+     * Returns the Content of this tag
+     *
+     * @return String
+     */
+    public function getContent ()
+    {
+        return $this->content;
     }
 
 }

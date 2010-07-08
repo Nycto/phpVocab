@@ -45,6 +45,13 @@ class Comment
     private $details;
 
     /**
+     * The list of tags in this comment
+     *
+     * @var Array
+     */
+    private $tags = array();
+
+    /**
      * Constructor...
      *
      * @param String $summary The Summary text in this comment
@@ -74,6 +81,28 @@ class Comment
     public function getDetails ()
     {
         return $this->details;
+    }
+
+    /**
+     * Adds a new tag onto this comment
+     *
+     * @param \vc\Data\Tag $tag
+     * @return \vc\Data\Comment Returns a self reference
+     */
+    public function addTag ( \vc\Data\Tag $tag )
+    {
+        $this->tags[] = $tag;
+        return $this;
+    }
+
+    /**
+     * Returns the Tags in this comment
+     *
+     * @return Array An array of \vc\Data\Tag objects
+     */
+    public function getTags ()
+    {
+        return $this->tags;
     }
 
 }
