@@ -25,7 +25,7 @@
 namespace vc\Data;
 
 /**
- * A doc comment
+ * A doc comment annotation
  */
 class Tag
 {
