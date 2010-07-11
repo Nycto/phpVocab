@@ -27,7 +27,7 @@ require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 /**
  * Unit test for running all the tests
  */
-class test_Tokens_Comments extends PHPUnit_Framework_TestCase
+class test_classes_Tokens_Comments extends PHPUnit_Framework_TestCase
 {
 
     public function test_BasicTracking ()
