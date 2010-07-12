@@ -64,6 +64,23 @@ class Access
         return NULL;
     }
 
+    /**
+     * Returns the next token expcluding the given types
+     *
+     * @param Array $types The list of types to exclude
+     * @return \vc\Tokens\Token Returns NULL if an appropriate token can not
+     *      be found
+     */
+    public function findExcluding ( array $types )
+    {
+        while ( $this->reader->hasToken() ) {
+            $token = $this->reader->nextToken();
+            if ( !in_array($token->getType(), $types) )
+                return $token;
+        }
+        return NULL;
+    }
+
 }
 
 ?>

@@ -75,6 +75,50 @@ class test_classes_Tokens_Access extends PHPUnit_Framework_TestCase
         );
     }
 
+    public function testFindExcluding_EmptyTokenSet ()
+    {
+        $reader = new \vc\Tokens\Access(
+            new \vc\Tokens\Parser(
+                new \r8\Stream\In\Void
+            )
+        );
+
+        $this->assertNull(
+            $reader->find(array(\vc\Tokens\Token::T_CLASS))
+        );
+    }
+
+    public function testFindExcluding_TokenGetsFound ()
+    {
+        $reader = new \vc\Tokens\Access(
+            new \vc\Tokens\Parser(
+                new \r8\Stream\In\String("<?php echo 'content';?>")
+            )
+        );
+
+        $this->assertEquals(
+            new \vc\Tokens\Token(316, 'echo', 1),
+            $reader->findExcluding(array(
+                \vc\Tokens\Token::T_WHITESPACE,
+                \vc\Tokens\Token::T_OPEN_TAG
+            ))
+        );
+
+        $this->assertEquals(
+            new \vc\Tokens\Token(-106, ';', 1),
+            $reader->findExcluding(array(
+                \vc\Tokens\Token::T_WHITESPACE,
+                \vc\Tokens\Token::T_CONSTANT_ENCAPSED_STRING
+            ))
+        );
+
+        $this->assertNull(
+            $reader->findExcluding(array(
+                \vc\Tokens\Token::T_CLOSE_TAG
+            ))
+        );
+    }
+
 }
 
 ?>
