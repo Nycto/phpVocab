@@ -30,17 +30,18 @@ require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 class test_classes_Data_Comment extends PHPUnit_Framework_TestCase
 {
 
-    public function testAccessors ()
+    public function testConstructAccessors ()
     {
-        $comment = new \vc\Data\Comment("quip", "info");
+        $comment = new \vc\Data\Comment("text");
+        $this->assertSame( "text", $comment->getText() );
 
-        $this->assertSame( "quip", $comment->getSummary() );
-        $this->assertSame( "info", $comment->getDetails() );
+        $comment = new \vc\Data\Comment;
+        $this->assertNull( $comment->getText() );
     }
 
     public function testTags ()
     {
-        $comment = new \vc\Data\Comment("quip", "info");
+        $comment = new \vc\Data\Comment;
         $this->assertSame( array(), $comment->getTags() );
 
         $tag1 = new \vc\Data\Tag("note", "details");

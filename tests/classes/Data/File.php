@@ -41,7 +41,7 @@ class test_classes_Data_File extends PHPUnit_Framework_TestCase
         $file = new \vc\Data\File('path');
         $this->assertNull( $file->getComment() );
 
-        $comment = new \vc\Data\Comment('summary', 'details');
+        $comment = new \vc\Data\Comment;
         $this->assertSame( $file, $file->setComment($comment) );
         $this->assertSame( $comment, $file->getComment() );
     }

@@ -31,18 +31,11 @@ class Comment
 {
 
     /**
-     * The summary text in this comment
+     * The text of the comment
      *
      * @var String
      */
-    private $summary;
-
-    /**
-     * The detailed information in this comment
-     *
-     * @var String
-     */
-    private $details;
+    private $text;
 
     /**
      * The list of tags in this comment
@@ -54,33 +47,21 @@ class Comment
     /**
      * Constructor...
      *
-     * @param String $summary The Summary text in this comment
-     * @param String $details The detailed information in this comment
+     * @param String $text The Summary text in this comment
      */
-    public function __construct ( $summary, $details )
+    public function __construct ( $text = NULL )
     {
-        $this->summary = trim( (string) $summary ) ?: NULL;
-        $this->details = trim( (string) $details ) ?: NULL;
+        $this->text = trim( (string) $text ) ?: NULL;
     }
 
     /**
-     * Returns the Summary text in this comment
+     * Returns the text in this comment
      *
      * @return String
      */
-    public function getSummary ()
+    public function getText ()
     {
-        return $this->summary;
-    }
-
-    /**
-     * Returns the detailed information in this comment
-     *
-     * @return String
-     */
-    public function getDetails ()
-    {
-        return $this->details;
+        return $this->text;
     }
 
     /**

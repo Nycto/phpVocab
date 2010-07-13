@@ -34,7 +34,7 @@ class test_classes_Data_Type_IFace extends PHPUnit_Framework_TestCase
     {
         $iface = $this->getMockForAbstractClass(
             '\vc\Data\Type\IFace',
-            array(123, new \vc\Data\Comment("summary", "details"))
+            array(123, new \vc\Data\Comment)
         );
         $this->assertSame( array(), $iface->getExtends() );
 

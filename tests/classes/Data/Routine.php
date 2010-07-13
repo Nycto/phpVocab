@@ -32,7 +32,7 @@ class test_classes_Data_Routine extends PHPUnit_Framework_TestCase
 
     public function testConstruct ()
     {
-        $comment = new \vc\Data\Comment("summary", "details");
+        $comment = new \vc\Data\Comment;
 
         $routine = $this->getMockForAbstractClass(
             '\vc\Data\Routine',
@@ -47,7 +47,7 @@ class test_classes_Data_Routine extends PHPUnit_Framework_TestCase
     {
         $routine = $this->getMockForAbstractClass(
             '\vc\Data\Routine',
-            array(123, new \vc\Data\Comment("summary", "details"))
+            array(123, new \vc\Data\Comment)
         );
 
         $this->assertNull( $routine->getName() );
@@ -59,7 +59,7 @@ class test_classes_Data_Routine extends PHPUnit_Framework_TestCase
     {
         $routine = $this->getMockForAbstractClass(
             '\vc\Data\Routine',
-            array(123, new \vc\Data\Comment("summary", "details"))
+            array(123, new \vc\Data\Comment)
         );
 
         $this->assertSame( array(), $routine->getArgs() );

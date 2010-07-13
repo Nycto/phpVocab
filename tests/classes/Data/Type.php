@@ -32,7 +32,7 @@ class test_classes_Data_Type extends PHPUnit_Framework_TestCase
 
     public function testConstruct ()
     {
-        $comment = new \vc\Data\Comment("summary", "details");
+        $comment = new \vc\Data\Comment;
 
         $type = $this->getMockForAbstractClass(
             '\vc\Data\Type',
@@ -47,7 +47,7 @@ class test_classes_Data_Type extends PHPUnit_Framework_TestCase
     {
         $type = $this->getMockForAbstractClass(
             '\vc\Data\Type',
-            array(123, new \vc\Data\Comment("summary", "details"))
+            array(123, new \vc\Data\Comment)
         );
 
         $this->assertNull( $type->getName() );

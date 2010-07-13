@@ -34,7 +34,7 @@ class test_classes_Data_Type_Cls extends PHPUnit_Framework_TestCase
     {
         $cls = $this->getMockForAbstractClass(
             '\vc\Data\Type\Cls',
-            array(123, new \vc\Data\Comment("summary", "details"))
+            array(123, new \vc\Data\Comment)
         );
 
         $this->assertFalse( $cls->getFinal() );
@@ -46,7 +46,7 @@ class test_classes_Data_Type_Cls extends PHPUnit_Framework_TestCase
     {
         $cls = $this->getMockForAbstractClass(
             '\vc\Data\Type\Cls',
-            array(123, new \vc\Data\Comment("summary", "details"))
+            array(123, new \vc\Data\Comment)
         );
 
         $this->assertFalse( $cls->getAbstract() );
@@ -58,7 +58,7 @@ class test_classes_Data_Type_Cls extends PHPUnit_Framework_TestCase
     {
         $cls = $this->getMockForAbstractClass(
             '\vc\Data\Type\Cls',
-            array(123, new \vc\Data\Comment("summary", "details"))
+            array(123, new \vc\Data\Comment)
         );
 
         $this->assertNull( $cls->getExtends() );
@@ -70,7 +70,7 @@ class test_classes_Data_Type_Cls extends PHPUnit_Framework_TestCase
     {
         $cls = $this->getMockForAbstractClass(
             '\vc\Data\Type\Cls',
-            array(123, new \vc\Data\Comment("summary", "details"))
+            array(123, new \vc\Data\Comment)
         );
 
         $this->assertSame( array(), $cls->getIFaces() );
