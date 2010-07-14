@@ -31,6 +31,10 @@ define("r8_SUPPRESS_HANDLERS", TRUE);
 
 require_once rtrim( __DIR__, "/" ) ."/../src/vocab.php";
 
+// Set up the autoload structure for vocab specific classes
+\r8\Autoload::getInstance()
+    ->register('vc\Test', rtrim( __DIR__, "/" ) .'/Test');
+
 error_reporting( E_ALL | E_STRICT );
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
