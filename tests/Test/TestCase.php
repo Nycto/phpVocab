@@ -45,8 +45,16 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function assertIsTokenOf ( $type, $token )
     {
-        $this->assertThat( $token, $this->isInstanceOf('\vc\Tokens\Token') );
-        $this->assertSame( $type, $token->getType() );
+        $this->assertThat(
+            $token,
+            $this->isInstanceOf('\vc\Tokens\Token'),
+            "Value is not a Token"
+        );
+        $this->assertEquals(
+            $type,
+            $token->getType(),
+            "Token is not of the correct type"
+        );
     }
 
     /**
@@ -54,8 +62,15 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function assertHasToken ( $type, $tokens )
     {
-        $this->assertThat( $tokens, $this->isInstanceOf('\vc\iface\Tokens\Reader') );
-        $this->assertTrue( $tokens->hasToken() );
+        $this->assertThat(
+            $tokens,
+            $this->isInstanceOf('\vc\iface\Tokens\Reader'),
+            "Value is not a Token Reader"
+        );
+        $this->assertTrue(
+            $tokens->hasToken(),
+            "Token Reader does not have any tokens remaining"
+        );
         $this->assertIsTokenOf( $type, $tokens->nextToken() );
     }
 
@@ -64,9 +79,19 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function assertEndOfTokens ( $tokens )
     {
-        $this->assertThat( $tokens, $this->isInstanceOf('\vc\iface\Tokens\Reader') );
-        $this->assertFalse( $tokens->hasToken() );
-        $this->assertNull( $tokens->nextToken() );
+        $this->assertThat(
+            $tokens,
+            $this->isInstanceOf('\vc\iface\Tokens\Reader'),
+            "Value is not a Token Reader"
+        );
+        $this->assertFalse(
+            $tokens->hasToken(),
+            "Token Reader should not have any tokens remaining"
+        );
+        $this->assertNull(
+            $tokens->nextToken(),
+            "Token Reader should return NULL when it has no more tokens"
+        );
     }
 
 }
