@@ -27,43 +27,75 @@ require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 /**
  * Unit test for running all the tests
  */
-class test_classes_Tokens_Comments extends PHPUnit_Framework_TestCase
+class test_classes_Tokens_Comments extends \vc\Test\TestCase
 {
+
+    /**
+     * Asserts that a comment doesn't contain any data
+     *
+     * @return NULL
+     */
+    public function assertEmptyComment ( $value )
+    {
+        $this->assertEquals( new \vc\Data\Comment, $value );
+    }
+
+    /**
+     * Asserts that a value is a valid comment
+     *
+     * @return NULL
+     */
+    public function assertComment ( $comment, $value )
+    {
+        $this->assertEquals( new \vc\Data\Comment( $comment ), $value );
+    }
 
     public function test_BasicTracking ()
     {
-        $token1 = new \vc\Tokens\Token( T_DOC_COMMENT, '/** */', 1 );
-        $token2 = new \vc\Tokens\Token( T_CLASS, 'class', 1 );
+        $reader = new \vc\Tokens\Comments(
+            new \vc\Parser\Comment,
+            $this->oneTokenReader()
+                ->then( T_DOC_COMMENT, '/** Comment */' )
+                ->then( T_CLASS, 'class', 2 )
+        );
 
-        $inner = $this->getMock('\vc\iface\Tokens\Reader');
-        $inner->expects( $this->exactly(2) )->method( "hasToken" )
-            ->will( $this->returnValue( TRUE ) );
-        $inner->expects( $this->at(1) )->method( "nextToken" )
-            ->will( $this->returnValue($token1) );
-        $inner->expects( $this->at(3) )->method( "nextToken" )
-            ->will( $this->returnValue($token2) );
+        $this->assertEmptyComment( $reader->getComment() );
 
-        $comments = new \vc\Tokens\Comments( $inner );
-        $this->assertNull( $comments->getComment() );
+        $this->assertHasToken( T_DOC_COMMENT, $reader );
 
-        $this->assertTrue( $comments->hasToken() );
-        $this->assertSame( $token1, $comments->nextToken() );
+        $this->assertHasToken( T_CLASS, $reader );
+        $this->assertComment( 'Comment', $reader->getComment() );
 
-        $this->assertTrue( $comments->hasToken() );
-        $this->assertSame( $token2, $comments->nextToken() );
-        $this->assertSame( '/** */', $comments->getComment() );
+        $this->assertEmptyComment( $reader->getComment() );
+    }
 
-        $this->assertSame( $comments, $comments->consumeComment() );
-        $this->assertNull( $comments->getComment() );
+    public function testCommentInvalidedByToken ()
+    {
+        $reader = new \vc\Tokens\Comments(
+            new \vc\Parser\Comment,
+            $this->oneTokenReader()
+                ->then( T_DOC_COMMENT, '/** Comment */' )
+                ->then( \vc\Tokens\Token::T_SEMICOLON, ';' )
+        );
+
+        $this->assertEmptyComment( $reader->getComment() );
+        $this->assertHasToken( T_DOC_COMMENT, $reader );
+
+        $this->assertComment( 'Comment', $reader->getComment() );
+
+        $this->assertHasToken( \vc\Tokens\Token::T_SEMICOLON, $reader );
+        $this->assertEmptyComment( $reader->getComment() );
     }
 
     public function testReinstateToken ()
     {
-        $inner = $this->getMock('\vc\iface\Tokens\Reader');
-        $inner->expects( $this->once() )->method( "reinstateToken" );
+        $reader = $this->oneTokenReader()->then( T_CLASS, 'class' );
 
-        $comments = new \vc\Tokens\Comments( $inner );
+        $comments = new \vc\Tokens\Comments( new \vc\Parser\Comment, $reader );
+        $this->assertHasToken( T_CLASS, $comments );
+
         $this->assertSame( $comments, $comments->reinstateToken() );
+        $this->assertHasToken( T_CLASS, $comments );
     }
 
 }

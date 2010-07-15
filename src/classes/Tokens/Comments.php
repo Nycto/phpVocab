@@ -31,6 +31,25 @@ class Comments implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Comments
 {
 
     /**
+     * The list of tokens that will invalidate the current comment
+     *
+     * @var Array
+     */
+    static private $invalidate = array(
+        \vc\Tokens\Token::T_SEMICOLON,
+        \vc\Tokens\Token::T_BLOCK_OPEN,
+        \vc\Tokens\Token::T_BLOCK_CLOSE,
+        \vc\Tokens\Token::T_CLOSE_TAG,
+    );
+
+    /**
+     * The parser to use for building the Comment Data objects
+     *
+     * @var \vc\Parser\Comment
+     */
+    private $parser;
+
+    /**
      * The Token Reader being wrapped
      *
      * @var \vc\iface\Tokens\Reader
@@ -47,10 +66,15 @@ class Comments implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Comments
     /**
      * Constructor...
      *
+     * @param \vc\Parser\Comment $parser The parser to use for building the
+     *      Comment data objects
      * @param \vc\iface\Tokens\Reader $inner The token reader being wrapped
      */
-    public function __construct ( \vc\iface\Tokens\Reader $inner )
-    {
+    public function __construct (
+        \vc\Parser\Comment $parser,
+        \vc\iface\Tokens\Reader $inner
+    ) {
+        $this->parser = $parser;
         $this->inner = $inner;
     }
 
@@ -71,14 +95,17 @@ class Comments implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Comments
      */
     public function nextToken ()
     {
-        $inner = $this->inner->nextToken();
+        $next = $this->inner->nextToken();
 
-        $type = $inner->getType();
+        $type = $next->getType();
 
         if ( $type == \vc\Tokens\Token::T_DOC_COMMENT )
-            $this->comment = $inner->getContent();
+            $this->comment = $next->getContent();
 
-        return $inner;
+        else if ( in_array($type, self::$invalidate) )
+            $this->comment = NULL;
+
+        return $next;
     }
 
     /**
@@ -96,22 +123,17 @@ class Comments implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Comments
     /**
      * Returns the block comment associated with the current context
      *
-     * @return String
+     * @return \vc\Data\Comment
      */
     public function getComment ()
     {
-        return $this->comment;
-    }
-
-    /**
-     * Consumes the current comment so it can't be used again
-     *
-     * @return \vc\iface\Tokens\Comments
-     */
-    public function consumeComment ()
-    {
+        $comment = $this->comment;
         $this->comment = NULL;
-        return $this;
+
+        if ( empty($comment) )
+            return new \vc\Data\Comment;
+        else
+            return $this->parser->parse( $comment );
     }
 
 }

@@ -34,16 +34,9 @@ interface Comments
     /**
      * Returns the block comment associated with the current context
      *
-     * @return String
+     * @return \vc\Data\Comment
      */
     public function getComment ();
-
-    /**
-     * Consumes the current comment so it can't be used again
-     *
-     * @return \vc\iface\Tokens\Comments Returns a self reference
-     */
-    public function consumeComment ();
 
 }
 
