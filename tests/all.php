@@ -35,7 +35,7 @@ class all
     public static function suite()
     {
         $suite = new \r8\Test\Suite;
-        $suite->addSubDirs( "test_", __DIR__ );
+        $suite->addFromFiles( "test_classes_", __DIR__ ."/classes", '' );
         return $suite;
     }
 
