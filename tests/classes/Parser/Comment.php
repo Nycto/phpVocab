@@ -27,7 +27,7 @@ require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 /**
  * Unit test for running all the tests
  */
-class test_classes_Parser_Comment extends PHPUnit_Framework_TestCase
+class test_classes_Parser_Comment extends \vc\Test\TestCase
 {
 
     public function testParse_SingleLine ()

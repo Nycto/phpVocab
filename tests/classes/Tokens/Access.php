@@ -27,7 +27,7 @@ require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 /**
  * Unit test for running all the tests
  */
-class test_classes_Tokens_Access extends PHPUnit_Framework_TestCase
+class test_classes_Tokens_Access extends \vc\Test\TestCase
 {
 
     public function testFind_EmptyTokenSet ()
@@ -51,16 +51,16 @@ class test_classes_Tokens_Access extends PHPUnit_Framework_TestCase
             )
         );
 
-        $this->assertEquals(
-            new \vc\Tokens\Token(316, 'echo', 1),
+        $this->assertIsTokenOf(
+            \vc\Tokens\Token::T_ECHO,
             $reader->find(array(
                 \vc\Tokens\Token::T_ECHO,
                 \vc\Tokens\Token::T_SEMICOLON
             ))
         );
 
-        $this->assertEquals(
-            new \vc\Tokens\Token(-106, ';', 1),
+        $this->assertIsTokenOf(
+            \vc\Tokens\Token::T_SEMICOLON,
             $reader->find(array(
                 \vc\Tokens\Token::T_ECHO,
                 \vc\Tokens\Token::T_SEMICOLON
@@ -96,16 +96,16 @@ class test_classes_Tokens_Access extends PHPUnit_Framework_TestCase
             )
         );
 
-        $this->assertEquals(
-            new \vc\Tokens\Token(316, 'echo', 1),
+        $this->assertIsTokenOf(
+            \vc\Tokens\Token::T_ECHO,
             $reader->findExcluding(array(
                 \vc\Tokens\Token::T_WHITESPACE,
                 \vc\Tokens\Token::T_OPEN_TAG
             ))
         );
 
-        $this->assertEquals(
-            new \vc\Tokens\Token(-106, ';', 1),
+        $this->assertIsTokenOf(
+            \vc\Tokens\Token::T_SEMICOLON,
             $reader->findExcluding(array(
                 \vc\Tokens\Token::T_WHITESPACE,
                 \vc\Tokens\Token::T_CONSTANT_ENCAPSED_STRING

@@ -27,7 +27,7 @@ require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 /**
  * Unit test for running all the tests
  */
-class test_classes_Tokens_Token extends PHPUnit_Framework_TestCase
+class test_classes_Tokens_Token extends \vc\Test\TestCase
 {
 
     public function testConstruct ()

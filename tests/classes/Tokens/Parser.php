@@ -27,16 +27,15 @@ require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 /**
  * Unit test for running all the tests
  */
-class test_classes_Tokens_Parser extends PHPUnit_Framework_TestCase
+class test_classes_Tokens_Parser extends \vc\Test\TestCase
 {
 
     public function test_EmptyInput ()
     {
         $parser = new \vc\Tokens\Parser( new \r8\Stream\In\Void );
-        $this->assertFalse( $parser->hasToken() );
-        $this->assertNull( $parser->nextToken() );
-        $this->assertNull( $parser->nextToken() );
-        $this->assertNull( $parser->nextToken() );
+        $this->assertEndOfTokens($parser);
+        $this->assertEndOfTokens($parser);
+        $this->assertEndOfTokens($parser);
     }
 
     public function test_TokenParsing ()
@@ -129,8 +128,7 @@ class test_classes_Tokens_Parser extends PHPUnit_Framework_TestCase
             );
         }
 
-        $this->assertFalse( $parser->hasToken() );
-        $this->assertNull( $parser->nextToken() );
+        $this->assertEndOfTokens($parser);
     }
 
     public function testReinstateToken_CalledBeforeAnyTokensAreRead ()
@@ -142,12 +140,7 @@ class test_classes_Tokens_Parser extends PHPUnit_Framework_TestCase
         );
 
         $this->assertSame( $parser, $parser->reinstateToken() );
-
-        $this->assertTrue( $parser->hasToken() );
-        $this->assertEquals(
-            new \vc\Tokens\Token(368, '<?php ', 1),
-            $parser->nextToken()
-        );
+        $this->assertHasToken( T_OPEN_TAG, $parser );
     }
 
     public function testReinstateToken_ShiftsTokenBackOntoList ()
@@ -159,7 +152,7 @@ class test_classes_Tokens_Parser extends PHPUnit_Framework_TestCase
         );
 
         $token = $parser->nextToken();
-        $this->assertEquals( new \vc\Tokens\Token(368, '<?php ', 1), $token );
+        $this->assertIsTokenOf( T_OPEN_TAG, $token );
 
         $this->assertSame( $parser, $parser->reinstateToken() );
         $this->assertSame( $token, $parser->nextToken() );
