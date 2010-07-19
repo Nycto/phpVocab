@@ -55,8 +55,7 @@ class test_classes_Tokens_Comments extends \vc\Test\TestCase
         $reader = new \vc\Tokens\Comments(
             new \vc\Parser\Comment,
             $this->oneTokenReader()
-                ->then( T_DOC_COMMENT, '/** Comment */' )
-                ->then( T_CLASS, 'class', 2 )
+                ->thenADocComment('Comment')->thenAClass()
         );
 
         $this->assertEmptyComment( $reader->getComment() );
@@ -74,8 +73,7 @@ class test_classes_Tokens_Comments extends \vc\Test\TestCase
         $reader = new \vc\Tokens\Comments(
             new \vc\Parser\Comment,
             $this->oneTokenReader()
-                ->then( T_DOC_COMMENT, '/** Comment */' )
-                ->then( \vc\Tokens\Token::T_SEMICOLON, ';' )
+                ->thenADocComment('Comment')->thenASemicolon()
         );
 
         $this->assertEmptyComment( $reader->getComment() );
@@ -89,7 +87,7 @@ class test_classes_Tokens_Comments extends \vc\Test\TestCase
 
     public function testReinstateToken ()
     {
-        $reader = $this->oneTokenReader()->then( T_CLASS, 'class' );
+        $reader = $this->oneTokenReader()->thenAClass();
 
         $comments = new \vc\Tokens\Comments( new \vc\Parser\Comment, $reader );
         $this->assertHasToken( T_CLASS, $comments );

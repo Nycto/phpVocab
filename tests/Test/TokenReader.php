@@ -101,6 +101,80 @@ class TokenReader implements \vc\iface\Tokens\Reader
         return $this;
     }
 
+    /**
+     * Adds an open block token
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAnOpenBlock ( $line = 1 )
+    {
+        return $this->then( \vc\Tokens\Token::T_BLOCK_OPEN, '{', $line );
+    }
+
+    /**
+     * Adds a close block token
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenACloseBlock ( $line = 1 )
+    {
+        return $this->then( \vc\Tokens\Token::T_BLOCK_CLOSE, '}', $line );
+    }
+
+    /**
+     * Adds a class token
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAClass ( $line = 1 )
+    {
+        return $this->then( \vc\Tokens\Token::T_CLASS, 'class', $line );
+    }
+
+    /**
+     * Adds a function token
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAFunction ( $line = 1 )
+    {
+        return $this->then( \vc\Tokens\Token::T_FUNCTION, 'function', $line );
+    }
+
+    /**
+     * Adds a close tag token
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenACloseTag ( $line = 1 )
+    {
+        return $this->then( \vc\Tokens\Token::T_CLOSE_TAG, '?>', $line );
+    }
+
+    /**
+     * Adds a doc comment token
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenADocComment ( $comment = '', $line = 1 )
+    {
+        return $this->then(
+            \vc\Tokens\Token::T_DOC_COMMENT,
+            "/**\n * $comment\n */",
+            $line
+        );
+    }
+
+    /**
+     * Adds a close tag token
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenASemicolon ( $line = 1 )
+    {
+        return $this->then( \vc\Tokens\Token::T_SEMICOLON, ';', $line );
+    }
+
 }
 
 ?>
