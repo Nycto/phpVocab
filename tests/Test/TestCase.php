@@ -27,7 +27,7 @@ namespace vc\Test;
 /**
  * The base test case class
  */
-class TestCase extends \PHPUnit_Framework_TestCase
+abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
 
     /**
