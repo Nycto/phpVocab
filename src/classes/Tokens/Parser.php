@@ -112,12 +112,19 @@ class Parser implements \vc\iface\Tokens\Reader
 
         $new = array_shift( $this->tokens );
 
+        // In most cases, token_get_all represents a token as an array
         if ( is_array($new) ) {
             $this->current = \vc\Tokens\Token::fromArray($new);
         }
+
+        // When a token is reinstated, its object gets shifted onto this list
         else if ( $new instanceof \vc\Tokens\Token ) {
             $this->current = $new;
         }
+
+        // For some simple tokens, token_get_all will just return a string of
+        // the token. To normalize this, we have created new token values and
+        // mapped them to the appropriate stirngs
         else {
             if ( !isset(self::$tokenMap[$new]) )
                 throw new \r8\Exception\Data($new, "Token", "Unrecognized Token");
@@ -137,7 +144,6 @@ class Parser implements \vc\iface\Tokens\Reader
                 self::$tokenMap[$new], $new, $line
             );
         }
-
 
         return $this->current;
     }
