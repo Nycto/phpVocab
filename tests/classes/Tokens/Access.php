@@ -22,6 +22,8 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
+use \vc\Tokens\Token as Token;
+
 require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 
 /**
@@ -39,7 +41,7 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
         );
 
         $this->assertNull(
-            $reader->find(array(\vc\Tokens\Token::T_CLASS))
+            $reader->find(array(Token::T_CLASS))
         );
     }
 
@@ -52,39 +54,35 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
         );
 
         $this->assertIsTokenOf(
-            \vc\Tokens\Token::T_ECHO,
+            Token::T_ECHO,
             $reader->find(array(
-                \vc\Tokens\Token::T_ECHO,
-                \vc\Tokens\Token::T_SEMICOLON
+                Token::T_ECHO,
+                Token::T_SEMICOLON
             ))
         );
 
         $this->assertIsTokenOf(
-            \vc\Tokens\Token::T_SEMICOLON,
+            Token::T_SEMICOLON,
             $reader->find(array(
-                \vc\Tokens\Token::T_ECHO,
-                \vc\Tokens\Token::T_SEMICOLON
+                Token::T_ECHO,
+                Token::T_SEMICOLON
             ))
         );
 
         $this->assertNull(
             $reader->find(array(
-                \vc\Tokens\Token::T_ECHO,
-                \vc\Tokens\Token::T_SEMICOLON
+                Token::T_ECHO,
+                Token::T_SEMICOLON
             ))
         );
     }
 
     public function testFindExcluding_EmptyTokenSet ()
     {
-        $reader = new \vc\Tokens\Access(
-            new \vc\Tokens\Parser(
-                new \r8\Stream\In\Void
-            )
-        );
+        $reader = new \vc\Tokens\Access( $this->oneTokenReader() );
 
         $this->assertNull(
-            $reader->find(array(\vc\Tokens\Token::T_CLASS))
+            $reader->find(array(Token::T_CLASS))
         );
     }
 
@@ -97,26 +95,85 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
         );
 
         $this->assertIsTokenOf(
-            \vc\Tokens\Token::T_ECHO,
+            Token::T_ECHO,
             $reader->findExcluding(array(
-                \vc\Tokens\Token::T_WHITESPACE,
-                \vc\Tokens\Token::T_OPEN_TAG
+                Token::T_WHITESPACE,
+                Token::T_OPEN_TAG
             ))
         );
 
         $this->assertIsTokenOf(
-            \vc\Tokens\Token::T_SEMICOLON,
+            Token::T_SEMICOLON,
             $reader->findExcluding(array(
-                \vc\Tokens\Token::T_WHITESPACE,
-                \vc\Tokens\Token::T_CONSTANT_ENCAPSED_STRING
+                Token::T_WHITESPACE,
+                Token::T_CONSTANT_ENCAPSED_STRING
             ))
         );
 
         $this->assertNull(
             $reader->findExcluding(array(
-                \vc\Tokens\Token::T_CLOSE_TAG
+                Token::T_CLOSE_TAG
             ))
         );
+    }
+
+    public function testFindAllowing_EmptyTokenSet ()
+    {
+        $reader = new \vc\Tokens\Access( $this->oneTokenReader() );
+
+        $this->assertNull(
+            $reader->findAllowing(array(Token::T_CLASS))
+        );
+    }
+
+    public function testFindAllowing_TokenGetsFound ()
+    {
+        $reader = new \vc\Tokens\Access(
+            new \vc\Tokens\Parser(
+                new \r8\Stream\In\String("<?php echo 'content';?>")
+            )
+        );
+
+        $this->assertIsTokenOf(
+            Token::T_ECHO,
+            $reader->findAllowing(
+                array( Token::T_ECHO, Token::T_SEMICOLON ),
+                array( Token::T_OPEN_TAG, Token::T_CONSTANT_ENCAPSED_STRING )
+            )
+        );
+
+        $this->assertIsTokenOf(
+            Token::T_SEMICOLON,
+            $reader->findAllowing(
+                array( Token::T_ECHO, Token::T_SEMICOLON ),
+                array( Token::T_WHITESPACE, Token::T_CONSTANT_ENCAPSED_STRING )
+            )
+        );
+
+        $this->assertNull(
+            $reader->findAllowing(
+                array( Token::T_CLASS ),
+                array( Token::T_CLOSE_TAG )
+            )
+        );
+    }
+
+    public function testFindAllowing_UnexpectedToken ()
+    {
+        $reader = new \vc\Tokens\Access(
+            new \vc\Tokens\Parser(
+                new \r8\Stream\In\String("<?php echo 'content';?>")
+            )
+        );
+
+        try {
+            $reader->findAllowing(
+                array( Token::T_ECHO, Token::T_SEMICOLON ),
+                array( Token::T_CLASS )
+            );
+            $this->fail("An expected exception was not thrown");
+        }
+        catch ( \r8\Exception\Data $err ) {}
     }
 
 }
