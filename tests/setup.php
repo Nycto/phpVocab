@@ -38,5 +38,6 @@ require_once rtrim( __DIR__, "/" ) ."/../src/vocab.php";
 error_reporting( E_ALL | E_STRICT );
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
+PHPUnit_Util_Filter::addDirectoryToFilter(rtrim( __DIR__, "/" ) .'/Test');
 
 ?>
