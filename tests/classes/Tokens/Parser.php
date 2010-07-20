@@ -49,41 +49,41 @@ class test_classes_Tokens_Parser extends \vc\Test\TestCase
         $this->assertTrue( $parser->hasToken() );
         $this->assertEquals(
             new \vc\Tokens\Token(368, '<?php ', 1),
-            $parser->nextToken()
+            $parser->popToken()
         );
 
         $this->assertTrue( $parser->hasToken() );
         $this->assertEquals(
             new \vc\Tokens\Token(316, 'echo', 1),
-            $parser->nextToken()
+            $parser->popToken()
         );
 
         $this->assertTrue( $parser->hasToken() );
         $this->assertEquals(
             new \vc\Tokens\Token(371, ' ', 1),
-            $parser->nextToken()
+            $parser->popToken()
         );
 
         $this->assertTrue( $parser->hasToken() );
         $this->assertEquals(
             new \vc\Tokens\Token(315, "'content'", 1),
-            $parser->nextToken()
+            $parser->popToken()
         );
 
         $this->assertTrue( $parser->hasToken() );
         $this->assertEquals(
             new \vc\Tokens\Token(-106, ';', 1),
-            $parser->nextToken()
+            $parser->popToken()
         );
 
         $this->assertTrue( $parser->hasToken() );
         $this->assertEquals(
             new \vc\Tokens\Token(370, '?>', 1),
-            $parser->nextToken()
+            $parser->popToken()
         );
     }
 
-    public function testNextToken_CustomTokens ()
+    public function testPopToken_CustomTokens ()
     {
         $parser = new \vc\Tokens\Parser(
             new \r8\Stream\In\String(
@@ -123,7 +123,7 @@ class test_classes_Tokens_Parser extends \vc\Test\TestCase
             );
             $this->assertEquals(
                 \vc\Tokens\Token::fromArray( $token ),
-                $parser->nextToken(),
+                $parser->popToken(),
                 "Token mismatch at offset #$offset"
             );
         }
@@ -151,11 +151,11 @@ class test_classes_Tokens_Parser extends \vc\Test\TestCase
             )
         );
 
-        $token = $parser->nextToken();
+        $token = $parser->popToken();
         $this->assertIsTokenOf( T_OPEN_TAG, $token );
 
         $this->assertSame( $parser, $parser->reinstateToken() );
-        $this->assertSame( $token, $parser->nextToken() );
+        $this->assertSame( $token, $parser->popToken() );
     }
 
 }

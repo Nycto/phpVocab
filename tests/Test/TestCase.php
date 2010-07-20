@@ -71,7 +71,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             $tokens->hasToken(),
             "Token Reader does not have any tokens remaining"
         );
-        $this->assertIsTokenOf( $type, $tokens->nextToken() );
+        $this->assertIsTokenOf( $type, $tokens->popToken() );
     }
 
     /**
@@ -89,7 +89,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             "Token Reader should not have any tokens remaining"
         );
         $this->assertNull(
-            $tokens->nextToken(),
+            $tokens->popToken(),
             "Token Reader should return NULL when it has no more tokens"
         );
     }

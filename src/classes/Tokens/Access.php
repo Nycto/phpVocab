@@ -57,7 +57,7 @@ class Access
     public function find ( array $types )
     {
         while ( $this->reader->hasToken() ) {
-            $token = $this->reader->nextToken();
+            $token = $this->reader->popToken();
             if ( in_array($token->getType(), $types) )
                 return $token;
         }
@@ -74,7 +74,7 @@ class Access
     public function findExcluding ( array $types )
     {
         while ( $this->reader->hasToken() ) {
-            $token = $this->reader->nextToken();
+            $token = $this->reader->popToken();
             if ( !in_array($token->getType(), $types) )
                 return $token;
         }
@@ -96,7 +96,7 @@ class Access
     {
         while ( $this->reader->hasToken() ) {
 
-            $token = $this->reader->nextToken();
+            $token = $this->reader->popToken();
             $type = $token->getType();
 
             if ( in_array($type, $types) ) {

@@ -83,7 +83,7 @@ class TokenReader implements \vc\iface\Tokens\Reader
      *
      * @return \vc\Tokens\Token|NULL Returns NULL if no tokens are left
      */
-    public function nextToken ()
+    public function popToken ()
     {
         $this->current = array_shift($this->tokens);
         return $this->current;
@@ -91,7 +91,7 @@ class TokenReader implements \vc\iface\Tokens\Reader
 
     /**
      * Pushes the current token back onto the end of the reader so it will be
-     * returned the next time someone calls nextToken
+     * returned the next time someone calls popToken
      *
      * @return \vc\iface\Tokens\Reader Returns a self reference
      */

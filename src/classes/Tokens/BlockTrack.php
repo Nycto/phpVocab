@@ -87,12 +87,12 @@ class BlockTrack implements \vc\iface\Tokens\Reader
      *
      * @return \vc\Tokens\Token|NULL Returns NULL if no tokens are left
      */
-    public function nextToken ()
+    public function popToken ()
     {
         if ( !$this->hasToken() )
             return NULL;
 
-        $next = $this->inner->nextToken();
+        $next = $this->inner->popToken();
 
         // Track the current type so we can adjust the depth if it is reinstanted
         $this->type = $next->getType();
@@ -114,7 +114,7 @@ class BlockTrack implements \vc\iface\Tokens\Reader
 
     /**
      * Pushes the current token back onto the end of the reader so it will be
-     * returned the next time someone calls nextToken
+     * returned the next time someone calls popToken
      *
      * @return \vc\iface\Tokens\Reader Returns a self reference
      */

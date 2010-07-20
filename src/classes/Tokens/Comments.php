@@ -93,9 +93,9 @@ class Comments implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Comments
      *
      * @return \vc\Tokens\Token|NULL Returns NULL if no tokens are left
      */
-    public function nextToken ()
+    public function popToken ()
     {
-        $next = $this->inner->nextToken();
+        $next = $this->inner->popToken();
 
         $type = $next->getType();
 
@@ -110,7 +110,7 @@ class Comments implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Comments
 
     /**
      * Pushes the current token back onto the end of the reader so it will be
-     * returned the next time someone calls nextToken
+     * returned the next time someone calls popToken
      *
      * @return \vc\iface\Tokens\Reader Returns a self reference
      */
