@@ -38,13 +38,6 @@ class TokenReader implements \vc\iface\Tokens\Reader
     private $tokens = array();
 
     /**
-     * The current token
-     *
-     * @var \vc\Tokens\Token
-     */
-    private $current;
-
-    /**
      * Instantiates a new Token Stub
      *
      * @return \vc\Tokens\Stub
@@ -85,20 +78,17 @@ class TokenReader implements \vc\iface\Tokens\Reader
      */
     public function popToken ()
     {
-        $this->current = array_shift($this->tokens);
-        return $this->current;
+        return array_shift($this->tokens);
     }
 
     /**
-     * Pushes the current token back onto the end of the reader so it will be
-     * returned the next time someone calls popToken
+     * Returns the next token in the stack without shifting it off the list
      *
-     * @return \vc\iface\Tokens\Reader Returns a self reference
+     * @return \vc\Tokens\Token|NULL Returns NULL if no tokens are left
      */
-    public function reinstateToken ()
+    public function peekAtToken ()
     {
-        array_unshift($this->tokens, $this->current);
-        return $this;
+        return reset($this->tokens);
     }
 
     /**

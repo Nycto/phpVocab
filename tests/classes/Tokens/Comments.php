@@ -85,15 +85,14 @@ class test_classes_Tokens_Comments extends \vc\Test\TestCase
         $this->assertEmptyComment( $reader->getComment() );
     }
 
-    public function testReinstateToken ()
+    public function testPeekAtToken ()
     {
-        $reader = $this->oneTokenReader()->thenAClass();
+        $comments = new \vc\Tokens\Comments(
+            new \vc\Parser\Comment,
+            $this->oneTokenReader()->thenAClass()
+        );
 
-        $comments = new \vc\Tokens\Comments( new \vc\Parser\Comment, $reader );
-        $this->assertHasToken( T_CLASS, $comments );
-
-        $this->assertSame( $comments, $comments->reinstateToken() );
-        $this->assertHasToken( T_CLASS, $comments );
+        $this->assertIsTokenOf( T_CLASS, $comments->peekAtToken() );
     }
 
 }

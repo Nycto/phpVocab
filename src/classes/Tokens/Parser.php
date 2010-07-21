@@ -74,9 +74,13 @@ class Parser implements \vc\iface\Tokens\Reader
     private $tokens;
 
     /**
-     * The current token value
+     * The current token
      *
-     * @var Array
+     * We need to track this because not all tokens come with a line number.
+     * In those cases, we use the previous token to determine what line we're
+     * on.
+     *
+     * @var \vc\Tokens\Token
      */
     private $current;
 
@@ -88,6 +92,42 @@ class Parser implements \vc\iface\Tokens\Reader
     public function __construct ( \r8\iface\Stream\In $input )
     {
         $this->tokens = \token_get_all( $input->readAll() );
+    }
+
+    /**
+     * Builds a token from a mixed input
+     *
+     * @param Mixed $input
+     * @return \vc\Tokens\Token
+     */
+    private function buildToken ( $input )
+    {
+        // In most cases, token_get_all represents a token as an array
+        if ( is_array($input) )
+            return \vc\Tokens\Token::fromArray($input);
+
+        // When a token is reinstated, its object gets shifted onto this list
+        if ( $input instanceof \vc\Tokens\Token )
+            return $input;
+
+        // For some simple tokens, token_get_all will just return a string of
+        // the token. To normalize this, we have created new token values and
+        // mapped them to the appropriate stirngs
+        if ( !isset(self::$tokenMap[$input]) )
+            throw new \r8\Exception\Data($input, "Token", "Unrecognized Token");
+
+        // For custom tokens, we need to derive the line number based on the
+        // previous token. If the previous token contains a carriage return,
+        // then we need to manually bump the value up
+        $line = $this->current->getLine();
+        if (
+            $this->current->getType() == T_WHITESPACE
+            && stripos( $this->current->getContent(), "\n" ) !== FALSE
+        ) {
+            $line++;
+        }
+
+        return new \vc\Tokens\Token( self::$tokenMap[$input], $input, $line );
     }
 
     /**
@@ -110,58 +150,22 @@ class Parser implements \vc\iface\Tokens\Reader
         if ( empty($this->tokens) )
             return NULL;
 
-        $new = array_shift( $this->tokens );
-
-        // In most cases, token_get_all represents a token as an array
-        if ( is_array($new) ) {
-            $this->current = \vc\Tokens\Token::fromArray($new);
-        }
-
-        // When a token is reinstated, its object gets shifted onto this list
-        else if ( $new instanceof \vc\Tokens\Token ) {
-            $this->current = $new;
-        }
-
-        // For some simple tokens, token_get_all will just return a string of
-        // the token. To normalize this, we have created new token values and
-        // mapped them to the appropriate stirngs
-        else {
-            if ( !isset(self::$tokenMap[$new]) )
-                throw new \r8\Exception\Data($new, "Token", "Unrecognized Token");
-
-            // For custom tokens, we need to derive the line number based on the
-            // previous token. If the previous token contains a carriage return,
-            // then we need to manually bump the value up
-            $line = $this->current->getLine();
-            if (
-                $this->current->getType() == T_WHITESPACE
-                && stripos( $this->current->getContent(), "\n" ) !== FALSE
-            ) {
-                $line++;
-            }
-
-            $this->current = new \vc\Tokens\Token(
-                self::$tokenMap[$new], $new, $line
-            );
-        }
-
+        $this->current = $this->buildToken( array_shift( $this->tokens ) );
         return $this->current;
     }
 
     /**
-     * Pushes the current token back onto the end of the reader so it will be
-     * returned the next time someone calls popToken
+     * Returns the next token in the stack without shifting it off the list
      *
-     * @return \vc\iface\Tokens\Reader Returns a self reference
+     * @return \vc\Tokens\Token|NULL Returns NULL if no tokens are left
      */
-    public function reinstateToken ()
+    public function peekAtToken ()
     {
-        if ( !$this->current )
-            return $this;
+        if ( empty($this->tokens) )
+            return NULL;
 
-        array_unshift( $this->tokens, $this->current );
-
-        return $this;
+        $this->tokens[0] = $this->buildToken( $this->tokens[0] );
+        return $this->tokens[0];
     }
 
 }

@@ -38,19 +38,18 @@ interface Reader
     public function hasToken ();
 
     /**
-     * Returns the next token
+     * Returns the next token and shifts it off the list
      *
      * @return \vc\Tokens\Token|NULL Returns NULL if no tokens are left
      */
     public function popToken ();
 
     /**
-     * Pushes the current token back onto the end of the reader so it will be
-     * returned the next time someone calls popToken
+     * Returns the next token in the stack without shifting it off the list
      *
-     * @return \vc\iface\Tokens\Reader Returns a self reference
+     * @return \vc\Tokens\Token|NULL Returns NULL if no tokens are left
      */
-    public function reinstateToken ();
+    public function peekAtToken ();
 
 }
 

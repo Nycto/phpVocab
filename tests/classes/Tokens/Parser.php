@@ -131,7 +131,7 @@ class test_classes_Tokens_Parser extends \vc\Test\TestCase
         $this->assertEndOfTokens($parser);
     }
 
-    public function testReinstateToken_CalledBeforeAnyTokensAreRead ()
+    public function testPeekAtToken ()
     {
         $parser = new \vc\Tokens\Parser(
             new \r8\Stream\In\String(
@@ -139,23 +139,15 @@ class test_classes_Tokens_Parser extends \vc\Test\TestCase
             )
         );
 
-        $this->assertSame( $parser, $parser->reinstateToken() );
-        $this->assertHasToken( T_OPEN_TAG, $parser );
-    }
+        $peek = $parser->peekAtToken();
+        $this->assertIsTokenOf( T_OPEN_TAG, $peek );
+        $this->assertSame( $peek, $parser->peekAtToken() );
+        $this->assertSame( $peek, $parser->popToken() );
 
-    public function testReinstateToken_ShiftsTokenBackOntoList ()
-    {
-        $parser = new \vc\Tokens\Parser(
-            new \r8\Stream\In\String(
-                "<?php echo 'content';?>"
-            )
-        );
-
-        $token = $parser->popToken();
-        $this->assertIsTokenOf( T_OPEN_TAG, $token );
-
-        $this->assertSame( $parser, $parser->reinstateToken() );
-        $this->assertSame( $token, $parser->popToken() );
+        $peek2 = $parser->peekAtToken();
+        $this->assertIsTokenOf( T_ECHO, $peek2 );
+        $this->assertSame( $peek2, $parser->peekAtToken() );
+        $this->assertSame( $peek2, $parser->popToken() );
     }
 
 }

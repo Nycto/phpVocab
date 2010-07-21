@@ -48,18 +48,11 @@ class BlockTrack implements \vc\iface\Tokens\Reader
     private $depth = 1;
 
     /**
-     * The number of tokens that have passed through this reader
+     * Whether the first token has been popped or not
      *
-     * @var Integer
+     * @var Boolean
      */
-    private $offset = 0;
-
-    /**
-     * The type of the current token
-     *
-     * @var Integer
-     */
-    private $type;
+    private $first = TRUE;
 
     /**
      * Constructor...
@@ -94,50 +87,32 @@ class BlockTrack implements \vc\iface\Tokens\Reader
 
         $next = $this->inner->popToken();
 
-        // Track the current type so we can adjust the depth if it is reinstanted
-        $this->type = $next->getType();
+        $type = $next->getType();
 
         // If the first token we read is an open curly, it doesn't affect the depth
-        if ( $this->offset > 0 )
-        {
-            if ( $this->type == \vc\Tokens\Token::T_BLOCK_OPEN )
-                $this->depth++;
+        if ( $this->first )
+            $this->first = FALSE;
 
-            else if ( $this->type == \vc\Tokens\Token::T_BLOCK_CLOSE )
-                $this->depth--;
-        }
+        else if ( $type == \vc\Tokens\Token::T_BLOCK_OPEN )
+            $this->depth++;
 
-        $this->offset++;
+        else if ( $type == \vc\Tokens\Token::T_BLOCK_CLOSE )
+            $this->depth--;
 
         return $next;
     }
 
     /**
-     * Pushes the current token back onto the end of the reader so it will be
-     * returned the next time someone calls popToken
+     * Returns the next token in the stack without shifting it off the list
      *
-     * @return \vc\iface\Tokens\Reader Returns a self reference
+     * @return \vc\Tokens\Token|NULL Returns NULL if no tokens are left
      */
-    public function reinstateToken ()
+    public function peekAtToken ()
     {
         if ( $this->depth <= 0 )
-            return $this;
+            return NULL;
 
-        $this->offset--;
-
-        // Only adjust the depth if this isn't the first token
-        if ( $this->offset > 0 ) {
-
-            if ( $this->type == \vc\Tokens\Token::T_BLOCK_OPEN )
-                $this->depth--;
-
-            else if ( $this->type == \vc\Tokens\Token::T_BLOCK_CLOSE )
-                $this->depth++;
-        }
-
-        $this->inner->reinstateToken();
-
-        return $this;
+        return $this->inner->peekAtToken();
     }
 
 }
