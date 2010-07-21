@@ -32,13 +32,23 @@ require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 class test_classes_Tokens_Access extends \vc\Test\TestCase
 {
 
+    /**
+     * Returns a test token reader with sample data loaded in it
+     *
+     * @return \vc\Token\Access
+     */
+    public function getTestReader ()
+    {
+        return new \vc\Tokens\Access(
+            $this->oneTokenReader()->thenAnOpenTag()->thenAnEcho()
+                ->thenSomeSpace()->thenAString("content")
+                ->thenASemiColon()->thenACloseTag()
+        );
+    }
+
     public function testFind_EmptyTokenSet ()
     {
-        $reader = new \vc\Tokens\Access(
-            new \vc\Tokens\Parser(
-                new \r8\Stream\In\Void
-            )
-        );
+        $reader = new \vc\Tokens\Access( $this->oneTokenReader() );
 
         $this->assertNull(
             $reader->find(array(Token::T_CLASS))
@@ -47,33 +57,20 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
 
     public function testFind_TokenGetsFound ()
     {
-        $reader = new \vc\Tokens\Access(
-            new \vc\Tokens\Parser(
-                new \r8\Stream\In\String("<?php echo 'content';?>")
-            )
-        );
+        $reader = $this->getTestReader();
 
         $this->assertIsTokenOf(
             Token::T_ECHO,
-            $reader->find(array(
-                Token::T_ECHO,
-                Token::T_SEMICOLON
-            ))
+            $reader->find(array( Token::T_ECHO, Token::T_SEMICOLON ))
         );
 
         $this->assertIsTokenOf(
             Token::T_SEMICOLON,
-            $reader->find(array(
-                Token::T_ECHO,
-                Token::T_SEMICOLON
-            ))
+            $reader->find(array( Token::T_ECHO, Token::T_SEMICOLON ))
         );
 
         $this->assertNull(
-            $reader->find(array(
-                Token::T_ECHO,
-                Token::T_SEMICOLON
-            ))
+            $reader->find(array( Token::T_ECHO, Token::T_SEMICOLON ))
         );
     }
 
@@ -88,11 +85,7 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
 
     public function testFindExcluding_TokenGetsFound ()
     {
-        $reader = new \vc\Tokens\Access(
-            new \vc\Tokens\Parser(
-                new \r8\Stream\In\String("<?php echo 'content';?>")
-            )
-        );
+        $reader = $this->getTestReader();
 
         $this->assertIsTokenOf(
             Token::T_ECHO,
@@ -111,9 +104,7 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
         );
 
         $this->assertNull(
-            $reader->findExcluding(array(
-                Token::T_CLOSE_TAG
-            ))
+            $reader->findExcluding(array( Token::T_CLOSE_TAG ))
         );
     }
 
@@ -128,11 +119,7 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
 
     public function testFindAllowing_TokenGetsFound ()
     {
-        $reader = new \vc\Tokens\Access(
-            new \vc\Tokens\Parser(
-                new \r8\Stream\In\String("<?php echo 'content';?>")
-            )
-        );
+        $reader = $this->getTestReader();
 
         $this->assertIsTokenOf(
             Token::T_ECHO,
@@ -160,11 +147,7 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
 
     public function testFindAllowing_UnexpectedToken ()
     {
-        $reader = new \vc\Tokens\Access(
-            new \vc\Tokens\Parser(
-                new \r8\Stream\In\String("<?php echo 'content';?>")
-            )
-        );
+        $reader = $this->getTestReader();
 
         try {
             $reader->findAllowing(

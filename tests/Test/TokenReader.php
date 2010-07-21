@@ -132,6 +132,26 @@ class TokenReader implements \vc\iface\Tokens\Reader
     }
 
     /**
+     * Adds a call to echo
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAnEcho ( $line = 1 )
+    {
+        return $this->then( \vc\Tokens\Token::T_ECHO, 'echo', $line );
+    }
+
+    /**
+     * Adds an open tag
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAnOpenTag ( $line = 1 )
+    {
+        return $this->then( \vc\Tokens\Token::T_OPEN_TAG, '<?php ', $line );
+    }
+
+    /**
      * Adds a close tag token
      *
      * @return \vc\iface\Tokens\Reader Returns a self reference
@@ -163,6 +183,34 @@ class TokenReader implements \vc\iface\Tokens\Reader
     public function thenASemicolon ( $line = 1 )
     {
         return $this->then( \vc\Tokens\Token::T_SEMICOLON, ';', $line );
+    }
+
+    /**
+     * Adds a set of whitespace
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenSomeSpace ( $amount = 1, $line = 1 )
+    {
+        return $this->then(
+            \vc\Tokens\Token::T_WHITESPACE,
+            str_repeat(' ', $amount),
+            $line
+        );
+    }
+
+    /**
+     * Adds a Constant Encapsulated String
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAString ( $value, $line = 1 )
+    {
+        return $this->then(
+            \vc\Tokens\Token::T_CONSTANT_ENCAPSED_STRING,
+            "'". $value ."'",
+            $line
+        );
     }
 
 }
