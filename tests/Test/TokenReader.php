@@ -78,7 +78,7 @@ class TokenReader implements \vc\iface\Tokens\Reader
      */
     public function popToken ()
     {
-        return array_shift($this->tokens);
+        return array_shift($this->tokens) ?: NULL;
     }
 
     /**
@@ -88,7 +88,8 @@ class TokenReader implements \vc\iface\Tokens\Reader
      */
     public function peekAtToken ()
     {
-        return reset($this->tokens);
+        return reset($this->tokens) ?: NULL;
+
     }
 
     /**
