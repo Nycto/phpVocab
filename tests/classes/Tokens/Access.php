@@ -147,16 +147,22 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
 
     public function testFindAllowing_UnexpectedToken ()
     {
-        $reader = $this->getTestReader();
+        $reader = $this->oneTokenReader()->thenAnOpenTag()->thenAnEcho()
+            ->thenSomeSpace()->thenAString("content")
+            ->thenASemiColon()->thenACloseTag();
+
+        $access = new \vc\Tokens\Access( $reader );
 
         try {
-            $reader->findAllowing(
-                array( Token::T_ECHO, Token::T_SEMICOLON ),
-                array( Token::T_CLASS )
+            $access->findAllowing(
+                array( Token::T_CLOSE_TAG, Token::T_SEMICOLON ),
+                array( Token::T_OPEN_TAG, Token::T_WHITESPACE )
             );
             $this->fail("An expected exception was not thrown");
         }
         catch ( \r8\Exception\Data $err ) {}
+
+        $this->assertHasToken( Token::T_ECHO, $reader );
     }
 
 }

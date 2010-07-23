@@ -96,11 +96,11 @@ class Access
     {
         while ( $this->reader->hasToken() ) {
 
-            $token = $this->reader->popToken();
+            $token = $this->reader->peekAtToken();
             $type = $token->getType();
 
             if ( in_array($type, $types) ) {
-                return $token;
+                return $this->reader->popToken();
             }
             else if ( !in_array($type, $allowing) ) {
                 $err = new \r8\Exception\Data($type, "Token", "Unexpected Token");
@@ -108,6 +108,8 @@ class Access
                 $err->addData("Allowing", $allowing);
                 throw $err;
             }
+
+            $this->reader->popToken();
         }
 
         return NULL;
