@@ -46,20 +46,6 @@ class test_classes_Data_File extends \vc\Test\TestCase
         $this->assertSame( $comment, $file->getComment() );
     }
 
-    public function testConstantAccess ()
-    {
-        $file = new \vc\Data\File('path');
-        $this->assertSame( array(), $file->getAliases() );
-
-        $alias1 = new \vc\Data\Alias("path");
-        $this->assertSame( $file, $file->addAlias($alias1) );
-        $this->assertSame( array($alias1), $file->getAliases() );
-
-        $alias2 = new \vc\Data\Alias("path");
-        $this->assertSame( $file, $file->addAlias($alias2) );
-        $this->assertSame( array($alias1, $alias2), $file->getAliases() );
-    }
-
     public function testNamespaceAccess ()
     {
         $file = new \vc\Data\File('path');

@@ -38,6 +38,13 @@ class NSpace
     private $path;
 
     /**
+     * The list of aliases in this file
+     *
+     * @var Array An array of \vc\Data\Alias objects
+     */
+    private $aliases = array();
+
+    /**
      * The list of constants in this namespace
      *
      * @var Array
@@ -76,6 +83,28 @@ class NSpace
     public function getPath ()
     {
         return $this->path;
+    }
+
+    /**
+     * Adds a new alias to this file
+     *
+     * @param \vc\Data\Alias $alias
+     * @return \vc\Data\File Returns a self reference
+     */
+    public function addAlias ( \vc\Data\Alias $alias )
+    {
+        $this->aliases[] = $alias;
+        return $this;
+    }
+
+    /**
+     * Returns the Aliases loaded in this file
+     *
+     * @return Array An array of \vc\Data\Alias objects
+     */
+    public function getAliases ()
+    {
+        return $this->aliases;
     }
 
     /**
