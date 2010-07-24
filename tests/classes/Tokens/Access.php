@@ -160,7 +160,7 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
             );
             $this->fail("An expected exception was not thrown");
         }
-        catch ( \r8\Exception\Data $err ) {}
+        catch ( \vc\Tokens\UnexpectedToken $err ) {}
 
         $this->assertHasToken( Token::T_ECHO, $reader );
     }

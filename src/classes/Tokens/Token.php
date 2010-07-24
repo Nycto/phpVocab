@@ -218,6 +218,36 @@ class Token
     private $line;
 
     /**
+     * Returns the name of a token given a Token ID
+     *
+     * @param Integer $tokenID
+     * @return String|NULL Returns NULL if the token doesn't exist
+     */
+    static public function getTokenName ( $tokenID )
+    {
+        $tokenID = (int) $tokenID;
+
+        // First check if this is a built in token
+        $builtIn = token_name( $tokenID );
+        if ( !empty($builtIn) && $builtIn !== "UNKNOWN" )
+            return $builtIn;
+
+        // Build a list of names to tokens for the custom tokens
+        if ( empty(self::$readable) ) {
+            $refl = new \ReflectionClass(__CLASS__);
+            self::$readable = \array_flip(
+                array_filter(
+                    $refl->getConstants(),
+                    '\r8\num\negative'
+                )
+            );
+        }
+
+        return isset(self::$readable[$tokenID])
+            ? self::$readable[$tokenID] : NULL;
+    }
+
+    /**
      * Constructs a new instace of this object using an array as the source data
      *
      * @return \vc\Tokens\Token
@@ -282,22 +312,7 @@ class Token
      */
     public function getName ()
     {
-        $builtIn = token_name( $this->type );
-        if ( !empty($builtIn) && $builtIn !== "UNKNOWN" )
-            return $builtIn;
-
-        if ( empty(self::$readable) ) {
-            $refl = new \ReflectionClass(__CLASS__);
-            self::$readable = \array_flip(
-                array_filter(
-                    $refl->getConstants(),
-                    '\r8\num\negative'
-                )
-            );
-        }
-
-        return isset(self::$readable[$this->type])
-            ? self::$readable[$this->type] : NULL;
+        return self::getTokenName( $this->type );
     }
 
     /**

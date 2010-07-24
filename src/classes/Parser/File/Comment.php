@@ -72,7 +72,7 @@ class Comment
 
         // This will be thrown if an interrupt token was encountered before
         // a comment was found
-        catch ( \r8\Exception\Data $err ) {
+        catch ( \vc\Tokens\UnexpectedToken $err ) {
             $comment = new \vc\Data\Comment;
         }
 

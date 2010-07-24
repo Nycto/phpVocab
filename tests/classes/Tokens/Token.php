@@ -30,12 +30,41 @@ require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 class test_classes_Tokens_Token extends \vc\Test\TestCase
 {
 
+    public function testGetTokenName_FromABuiltInToken ()
+    {
+        $this->assertEquals(
+            "T_CONSTANT_ENCAPSED_STRING",
+            \vc\Tokens\Token::getTokenName( \T_CONSTANT_ENCAPSED_STRING )
+        );
+    }
+
+    public function testGetTokenName_FromACustomToken ()
+    {
+        $this->assertEquals(
+            "T_EQUALS",
+            \vc\Tokens\Token::getTokenName( \vc\Tokens\Token::T_EQUALS )
+        );
+
+        $this->assertEquals(
+            "T_EQUALS",
+            \vc\Tokens\Token::getTokenName( \vc\Tokens\Token::T_EQUALS )
+        );
+    }
+
+    public function testGetTokenName_UnknownToken ()
+    {
+        $this->assertNull(
+            \vc\Tokens\Token::getTokenName( 50000 )
+        );
+    }
+
     public function testConstruct ()
     {
         $token = new \vc\Tokens\Token(315, "'content'", 1);
         $this->assertSame( 315, $token->getType() );
         $this->assertSame( "'content'", $token->getcontent() );
         $this->assertSame( 1, $token->getLine() );
+        $this->assertSame( "T_CONSTANT_ENCAPSED_STRING", $token->getName() );
     }
 
     public function testFromArray ()
@@ -44,30 +73,6 @@ class test_classes_Tokens_Token extends \vc\Test\TestCase
             new \vc\Tokens\Token(315, "'content'", 1),
             \vc\Tokens\Token::fromArray(array(315, "'content'", 1))
         );
-    }
-
-    public function testGetName_FromABuiltInToken ()
-    {
-        $token = new \vc\Tokens\Token(315, "'content'", 1);
-        $this->assertEquals(
-            "T_CONSTANT_ENCAPSED_STRING",
-            $token->getName()
-        );
-    }
-
-    public function testGetName_FromACustomToken ()
-    {
-        $token = new \vc\Tokens\Token(\vc\Tokens\Token::T_EQUALS, "'content'", 1);
-        $this->assertEquals(
-            "T_EQUALS",
-            $token->getName()
-        );
-    }
-
-    public function testGetName_UnknownToken ()
-    {
-        $token = new \vc\Tokens\Token(50000, "'content'", 1);
-        $this->assertNull( $token->getName() );
     }
 
     public function testToArray ()

@@ -51,7 +51,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             "Value is not a Token"
         );
         $this->assertEquals(
-            r8(new \vc\Tokens\Token($type, '', 1))->getName(),
+            \vc\Tokens\Token::getTokenName($type),
             $token->getName(),
             "Token is not of the correct type"
         );

@@ -85,8 +85,8 @@ class Access
      * Returns the next token amongst the given type, skipping any tokens
      * listed in the allowing list
      *
-     * @throws \r8\Exception\Data If a token does not exist in either input
-     *      list, an exception will be thrown
+     * @throws \vc\Tokens\UnexpectedToken If a token does not exist in either
+     *      input list, an exception will be thrown
      * @param Array $types The list of types to search for
      * @param Array $allowing The list of tokens to skip
      * @return \vc\Tokens\Token Returns NULL if an appropriate token can not
@@ -99,15 +99,11 @@ class Access
             $token = $this->reader->peekAtToken();
             $type = $token->getType();
 
-            if ( in_array($type, $types) ) {
+            if ( in_array($type, $types) )
                 return $this->reader->popToken();
-            }
-            else if ( !in_array($type, $allowing) ) {
-                $err = new \r8\Exception\Data($type, "Token", "Unexpected Token");
-                $err->addData("Types", $types);
-                $err->addData("Allowing", $allowing);
-                throw $err;
-            }
+
+            else if ( !in_array($type, $allowing) )
+                throw new \vc\Tokens\UnexpectedToken($token, $types, $allowing);
 
             $this->reader->popToken();
         }
