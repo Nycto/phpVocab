@@ -27,9 +27,9 @@ use \vc\Tokens\Token as Token;
 require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 
 /**
- * Unit test for running all the tests
+ * Unit tests
  */
-class test_classes_Tokens_Access extends \vc\Test\TestCase
+class test_classes_Tokens_Search extends \vc\Test\TestCase
 {
 
     /**
@@ -39,7 +39,7 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
      */
     public function getTestReader ()
     {
-        return new \vc\Tokens\Access(
+        return new \vc\Tokens\Search(
             $this->oneTokenReader()->thenAnOpenTag()->thenAnEcho()
                 ->thenSomeSpace()->thenAString("content")
                 ->thenASemiColon()->thenACloseTag()
@@ -48,7 +48,7 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
 
     public function testFind_EmptyTokenSet ()
     {
-        $reader = new \vc\Tokens\Access( $this->oneTokenReader() );
+        $reader = new \vc\Tokens\Search( $this->oneTokenReader() );
 
         $this->assertNull(
             $reader->find(array(Token::T_CLASS))
@@ -76,7 +76,7 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
 
     public function testFindExcluding_EmptyTokenSet ()
     {
-        $reader = new \vc\Tokens\Access( $this->oneTokenReader() );
+        $reader = new \vc\Tokens\Search( $this->oneTokenReader() );
 
         $this->assertNull(
             $reader->find(array(Token::T_CLASS))
@@ -110,7 +110,7 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
 
     public function testFindAllowing_EmptyTokenSet ()
     {
-        $reader = new \vc\Tokens\Access( $this->oneTokenReader() );
+        $reader = new \vc\Tokens\Search( $this->oneTokenReader() );
 
         $this->assertNull(
             $reader->findAllowing(array(Token::T_CLASS))
@@ -151,7 +151,7 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
             ->thenSomeSpace()->thenAString("content")
             ->thenASemiColon()->thenACloseTag();
 
-        $access = new \vc\Tokens\Access( $reader );
+        $access = new \vc\Tokens\Search( $reader );
 
         try {
             $access->findAllowing(

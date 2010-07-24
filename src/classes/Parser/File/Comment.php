@@ -53,12 +53,12 @@ class Comment
      * Parses the given token reader
      *
      * @param \vc\Data\File $file The file to parse data into
-     * @param \vc\Tokens\Access $access
+     * @param \vc\iface\Tokens\Search $access
      * @return NULL
      */
     public function parse (
         \vc\Data\File $file,
-        \vc\Tokens\Access $access
+        \vc\iface\Tokens\Search $access
     ) {
         try {
             // First up, we look for the comment

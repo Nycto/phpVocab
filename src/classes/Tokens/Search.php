@@ -27,7 +27,7 @@ namespace vc\Tokens;
 /**
  * Providers helper access functionality around a token parser
  */
-class Access
+class Search implements \vc\iface\Tokens\Search
 {
 
     /**
