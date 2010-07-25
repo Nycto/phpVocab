@@ -48,11 +48,7 @@ class Search implements \vc\iface\Tokens\Search
     }
 
     /**
-     * Returns the next token amongst the given type
-     *
-     * @param Array $types The list of types to search for
-     * @return \vc\Tokens\Token Returns NULL if an appropriate token can not
-     *      be found
+     * @see \vc\iface\Tokens\Search::find
      */
     public function find ( array $types )
     {
@@ -65,11 +61,7 @@ class Search implements \vc\iface\Tokens\Search
     }
 
     /**
-     * Returns the next token expcluding the given types
-     *
-     * @param Array $types The list of types to exclude
-     * @return \vc\Tokens\Token Returns NULL if an appropriate token can not
-     *      be found
+     * @see \vc\iface\Tokens\Search::findExcluding
      */
     public function findExcluding ( array $types )
     {
@@ -82,28 +74,28 @@ class Search implements \vc\iface\Tokens\Search
     }
 
     /**
-     * Returns the next token amongst the given type, skipping any tokens
-     * listed in the allowing list
-     *
-     * @throws \vc\Tokens\UnexpectedToken If a token does not exist in either
-     *      input list, an exception will be thrown
-     * @param Array $types The list of types to search for
-     * @param Array $allowing The list of tokens to skip
-     * @return \vc\Tokens\Token Returns NULL if an appropriate token can not
-     *      be found
+     * @see \vc\iface\Tokens\Search::findAllowing
      */
-    public function findAllowing ( array $types, array $allowing = array() )
-    {
+    public function findAllowing (
+        array $types,
+        array $allowing = array(),
+        $fatal = TRUE
+    ) {
         while ( $this->reader->hasToken() ) {
 
             $token = $this->reader->peekAtToken();
             $type = $token->getType();
 
-            if ( in_array($type, $types) )
+            if ( in_array($type, $types) ) {
                 return $this->reader->popToken();
+            }
 
-            else if ( !in_array($type, $allowing) )
-                throw new \vc\Tokens\UnexpectedToken($token, $types, $allowing);
+            else if ( !in_array($type, $allowing) ){
+                if ( $fatal )
+                    throw new \vc\Tokens\UnexpectedToken($token, $types, $allowing);
+                else
+                    return NULL;
+            }
 
             $this->reader->popToken();
         }

@@ -165,6 +165,25 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
         $this->assertHasToken( Token::T_ECHO, $reader );
     }
 
+    public function testFindAllowing_TokenNotFound ()
+    {
+        $reader = $this->oneTokenReader()->thenAnOpenTag()->thenAnEcho()
+            ->thenSomeSpace()->thenAString("content")
+            ->thenASemiColon()->thenACloseTag();
+
+        $access = new \vc\Tokens\Search( $reader );
+
+        $this->assertNull(
+            $access->findAllowing(
+                array( Token::T_CLOSE_TAG, Token::T_SEMICOLON ),
+                array( Token::T_OPEN_TAG, Token::T_WHITESPACE ),
+                FALSE
+            )
+        );
+
+        $this->assertHasToken( Token::T_ECHO, $reader );
+    }
+
 }
 
 ?>
