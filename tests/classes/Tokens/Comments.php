@@ -66,6 +66,8 @@ class test_classes_Tokens_Comments extends \vc\Test\TestCase
         $this->assertComment( 'Comment', $reader->getComment() );
 
         $this->assertEmptyComment( $reader->getComment() );
+
+        $this->assertEndOfTokens( $reader );
     }
 
     public function testCommentInvalidedByToken ()

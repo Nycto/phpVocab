@@ -97,13 +97,16 @@ class Comments implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Comments
     {
         $next = $this->inner->popToken();
 
-        $type = $next->getType();
+        if ( $next ) {
 
-        if ( $type == \vc\Tokens\Token::T_DOC_COMMENT )
-            $this->comment = $next->getContent();
+            $type = $next->getType();
 
-        else if ( in_array($type, self::$invalidate) )
-            $this->comment = NULL;
+            if ( $type == \vc\Tokens\Token::T_DOC_COMMENT )
+                $this->comment = $next->getContent();
+
+            else if ( in_array($type, self::$invalidate) )
+                $this->comment = NULL;
+        }
 
         return $next;
     }
