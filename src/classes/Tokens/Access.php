@@ -181,6 +181,29 @@ class Access implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Search, \vc\if
         );
     }
 
+    /**
+     * Dumps the remaining contents of this token reader to the output
+     *
+     * @return NULL
+     */
+    public function dump ()
+    {
+        while ( $this->reader->hasToken() ) {
+            $token = $this->reader->popToken();
+            printf(
+                "Line %4d: %-26s (%4d): '%s'\n",
+                $token->getLine(),
+                $token->getName(),
+                $token->getType(),
+                str_replace(
+                    array("\n", "\r"),
+                    array('\n', '\r'),
+                    $token->getContent()
+                )
+            );
+        }
+    }
+
 }
 
 ?>
