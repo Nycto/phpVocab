@@ -92,7 +92,11 @@ class NSpace
      */
     public function appendNamespace ( $path )
     {
-        $this->path .= '\\'. ltrim($path, '\\');
+        if ( $this->path !== '' )
+            $this->path .= '\\';
+
+        $this->path .= ltrim($path, '\\');
+
         return $this;
     }
 

@@ -45,10 +45,10 @@ class test_classes_Data_NSpace extends \vc\Test\TestCase
         $this->assertSame( '', $nspace->getPath() );
 
         $this->assertSame( $nspace, $nspace->appendNamespace('path') );
-        $this->assertSame( '\\path', $nspace->getPath() );
+        $this->assertSame( 'path', $nspace->getPath() );
 
         $this->assertSame( $nspace, $nspace->appendNamespace('\\sub') );
-        $this->assertSame( '\\path\\sub', $nspace->getPath() );
+        $this->assertSame( 'path\\sub', $nspace->getPath() );
     }
 
     public function testAliasAccess ()
