@@ -59,6 +59,20 @@ class Method extends \vc\Data\Routine
     private $visibility;
 
     /**
+     * Builds a new method using a signature as the source
+     *
+     * @param \vc\Data\Signature $signature
+     * @return \vc\Data\Method
+     */
+    static public function build ( \vc\Data\Signature $signature )
+    {
+        $method = new self( $signature->getLine(), $signature->getComment() );
+        $method->setStatic( $signature->getStatic() );
+        $method->setVisibility( $signature->getVisibility() );
+        return $method;
+    }
+
+    /**
      * Constructor...
      *
      * @param Integer $line The line this routine starts on

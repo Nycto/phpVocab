@@ -30,6 +30,20 @@ require_once rtrim( __DIR__, "/" ) ."/../../../setup.php";
 class test_classes_Data_Routine_Method extends \vc\Test\TestCase
 {
 
+    public function testBuild ()
+    {
+        $comment = new \vc\Data\Comment;
+        $sig = new \vc\Data\Signature( 123, $comment );
+        $sig->setVisibility( \vc\Data\Visibility::vPrivate() );
+        $sig->setStatic( TRUE );
+
+        $meth = \vc\Data\Routine\Method::build( $sig );
+        $this->assertSame( 123, $meth->getLine() );
+        $this->assertSame( $comment, $meth->getComment() );
+        $this->assertTrue( $meth->getStatic() );
+        $this->assertEnum(\vc\Data\Visibility::vPRIVATE, $meth->getVisibility());
+    }
+
     public function testFinalAccess ()
     {
         $meth = new \vc\Data\Routine\Method(123);
@@ -57,7 +71,7 @@ class test_classes_Data_Routine_Method extends \vc\Test\TestCase
     public function testVisibilityAccess ()
     {
         $meth = new \vc\Data\Routine\Method(123);
-        $this->assertEquals( \vc\Data\Visibility::vPublic(), $meth->getVisibility() );
+        $this->assertEnum(\vc\Data\Visibility::vPUBLIC, $meth->getVisibility());
 
         $visibility = \vc\Data\Visibility::vPrivate();
         $this->assertSame( $meth, $meth->setVisibility($visibility) );

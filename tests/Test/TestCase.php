@@ -31,6 +31,19 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     * Asserts that an Enum equals the given value
+     *
+     * @param String|Integer $expected
+     * @param Mixed $enum
+     * @return NULL
+     */
+    public function assertEnum ( $expected, $enum )
+    {
+        $this->assertThat( $enum, $this->isInstanceOf( '\r8\Enum' ) );
+        $this->assertSame( $expected, $enum->getValue() );
+    }
+
+    /**
      * Returns a stub of the given class that won't call it's constructor
      *
      * @param String $class
