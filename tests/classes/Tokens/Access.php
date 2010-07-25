@@ -88,6 +88,22 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
         );
     }
 
+    public function testUntilTokens ()
+    {
+        $access = \vc\Tokens\Access::buildAccess(
+            $this->oneTokenReader()
+                ->thenAClass()->thenAnOpenBlock()
+                ->thenAFunction()->thenACloseBlock()
+        );
+
+        $until = $access->untilTokens(array( Token::T_FUNCTION ));
+        $this->assertThat( $until, $this->isInstanceOf('\vc\Tokens\Access') );
+
+        $this->assertHasToken( Token::T_CLASS, $until );
+        $this->assertHasToken( Token::T_BLOCK_OPEN, $until );
+        $this->assertEndOfTokens( $until );
+    }
+
 }
 
 ?>

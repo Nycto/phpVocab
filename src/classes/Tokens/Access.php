@@ -145,6 +145,23 @@ class Access implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Search, \vc\if
         return $this->comments->getComment();
     }
 
+    /**
+     * Copies this access object, but wraps it so it will only read until the
+     * given tokens are encountered
+     *
+     * @param Array $until The list of tokens that will halt this token reader
+     * @return \vc\Tokens\Access
+     */
+    public function untilTokens ( array $until )
+    {
+        $reader = new \vc\Tokens\Until( $until, $this->reader );
+        return new self(
+            $reader,
+            new \vc\Tokens\Search( $reader ),
+            $this->comments
+        );
+    }
+
 }
 
 ?>
