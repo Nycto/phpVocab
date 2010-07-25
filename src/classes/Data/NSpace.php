@@ -70,7 +70,7 @@ class NSpace
      *
      * @param String $path The path to this namespace
      */
-    public function __construct ( $path )
+    public function __construct ( $path = '/' )
     {
         $this->path = trim( (string) $path );
     }

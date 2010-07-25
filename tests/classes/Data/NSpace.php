@@ -34,6 +34,9 @@ class test_classes_Data_NSpace extends \vc\Test\TestCase
     {
         $nspace = new \vc\Data\NSpace('path');
         $this->assertSame( 'path', $nspace->getPath() );
+
+        $nspace = new \vc\Data\NSpace;
+        $this->assertSame( '/', $nspace->getPath() );
     }
 
     public function testAliasAccess ()
