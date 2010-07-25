@@ -27,7 +27,7 @@ namespace vc\Tokens;
 /**
  * Bundles multiple token access implementations into a single interface
  */
-class Access implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Search
+class Access implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Search, \vc\iface\Tokens\Comments
 {
 
     /**
@@ -45,6 +45,13 @@ class Access implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Search
     private $search;
 
     /**
+     * Access for reading tokens
+     *
+     * @var \vc\iface\Tokens\Comments
+     */
+    private $comments;
+
+    /**
      * A helper function which builds an access object from a Token Reader
      *
      * @param \vc\iface\Tokens\Reader $reader
@@ -52,9 +59,14 @@ class Access implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Search
      */
     static public function buildAccess ( \vc\iface\Tokens\Reader $reader )
     {
+        $comments = new \vc\Tokens\Comments(
+            new \vc\Parser\Comment,
+            $reader
+        );
         return new \vc\Tokens\Access(
-            $reader,
-            new \vc\Tokens\Search( $reader )
+            $comments,
+            new \vc\Tokens\Search( $comments ),
+            $comments
         );
     }
 
@@ -63,13 +75,16 @@ class Access implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Search
      *
      * @param \vc\iface\Tokens\Reader $reader The Token reader being wrapped
      * @param \vc\iface\Tokens\Search $search The search interface being wrapped
+     * @param \vc\iface\Tokens\Comments $comments Access for reading tokens
      */
     public function __construct (
         \vc\iface\Tokens\Reader $reader,
-        \vc\iface\Tokens\Search $search
+        \vc\iface\Tokens\Search $search,
+        \vc\iface\Tokens\Comments $comments
     ) {
         $this->reader = $reader;
         $this->search = $search;
+        $this->comments = $comments;
     }
 
     /**
@@ -118,6 +133,16 @@ class Access implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Search
     public function findAllowing ( array $types, array $allowing = array() )
     {
         return $this->search->findAllowing( $types, $allowing );
+    }
+
+    /**
+     * Returns the block comment associated with the current context
+     *
+     * @return \vc\Data\Comment
+     */
+    public function getComment ()
+    {
+        return $this->comments->getComment();
     }
 
 }

@@ -72,6 +72,22 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
         );
     }
 
+    public function testTokenComments ()
+    {
+        $access = \vc\Tokens\Access::buildAccess(
+            $reader = $this->oneTokenReader()
+                ->thenADocComment('test')->thenAClass()
+        );
+
+        $this->assertHasToken( Token::T_DOC_COMMENT, $access );
+        $this->assertHasToken( Token::T_CLASS, $access );
+
+        $this->assertEquals(
+            new \vc\Data\Comment('test'),
+            $access->getComment()
+        );
+    }
+
 }
 
 ?>
