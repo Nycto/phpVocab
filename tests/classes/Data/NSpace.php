@@ -30,6 +30,15 @@ require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 class test_classes_Data_NSpace extends \vc\Test\TestCase
 {
 
+    public function testConstruct ()
+    {
+        $nspace = new \vc\Data\NSpace;
+        $this->assertSame( '', $nspace->getPath() );
+
+        $nspace = new \vc\Data\NSpace('path\\to\\ns');
+        $this->assertSame( 'path\\to\\ns', $nspace->getPath() );
+    }
+
     public function testAppendNamespace ()
     {
         $nspace = new \vc\Data\NSpace;

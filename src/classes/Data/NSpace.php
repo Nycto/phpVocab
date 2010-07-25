@@ -35,7 +35,7 @@ class NSpace
      *
      * @var String
      */
-    private $path = '';
+    private $path;
 
     /**
      * The list of aliases in this file
@@ -64,6 +64,16 @@ class NSpace
      * @var Array
      */
     private $types = array();
+
+    /**
+     * Constructor...
+     *
+     * @param String $path The initial namespace path
+     */
+    public function __construct ( $path = '' )
+    {
+        $this->path = (string) $path;
+    }
 
     /**
      * Returns the Path of this namespace
