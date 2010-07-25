@@ -51,11 +51,11 @@ class test_classes_Data_File extends \vc\Test\TestCase
         $file = new \vc\Data\File('path');
         $this->assertSame( array(), $file->getNamespaces() );
 
-        $nspace1 = new \vc\Data\NSpace("path");
+        $nspace1 = new \vc\Data\NSpace;
         $this->assertSame( $file, $file->addNamespace($nspace1) );
         $this->assertSame( array($nspace1), $file->getNamespaces() );
 
-        $nspace2 = new \vc\Data\NSpace("path");
+        $nspace2 = new \vc\Data\NSpace;
         $this->assertSame( $file, $file->addNamespace($nspace2) );
         $this->assertSame( array($nspace1, $nspace2), $file->getNamespaces() );
     }

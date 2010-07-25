@@ -35,7 +35,7 @@ class NSpace
      *
      * @var String
      */
-    private $path;
+    private $path = '';
 
     /**
      * The list of aliases in this file
@@ -66,16 +66,6 @@ class NSpace
     private $types = array();
 
     /**
-     * Constructor...
-     *
-     * @param String $path The path to this namespace
-     */
-    public function __construct ( $path = '/' )
-    {
-        $this->path = trim( (string) $path );
-    }
-
-    /**
      * Returns the Path of this namespace
      *
      * @return String
@@ -83,6 +73,17 @@ class NSpace
     public function getPath ()
     {
         return $this->path;
+    }
+
+    /**
+     * Appends a value to the path in this namespace
+     *
+     * @return \vc\Data\File Returns a self reference
+     */
+    public function appendNamespace ( $path )
+    {
+        $this->path .= '\\'. ltrim($path, '\\');
+        return $this;
     }
 
     /**

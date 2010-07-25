@@ -30,18 +30,21 @@ require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 class test_classes_Data_NSpace extends \vc\Test\TestCase
 {
 
-    public function testConstruct ()
+    public function testAppendNamespace ()
     {
-        $nspace = new \vc\Data\NSpace('path');
-        $this->assertSame( 'path', $nspace->getPath() );
-
         $nspace = new \vc\Data\NSpace;
-        $this->assertSame( '/', $nspace->getPath() );
+        $this->assertSame( '', $nspace->getPath() );
+
+        $this->assertSame( $nspace, $nspace->appendNamespace('path') );
+        $this->assertSame( '\\path', $nspace->getPath() );
+
+        $this->assertSame( $nspace, $nspace->appendNamespace('\\sub') );
+        $this->assertSame( '\\path\\sub', $nspace->getPath() );
     }
 
     public function testAliasAccess ()
     {
-        $nspace = new \vc\Data\NSpace('path');
+        $nspace = new \vc\Data\NSpace;
         $this->assertSame( array(), $nspace->getAliases() );
 
         $alias1 = new \vc\Data\Alias("path");
@@ -55,7 +58,7 @@ class test_classes_Data_NSpace extends \vc\Test\TestCase
 
     public function testConstantAccess ()
     {
-        $nspace = new \vc\Data\NSpace('path');
+        $nspace = new \vc\Data\NSpace;
         $this->assertSame( array(), $nspace->getConstants() );
 
         $const1 = new \vc\Data\Constant("CONST", "value");
@@ -69,7 +72,7 @@ class test_classes_Data_NSpace extends \vc\Test\TestCase
 
     public function testFunctionAccess ()
     {
-        $nspace = new \vc\Data\NSpace('path');
+        $nspace = new \vc\Data\NSpace;
         $this->assertSame( array(), $nspace->getFunctions() );
 
         $func1 = new \vc\Data\Routine\Func(123);
@@ -83,7 +86,7 @@ class test_classes_Data_NSpace extends \vc\Test\TestCase
 
     public function testTypeAccess ()
     {
-        $nspace = new \vc\Data\NSpace('path');
+        $nspace = new \vc\Data\NSpace;
         $this->assertSame( array(), $nspace->getTypes() );
 
         $type1 = $this->getMockForAbstractClass('\vc\Data\Type', array(1));
