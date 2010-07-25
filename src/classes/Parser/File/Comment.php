@@ -40,26 +40,35 @@ class Comment
     private $comment;
 
     /**
+     * The parser to hand off to
+     *
+     * @var \vc\Parser\File\NSpaces
+     */
+    private $nspace;
+
+    /**
      * Constructor...
      *
      * @param \vc\Parser\Comment $comment The parser for reading comments
+     * @param \vc\Parser\File\NSpaces $nspace The parser to hand off to
      */
-    public function __construct ( \vc\Parser\Comment $comment )
-    {
+    public function __construct (
+        \vc\Parser\Comment $comment,
+        \vc\Parser\File\NSpaces $nspace
+    ) {
         $this->comment = $comment;
+        $this->nspace = $nspace;
     }
 
     /**
      * Parses the given token reader
      *
      * @param \vc\Data\File $file The file to parse data into
-     * @param \vc\iface\Tokens\Search $access
+     * @param \vc\Tokens\Access $access
      * @return NULL
      */
-    public function parse (
-        \vc\Data\File $file,
-        \vc\iface\Tokens\Search $access
-    ) {
+    public function parse ( \vc\Data\File $file, \vc\Tokens\Access $access )
+    {
         try {
             // First up, we look for the comment
             $token = $access->findAllowing(
@@ -77,6 +86,8 @@ class Comment
         }
 
         $file->setComment( $comment );
+
+        $this->nspace->parse( $file, $access );
     }
 
 }

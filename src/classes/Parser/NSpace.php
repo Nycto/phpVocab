@@ -1,7 +1,5 @@
 <?php
 /**
- * Unit test configuration file
- *
  * @license Artistic License 2.0
  *
  * This file is part of phpVocab.
@@ -24,21 +22,25 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-require_once 'PHPUnit/Framework.php';
-require_once 'PHPUnit/Extensions/OutputTestCase.php';
+namespace vc\Parser;
 
-define("r8_SUPPRESS_HANDLERS", TRUE);
-define("vocab_TEST_DATA", __DIR__ .'/Data');
+/**
+ * Parses the contents of a namespace
+ */
+class NSpace
+{
 
-require_once rtrim( __DIR__, "/" ) ."/../src/vocab.php";
+    /**
+     * Parses the given token reader
+     *
+     * @param \vc\Data\NSpace $nspace The namespace to parse data into
+     * @param \vc\Tokens\Search $access The token access
+     * @return NULL
+     */
+    public function parse ( \vc\Data\NSpace $nspace, \vc\Tokens\Access $access )
+    {
+    }
 
-// Set up the autoload structure for vocab specific classes
-\r8\Autoload::getInstance()
-    ->register('vc\Test', rtrim( __DIR__, "/" ) .'/Test');
-
-error_reporting( E_ALL | E_STRICT );
-
-PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
-PHPUnit_Util_Filter::addDirectoryToFilter(rtrim( __DIR__, "/" ) .'/Test');
+}
 
 ?>

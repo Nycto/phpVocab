@@ -24,6 +24,8 @@
 
 namespace vc\Test;
 
+use vc\Tokens\Token as Token;
+
 /**
  * A test stub designed to return tokens in a specific order
  */
@@ -57,7 +59,7 @@ class TokenReader implements \vc\iface\Tokens\Reader
      */
     public function then ( $type, $value, $line = 1 )
     {
-        $this->tokens[] = new \vc\Tokens\Token( $type, $value, $line );
+        $this->tokens[] = new Token( $type, $value, $line );
         return $this;
     }
 
@@ -99,7 +101,7 @@ class TokenReader implements \vc\iface\Tokens\Reader
      */
     public function thenAnOpenBlock ( $line = 1 )
     {
-        return $this->then( \vc\Tokens\Token::T_BLOCK_OPEN, '{', $line );
+        return $this->then( Token::T_BLOCK_OPEN, '{', $line );
     }
 
     /**
@@ -109,7 +111,7 @@ class TokenReader implements \vc\iface\Tokens\Reader
      */
     public function thenACloseBlock ( $line = 1 )
     {
-        return $this->then( \vc\Tokens\Token::T_BLOCK_CLOSE, '}', $line );
+        return $this->then( Token::T_BLOCK_CLOSE, '}', $line );
     }
 
     /**
@@ -119,7 +121,7 @@ class TokenReader implements \vc\iface\Tokens\Reader
      */
     public function thenAClass ( $line = 1 )
     {
-        return $this->then( \vc\Tokens\Token::T_CLASS, 'class', $line );
+        return $this->then( Token::T_CLASS, 'class', $line );
     }
 
     /**
@@ -129,7 +131,7 @@ class TokenReader implements \vc\iface\Tokens\Reader
      */
     public function thenAFunction ( $line = 1 )
     {
-        return $this->then( \vc\Tokens\Token::T_FUNCTION, 'function', $line );
+        return $this->then( Token::T_FUNCTION, 'function', $line );
     }
 
     /**
@@ -139,7 +141,7 @@ class TokenReader implements \vc\iface\Tokens\Reader
      */
     public function thenAnEcho ( $line = 1 )
     {
-        return $this->then( \vc\Tokens\Token::T_ECHO, 'echo', $line );
+        return $this->then( Token::T_ECHO, 'echo', $line );
     }
 
     /**
@@ -149,7 +151,7 @@ class TokenReader implements \vc\iface\Tokens\Reader
      */
     public function thenAnOpenTag ( $line = 1 )
     {
-        return $this->then( \vc\Tokens\Token::T_OPEN_TAG, '<?php ', $line );
+        return $this->then( Token::T_OPEN_TAG, '<?php ', $line );
     }
 
     /**
@@ -159,7 +161,7 @@ class TokenReader implements \vc\iface\Tokens\Reader
      */
     public function thenACloseTag ( $line = 1 )
     {
-        return $this->then( \vc\Tokens\Token::T_CLOSE_TAG, '?>', $line );
+        return $this->then( Token::T_CLOSE_TAG, '?>', $line );
     }
 
     /**
@@ -170,7 +172,7 @@ class TokenReader implements \vc\iface\Tokens\Reader
     public function thenADocComment ( $comment = '', $line = 1 )
     {
         return $this->then(
-            \vc\Tokens\Token::T_DOC_COMMENT,
+            Token::T_DOC_COMMENT,
             "/**\n * $comment\n */",
             $line
         );
@@ -183,7 +185,7 @@ class TokenReader implements \vc\iface\Tokens\Reader
      */
     public function thenASemicolon ( $line = 1 )
     {
-        return $this->then( \vc\Tokens\Token::T_SEMICOLON, ';', $line );
+        return $this->then( Token::T_SEMICOLON, ';', $line );
     }
 
     /**
@@ -194,7 +196,7 @@ class TokenReader implements \vc\iface\Tokens\Reader
     public function thenSomeSpace ( $amount = 1, $line = 1 )
     {
         return $this->then(
-            \vc\Tokens\Token::T_WHITESPACE,
+            Token::T_WHITESPACE,
             str_repeat(' ', $amount),
             $line
         );
@@ -208,10 +210,31 @@ class TokenReader implements \vc\iface\Tokens\Reader
     public function thenAString ( $value, $line = 1 )
     {
         return $this->then(
-            \vc\Tokens\Token::T_CONSTANT_ENCAPSED_STRING,
+            Token::T_CONSTANT_ENCAPSED_STRING,
             "'". $value ."'",
             $line
         );
+    }
+
+    /**
+     * Adds a namespace definition
+     *
+     * @param String $namespace
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenANamespace ( $namespace, $line = 1 )
+    {
+        $this->then( Token::T_NAMESPACE, 'namespace', $line )
+            ->thenSomeSpace();
+
+        $namespace = explode('\\', $namespace);
+        $this->then( Token::T_STRING, array_shift($namespace), $line );
+        foreach ( $namespace AS $path ) {
+            $this->then( Token::T_NS_SEPARATOR, '\\', $line )
+                ->then( Token::T_STRING, $path, $line );
+        }
+
+        return $this;
     }
 
 }

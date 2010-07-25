@@ -31,6 +31,17 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     * Returns a stub of the given class that won't call it's constructor
+     *
+     * @param String $class
+     * @return Mixed
+     */
+    public function getStub ( $class )
+    {
+        return $this->getMock( $class, array(), array(), '', FALSE );
+    }
+
+    /**
      * Returns a new token reader
      *
      * @return \vc\iface\Tokens\Reader

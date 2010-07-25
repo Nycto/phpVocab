@@ -32,13 +32,14 @@ class test_classes_Parser_File_Comment extends \vc\Test\TestCase
 
     public function testCommentFound ()
     {
-        $reader = new \vc\Tokens\Search(
+        $reader = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()->thenAnOpenTag()->thenSomeSpace()
                 ->thenADocComment('This is a file comment')
         );
 
         $parser = new \vc\Parser\File\Comment(
-            new \vc\Parser\Comment
+            new \vc\Parser\Comment,
+            $this->getStub('vc\Parser\File\NSpaces')
         );
 
         $file = new \vc\Data\File('file.php');
@@ -53,13 +54,14 @@ class test_classes_Parser_File_Comment extends \vc\Test\TestCase
 
     public function testNoCommentFound ()
     {
-        $reader = new \vc\Tokens\Search(
+        $reader = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()->thenAnOpenTag()->thenSomeSpace()
                 ->thenAClass()->thenADocComment('This is a file comment')
         );
 
         $parser = new \vc\Parser\File\Comment(
-            new \vc\Parser\Comment
+            new \vc\Parser\Comment,
+            $this->getStub('vc\Parser\File\NSpaces')
         );
 
         $file = new \vc\Data\File('file.php');

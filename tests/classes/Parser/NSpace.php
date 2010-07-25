@@ -1,7 +1,5 @@
 <?php
 /**
- * Unit test configuration file
- *
  * @license Artistic License 2.0
  *
  * This file is part of phpVocab.
@@ -24,21 +22,14 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-require_once 'PHPUnit/Framework.php';
-require_once 'PHPUnit/Extensions/OutputTestCase.php';
+require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 
-define("r8_SUPPRESS_HANDLERS", TRUE);
-define("vocab_TEST_DATA", __DIR__ .'/Data');
-
-require_once rtrim( __DIR__, "/" ) ."/../src/vocab.php";
-
-// Set up the autoload structure for vocab specific classes
-\r8\Autoload::getInstance()
-    ->register('vc\Test', rtrim( __DIR__, "/" ) .'/Test');
-
-error_reporting( E_ALL | E_STRICT );
-
-PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
-PHPUnit_Util_Filter::addDirectoryToFilter(rtrim( __DIR__, "/" ) .'/Test');
+/**
+ * Unit tests
+ */
+class test_classes_Parser_NSpace extends \vc\Test\TestCase
+{
+    
+}
 
 ?>
