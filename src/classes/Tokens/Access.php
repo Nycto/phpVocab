@@ -162,6 +162,22 @@ class Access implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Search, \vc\if
         );
     }
 
+    /**
+     * Copies this access object, but wraps it so it will only read until the
+     * current block scope ends
+     *
+     * @return \vc\Tokens\Access
+     */
+    public function untilBlockEnds ()
+    {
+        $reader = new \vc\Tokens\BlockTrack( $this->reader );
+        return new self(
+            $reader,
+            new \vc\Tokens\Search( $reader ),
+            $this->comments
+        );
+    }
+
 }
 
 ?>
