@@ -316,6 +316,20 @@ class Token
     }
 
     /**
+     * Returns whether this token is of a given type
+     *
+     * @param Array|Integer $type The token types to check for
+     * @return Boolean
+     */
+    public function is ( $type )
+    {
+        if ( is_array($type) )
+            return in_array($this->type, $type);
+        else
+            return $this->type == $type;
+    }
+
+    /**
      * Converts this token back to an array, like the one returned by
      * token_get_all
      *
