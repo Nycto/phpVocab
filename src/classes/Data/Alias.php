@@ -35,7 +35,7 @@ class Alias
      *
      * @var string
      */
-    private $path;
+    private $path = '';
 
     /**
      * The alias, if given
@@ -45,15 +45,18 @@ class Alias
     private $alias;
 
     /**
-     * Constructor...
+     * Appends a value to the namespace path in this Alias
      *
-     * @param String $name The namespace path being aliased
-     * @param String $value The alias, if given
+     * @return \vc\Data\Alias Returns a self reference
      */
-    public function __construct ( $path, $alias = NULL )
+    public function appendNamespace ( $path )
     {
-        $this->path = (string) $path;
-        $this->alias = (string) $alias ?: NULL;
+        if ( $this->path !== '' )
+            $this->path .= '\\';
+
+        $this->path .= ltrim($path, '\\');
+
+        return $this;
     }
 
     /**
@@ -64,6 +67,18 @@ class Alias
     public function getPath ()
     {
         return $this->path;
+    }
+
+    /**
+     * Sets the Aliased value
+     *
+     * @param String $alias
+     * @return \vc\Data\Alias Returns a self reference
+     */
+    public function setAlias ( $alias )
+    {
+        $this->alias = (string) $alias ?: NULL;
+        return $this;
     }
 
     /**

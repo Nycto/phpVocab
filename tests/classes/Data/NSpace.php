@@ -56,11 +56,11 @@ class test_classes_Data_NSpace extends \vc\Test\TestCase
         $nspace = new \vc\Data\NSpace;
         $this->assertSame( array(), $nspace->getAliases() );
 
-        $alias1 = new \vc\Data\Alias("path");
+        $alias1 = new \vc\Data\Alias;
         $this->assertSame( $nspace, $nspace->addAlias($alias1) );
         $this->assertSame( array($alias1), $nspace->getAliases() );
 
-        $alias2 = new \vc\Data\Alias("path");
+        $alias2 = new \vc\Data\Alias;
         $this->assertSame( $nspace, $nspace->addAlias($alias2) );
         $this->assertSame( array($alias1, $alias2), $nspace->getAliases() );
     }

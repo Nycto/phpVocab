@@ -32,13 +32,18 @@ class test_classes_Data_Alias extends \vc\Test\TestCase
 
     public function testAccessors ()
     {
-        $const = new \vc\Data\Alias("path", "alias");
-        $this->assertSame( "path", $const->getPath() );
-        $this->assertSame( "alias", $const->getAlias() );
+        $alias = new \vc\Data\Alias;
+        $this->assertSame( '', $alias->getPath() );
+        $this->assertNull( $alias->getAlias() );
 
-        $const = new \vc\Data\Alias("path");
-        $this->assertSame( "path", $const->getPath() );
-        $this->assertNull( $const->getAlias() );
+        $this->assertSame( $alias, $alias->appendNamespace('sub') );
+        $this->assertSame( 'sub', $alias->getPath() );
+
+        $this->assertSame( $alias, $alias->appendNamespace('sub2') );
+        $this->assertSame( 'sub\\sub2', $alias->getPath() );
+
+        $this->assertSame( $alias, $alias->setAlias('als') );
+        $this->assertSame( 'als', $alias->getAlias() );
     }
 
 }
