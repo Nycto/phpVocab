@@ -70,9 +70,9 @@ class NSpace
      *
      * @param String $path The initial namespace path
      */
-    public function __construct ( $path = '' )
+    public function __construct ( $path = NULL )
     {
-        $this->path = (string) $path;
+        $this->path = (string) $path ?: NULL;
     }
 
     /**
@@ -86,17 +86,11 @@ class NSpace
     }
 
     /**
-     * Appends a value to the path in this namespace
-     *
-     * @return \vc\Data\File Returns a self reference
+     * @see \vc\iface\Parser\NSpacePath::setNamespace
      */
-    public function appendNamespace ( $path )
+    public function setNamespace ( $path )
     {
-        if ( $this->path !== '' )
-            $this->path .= '\\';
-
-        $this->path .= ltrim($path, '\\');
-
+        $this->path = (string) $path;
         return $this;
     }
 

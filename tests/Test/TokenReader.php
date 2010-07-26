@@ -215,6 +215,22 @@ class TokenReader implements \vc\iface\Tokens\Reader
             $line
         );
     }
+    /**
+     * Adds a namespace path
+     *
+     * @param String $namespace
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenANamespacePath ( $namespace, $line = 1 )
+    {
+        $namespace = explode('\\', $namespace);
+        $this->then( Token::T_STRING, array_shift($namespace), $line );
+        foreach ( $namespace AS $path ) {
+            $this->then( Token::T_NS_SEPARATOR, '\\', $line )
+                ->then( Token::T_STRING, $path, $line );
+        }
+        return $this;
+    }
 
     /**
      * Adds a namespace definition
@@ -224,17 +240,9 @@ class TokenReader implements \vc\iface\Tokens\Reader
      */
     public function thenANamespace ( $namespace, $line = 1 )
     {
-        $this->then( Token::T_NAMESPACE, 'namespace', $line )
-            ->thenSomeSpace();
-
-        $namespace = explode('\\', $namespace);
-        $this->then( Token::T_STRING, array_shift($namespace), $line );
-        foreach ( $namespace AS $path ) {
-            $this->then( Token::T_NS_SEPARATOR, '\\', $line )
-                ->then( Token::T_STRING, $path, $line );
-        }
-
-        return $this;
+        return $this->then( Token::T_NAMESPACE, 'namespace', $line )
+            ->thenSomeSpace()
+            ->thenANamespacePath($namespace);
     }
 
 }

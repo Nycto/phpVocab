@@ -33,22 +33,19 @@ class test_classes_Data_NSpace extends \vc\Test\TestCase
     public function testConstruct ()
     {
         $nspace = new \vc\Data\NSpace;
-        $this->assertSame( '', $nspace->getPath() );
+        $this->assertNull( $nspace->getPath() );
 
         $nspace = new \vc\Data\NSpace('path\\to\\ns');
         $this->assertSame( 'path\\to\\ns', $nspace->getPath() );
     }
 
-    public function testAppendNamespace ()
+    public function testSetNamespace ()
     {
         $nspace = new \vc\Data\NSpace;
-        $this->assertSame( '', $nspace->getPath() );
+        $this->assertNull( $nspace->getPath() );
 
-        $this->assertSame( $nspace, $nspace->appendNamespace('path') );
-        $this->assertSame( 'path', $nspace->getPath() );
-
-        $this->assertSame( $nspace, $nspace->appendNamespace('\\sub') );
-        $this->assertSame( 'path\\sub', $nspace->getPath() );
+        $this->assertSame( $nspace, $nspace->setNamespace('sub\\sub2') );
+        $this->assertSame( 'sub\\sub2', $nspace->getPath() );
     }
 
     public function testAliasAccess ()

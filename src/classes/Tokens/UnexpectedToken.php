@@ -50,7 +50,7 @@ class UnexpectedToken extends \r8\Exception
     public function __construct (
         \vc\Tokens\Token $token,
         array $search,
-        array $allowed
+        array $allowed = array()
     ) {
         parent::__construct("Unexpected Token: ". $token->getName());
         $this->addData( "Encountered Token", $token->getName() );

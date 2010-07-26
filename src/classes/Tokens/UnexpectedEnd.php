@@ -22,26 +22,23 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
+namespace vc\Tokens;
 
 /**
- * Unit test
+ * Thrown when a reader needs more tokens but none are available
  */
-class test_classes_Data_Alias extends \vc\Test\TestCase
+class UnexpectedEnd extends \r8\Exception
 {
 
-    public function testAccessors ()
-    {
-        $alias = new \vc\Data\Alias;
-        $this->assertNull( $alias->getPath() );
-        $this->assertNull( $alias->getAlias() );
+    /**
+     * The name of the exception
+     */
+    const TITLE = "Unexpected End of Tokens Exception";
 
-        $this->assertSame( $alias, $alias->setNamespace('sub\\sub2') );
-        $this->assertSame( 'sub\\sub2', $alias->getPath() );
-
-        $this->assertSame( $alias, $alias->setAlias('als') );
-        $this->assertSame( 'als', $alias->getAlias() );
-    }
+    /**
+     * A description of this Exception
+     */
+    const DESCRIPTION = "A token reader expects more tokens but none are available";
 
 }
 

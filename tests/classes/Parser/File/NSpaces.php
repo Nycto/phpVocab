@@ -55,8 +55,10 @@ class test_classes_Parser_File_NSpaces extends \vc\Test\TestCase
             $this->oneTokenReader()->thenAFunction()
         );
 
-        r8(new \vc\Parser\File\NSpaces($this->getNSpaceParser()))
-            ->parse( $file, $access );
+        $parser = new \vc\Parser\File\NSpaces(
+            new \vc\Parser\Path, $this->getNSpaceParser()
+        );
+        $parser->parse( $file, $access );
 
 
         $this->assertEquals(
@@ -77,8 +79,10 @@ class test_classes_Parser_File_NSpaces extends \vc\Test\TestCase
                 ->thenAFunction()
         );
 
-        r8(new \vc\Parser\File\NSpaces($this->getNSpaceParser()))
-            ->parse( $file, $access );
+        $parser = new \vc\Parser\File\NSpaces(
+            new \vc\Parser\Path, $this->getNSpaceParser()
+        );
+        $parser->parse( $file, $access );
 
 
         $this->assertEquals(
@@ -99,8 +103,10 @@ class test_classes_Parser_File_NSpaces extends \vc\Test\TestCase
                 ->thenAFunction()
         );
 
-        r8(new \vc\Parser\File\NSpaces($this->getNSpaceParser()))
-            ->parse( $file, $access );
+        $parser = new \vc\Parser\File\NSpaces(
+            new \vc\Parser\Path, $this->getNSpaceParser()
+        );
+        $parser->parse( $file, $access );
 
 
         $this->assertEquals(
@@ -123,8 +129,10 @@ class test_classes_Parser_File_NSpaces extends \vc\Test\TestCase
                 ->thenAFunction()
         );
 
-        r8(new \vc\Parser\File\NSpaces($this->getNSpaceParser(2)))
-            ->parse( $file, $access );
+        $parser = new \vc\Parser\File\NSpaces(
+            new \vc\Parser\Path, $this->getNSpaceParser(2)
+        );
+        $parser->parse( $file, $access );
 
 
         $this->assertEquals(
@@ -150,8 +158,10 @@ class test_classes_Parser_File_NSpaces extends \vc\Test\TestCase
                 ->thenAFunction()
         );
 
-        r8(new \vc\Parser\File\NSpaces($this->getNSpaceParser(2)))
-            ->parse( $file, $access );
+        $parser = new \vc\Parser\File\NSpaces(
+            new \vc\Parser\Path, $this->getNSpaceParser(2)
+        );
+        $parser->parse( $file, $access );
 
 
         $this->assertEquals(

@@ -33,6 +33,13 @@ class NSpaces
 {
 
     /**
+     * The parser for reading namespace paths
+     *
+     * @var \vc\Parser\Path
+     */
+    private $path;
+
+    /**
      * The parser for a given namespace
      *
      * @var \vc\Parser\NSPace
@@ -42,10 +49,14 @@ class NSpaces
     /**
      * Constructor...
      *
+     * @param \vc\Parser\Path $path The parser for reading namespace paths
      * @param \vc\Parser\NSPace $nspace The parser for a given namespace
      */
-    public function __construct ( \vc\Parser\NSPace $nspace )
-    {
+    public function __construct (
+        \vc\Parser\Path $path,
+        \vc\Parser\NSPace $nspace
+    ) {
+        $this->path = $path;
         $this->nspace = $nspace;
     }
 
@@ -77,23 +88,17 @@ class NSpaces
      */
     private function buildNS ( \vc\Data\NSpace $nspace, \vc\Tokens\Access $access )
     {
-        while ( TRUE ) {
-            $token = $access->findAllowing(
-                array(Token::T_STRING, Token::T_SEMICOLON, Token::T_BLOCK_OPEN),
-                array(Token::T_NS_SEPARATOR, Token::T_WHITESPACE)
-            );
+        $nspace->setNamespace( $this->path->parsePath( $access ) );
 
-            $type = $token->getType();
+        $token = $access->findAllowing(
+            array(Token::T_SEMICOLON, Token::T_BLOCK_OPEN),
+            array(Token::T_WHITESPACE)
+        );
 
-            if ( $type == Token::T_STRING )
-                $nspace->appendNamespace( $token->getContent() );
-
-            else if ( $type == Token::T_BLOCK_OPEN )
-                return $access->untilBlockEnds();
-
-            else
-                return $access->untilTokens(array(Token::T_NAMESPACE));
-        }
+        if ( $token->is(Token::T_BLOCK_OPEN) )
+            return $access->untilBlockEnds();
+        else
+            return $access->untilTokens(array(Token::T_NAMESPACE));
     }
 
     /**

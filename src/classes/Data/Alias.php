@@ -35,7 +35,7 @@ class Alias
      *
      * @var string
      */
-    private $path = '';
+    private $path;
 
     /**
      * The alias, if given
@@ -45,17 +45,11 @@ class Alias
     private $alias;
 
     /**
-     * Appends a value to the namespace path in this Alias
-     *
-     * @return \vc\Data\Alias Returns a self reference
+     * @see \vc\iface\Parser\NSpacePath::setNamespace
      */
-    public function appendNamespace ( $path )
+    public function setNamespace ( $path )
     {
-        if ( $this->path !== '' )
-            $this->path .= '\\';
-
-        $this->path .= ltrim($path, '\\');
-
+        $this->path = (string) $path;
         return $this;
     }
 
