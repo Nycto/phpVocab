@@ -86,6 +86,26 @@ class test_classes_Tokens_Token extends \vc\Test\TestCase
         $this->assertFalse( $token->is(array(Token::T_USE, Token::T_CLASS)) );
     }
 
+    public function testExpect ()
+    {
+        $token = new Token(Token::T_ECHO, "echo", 1);
+
+        $this->assertSame( $token, $token->expect(Token::T_ECHO) );
+        $this->assertSame( $token, $token->expect(array(Token::T_USE, Token::T_ECHO)) );
+
+        try {
+            $token->expect( Token::T_CLASS );
+            $this->fail("An expected exception was not thrown");
+        }
+        catch ( \vc\Tokens\UnexpectedToken $err ) {}
+
+        try {
+            $token->expect(array(Token::T_USE, Token::T_CLASS));
+            $this->fail("An expected exception was not thrown");
+        }
+        catch ( \vc\Tokens\UnexpectedToken $err ) {}
+    }
+
     public function testToArray ()
     {
         $token = new Token(Token::T_ECHO, "echo", 1);

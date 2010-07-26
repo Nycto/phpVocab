@@ -323,10 +323,21 @@ class Token
      */
     public function is ( $type )
     {
-        if ( is_array($type) )
-            return in_array($this->type, $type);
-        else
-            return $this->type == $type;
+        return in_array($this->type, (array) $type);
+    }
+
+    /**
+     * A method that peeks at the next token and throws an exception if it isn't
+     * one of the given values
+     *
+     * @param Array|Integer $type The token types to check for
+     * @return \vc\Tokens\Token Returns a self reference
+     */
+    public function expect ( $type )
+    {
+        if ( !$this->is( $type ) )
+            throw new \vc\Tokens\UnexpectedToken( $this, (array) $type );
+        return $this;
     }
 
     /**
