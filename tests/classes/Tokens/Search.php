@@ -112,9 +112,11 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
     {
         $reader = new \vc\Tokens\Search( $this->oneTokenReader() );
 
-        $this->assertNull(
-            $reader->findAllowing(array(Token::T_CLASS))
-        );
+        try {
+            $reader->findAllowing(array(Token::T_CLASS));
+            $this->fail("An expected exception was not thrown");
+        }
+        catch ( \vc\Tokens\UnexpectedEnd $err ) {}
     }
 
     public function testFindAllowing_TokenGetsFound ()
@@ -137,12 +139,14 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
             )
         );
 
-        $this->assertNull(
+        try {
             $reader->findAllowing(
                 array( Token::T_CLASS ),
                 array( Token::T_CLOSE_TAG )
-            )
-        );
+            );
+            $this->fail("An expected exception was not thrown");
+        }
+        catch ( \vc\Tokens\UnexpectedEnd $err ) {}
     }
 
     public function testFindAllowing_UnexpectedToken ()

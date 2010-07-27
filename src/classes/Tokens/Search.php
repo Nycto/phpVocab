@@ -100,7 +100,7 @@ class Search implements \vc\iface\Tokens\Search
             $this->reader->popToken();
         }
 
-        return NULL;
+        throw new \vc\Tokens\UnexpectedEnd;
     }
 
 }
