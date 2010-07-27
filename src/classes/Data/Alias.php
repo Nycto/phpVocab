@@ -45,12 +45,13 @@ class Alias
     private $alias;
 
     /**
-     * @see \vc\iface\Parser\NSpacePath::setNamespace
+     * Constructor...
+     *
+     * @param String $path The path being aliased
      */
-    public function setNamespace ( $path )
+    public function __construct ( $path )
     {
         $this->path = (string) $path;
-        return $this;
     }
 
     /**
