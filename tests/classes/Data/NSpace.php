@@ -67,11 +67,11 @@ class test_classes_Data_NSpace extends \vc\Test\TestCase
         $nspace = new \vc\Data\NSpace;
         $this->assertSame( array(), $nspace->getConstants() );
 
-        $const1 = new \vc\Data\Constant("CONST", "value");
+        $const1 = new \vc\Data\Constant("CONST");
         $this->assertSame( $nspace, $nspace->addConstant($const1) );
         $this->assertSame( array($const1), $nspace->getConstants() );
 
-        $const2 = new \vc\Data\Constant("CONST", "value");
+        $const2 = new \vc\Data\Constant("CONST");
         $this->assertSame( $nspace, $nspace->addConstant($const2) );
         $this->assertSame( array($const1, $const2), $nspace->getConstants() );
     }

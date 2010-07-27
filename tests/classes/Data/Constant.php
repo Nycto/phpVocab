@@ -32,8 +32,11 @@ class test_classes_Data_Constant extends \vc\Test\TestCase
 
     public function testAccessors ()
     {
-        $const = new \vc\Data\Constant("CONST", "value");
+        $const = new \vc\Data\Constant("CONST");
         $this->assertSame( "CONST", $const->getName() );
+        $this->assertNull( $const->getValue() );
+
+        $this->assertSame( $const, $const->setValue('value') );
         $this->assertSame( "value", $const->getValue() );
     }
 

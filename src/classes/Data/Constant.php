@@ -48,12 +48,10 @@ class Constant
      * Constructor...
      *
      * @param String $name The name of this constant
-     * @param String $value The value of this constant
      */
-    public function __construct ( $name, $value )
+    public function __construct ( $name )
     {
         $this->name = (string) $name;
-        $this->value = (string) $value;
     }
 
     /**
@@ -64,6 +62,18 @@ class Constant
     public function getName ()
     {
         return $this->name;
+    }
+
+    /**
+     * Sets the value of this constant
+     *
+     * @param String $value
+     * @return \vc\Data\Constant Returns a self reference
+     */
+    public function setValue ( $value )
+    {
+        $this->value = (string) $value;
+        return $this;
     }
 
     /**
