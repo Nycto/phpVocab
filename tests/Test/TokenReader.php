@@ -215,6 +215,19 @@ class TokenReader implements \vc\iface\Tokens\Reader
             $line
         );
     }
+
+    /**
+     * Adds the name of an class, function, etc
+     *
+     * Technically, this is a T_STRING token
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAName ( $value, $line = 1 )
+    {
+        return $this->then( Token::T_STRING, $value, $line );
+    }
+
     /**
      * Adds a namespace path
      *
@@ -227,7 +240,7 @@ class TokenReader implements \vc\iface\Tokens\Reader
         $this->then( Token::T_STRING, array_shift($namespace), $line );
         foreach ( $namespace AS $path ) {
             $this->then( Token::T_NS_SEPARATOR, '\\', $line )
-                ->then( Token::T_STRING, $path, $line );
+                ->thenAName( $path );
         }
         return $this;
     }
