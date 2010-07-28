@@ -207,11 +207,11 @@ class TokenReader implements \vc\iface\Tokens\Reader
      *
      * @return \vc\iface\Tokens\Reader Returns a self reference
      */
-    public function thenAString ( $value, $line = 1 )
+    public function thenAString ( $value, $quotedBy = "'", $line = 1 )
     {
         return $this->then(
             Token::T_CONSTANT_ENCAPSED_STRING,
-            "'". $value ."'",
+            $quotedBy . $value . $quotedBy,
             $line
         );
     }
@@ -256,6 +256,48 @@ class TokenReader implements \vc\iface\Tokens\Reader
         return $this->then( Token::T_NAMESPACE, 'namespace', $line )
             ->thenSomeSpace()
             ->thenANamespacePath($namespace);
+    }
+
+    /**
+     * Adds an equals token
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAnEquals ( $line = 1 )
+    {
+        return $this->then( Token::T_EQUALS, '=', $line );
+    }
+
+    /**
+     * Adds an integer token
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAnInteger ( $int, $line = 1 )
+    {
+        return $this->then( Token::T_LNUMBER, (string) $int, $line );
+    }
+
+    /**
+     * Adds a float token
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAFloat ( $float, $line = 1 )
+    {
+        return $this->then( Token::T_DNUMBER, (string) $float, $line );
+    }
+
+    /**
+     * Adds a Here doc token
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAHereDoc ( $content, $line = 1 )
+    {
+        return $this->then( Token::T_START_HEREDOC, "<<<EOT\n", $line )
+            ->then( Token::T_ENCAPSED_AND_WHITESPACE, $content, $line )
+            ->then( Token::T_END_HEREDOC, 'EOT', $line );
     }
 
 }

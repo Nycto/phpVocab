@@ -47,53 +47,6 @@ class Value
     private $type;
 
     /**
-     * Builds a new instance using a token as input
-     *
-     * @param \vc\Tokens\Token $token
-     * @return \vc\Data\Value
-     */
-    static public function buildFromToken ( \vc\Tokens\Token $token )
-    {
-        switch ( $token->getType() ) {
-
-            case Token::T_CONSTANT_ENCAPSED_STRING:
-                return new self(
-                    substr($token->getContent(), 1, -1),
-                    "string"
-                );
-
-            case Token::T_ENCAPSED_AND_WHITESPACE:
-                return new self( $token->getContent(), "string" );
-
-            case Token::T_LNUMBER:
-                return new self( $token->getContent(), "int" );
-
-            case Token::T_DNUMBER:
-                return new self( $token->getContent(), "float" );
-
-            case Token::T_STRING:
-                $type = strtolower( $token->getContent() );
-
-                if ( $type == "true" ||  $type == "false" )
-                    $type = "bool";
-                else if ( $type != "null" )
-                    throw new \r8\Exception\Data("Unrecognized value type: ". $type);
-
-                return new self( $token->getContent(), $type );
-
-            default:
-                throw new \vc\Tokens\UnexpectedToken(
-                    $token,
-                    array(
-                        Token::T_LNUMBER, Token::T_DNUMBER, Token::T_STRING,
-                        Token::T_CONSTANT_ENCAPSED_STRING,
-                        Token::T_ENCAPSED_AND_WHITESPACE
-                    )
-                );
-        }
-    }
-
-    /**
      * Constructor...
      *
      * @param String $value
