@@ -80,6 +80,16 @@ class test_classes_Data_Property extends \vc\Test\TestCase
         $this->assertTrue( $prop->getStatic() );
     }
 
+    public function testDefaultValueAccess ()
+    {
+        $prop = new \vc\Data\Property(123, new \vc\Data\Comment);
+        $this->assertNull( $prop->getValue() );
+
+        $value = new \vc\Data\Value('val', 'string');
+        $this->assertSame( $prop, $prop->setValue($value) );
+        $this->assertSame( $value, $prop->getValue() );
+    }
+
 }
 
 ?>

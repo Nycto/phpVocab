@@ -66,6 +66,13 @@ class Property
     private $static = FALSE;
 
     /**
+     * The default value of this property
+     *
+     * @var \vc\Data\Value
+     */
+    private $value;
+
+    /**
      * Builds a new method using a signature as the source
      *
      * @param \vc\Data\Signature $signature
@@ -176,6 +183,28 @@ class Property
     public function getStatic ()
     {
         return $this->static;
+    }
+
+    /**
+     * Sets the default value of this property
+     *
+     * @param \vc\Data\Value $value
+     * @return \vc\Data\Property Returns a self reference
+     */
+    public function setValue ( \vc\Data\Value $value )
+    {
+        $this->value = $value;
+        return $this;
+    }
+
+    /**
+     * Returns the default value of this property
+     *
+     * @return \vc\Data\Value
+     */
+    public function getValue ()
+    {
+        return $this->value;
     }
 
 }

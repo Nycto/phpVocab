@@ -36,8 +36,9 @@ class test_classes_Data_Constant extends \vc\Test\TestCase
         $this->assertSame( "CONST", $const->getName() );
         $this->assertNull( $const->getValue() );
 
-        $this->assertSame( $const, $const->setValue('value') );
-        $this->assertSame( "value", $const->getValue() );
+        $value = new \vc\Data\Value('value', 'string');
+        $this->assertSame( $const, $const->setValue($value) );
+        $this->assertSame( $value, $const->getValue() );
     }
 
 }

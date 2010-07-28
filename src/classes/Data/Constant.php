@@ -67,12 +67,12 @@ class Constant
     /**
      * Sets the value of this constant
      *
-     * @param String $value
+     * @param \vc\Data\Value $value
      * @return \vc\Data\Constant Returns a self reference
      */
-    public function setValue ( $value )
+    public function setValue ( \vc\Data\Value $value )
     {
-        $this->value = (string) $value;
+        $this->value = $value;
         return $this;
     }
 
