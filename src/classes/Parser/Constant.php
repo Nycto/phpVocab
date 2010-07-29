@@ -57,19 +57,19 @@ class Constant
      */
     public function parseConstant ( \vc\Tokens\Access $access )
     {
-        $name = $access->findAllowing(
+        $name = $access->findRequired(
             array(Token::T_STRING), array(Token::T_WHITESPACE)
         );
 
         $const = new \vc\Data\Constant( $name->getContent() );
 
-        $access->findAllowing(
+        $access->findRequired(
             array(Token::T_EQUALS), array(Token::T_WHITESPACE)
         );
 
         $const->setValue( $this->value->parseValue($access) );
 
-        $access->findAllowing(
+        $access->findRequired(
             array(Token::T_SEMICOLON),
             array(Token::T_WHITESPACE)
         );

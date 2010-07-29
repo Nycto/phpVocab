@@ -71,7 +71,7 @@ class Comment
     {
         try {
             // First up, we look for the comment
-            $token = $access->findAllowing(
+            $token = $access->findRequired(
                 array( Token::T_DOC_COMMENT ),
                 array( Token::T_OPEN_TAG, Token::T_WHITESPACE )
             );

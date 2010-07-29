@@ -53,7 +53,7 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
 
         $this->assertIsTokenOf(
             Token::T_BLOCK_OPEN,
-            $access->findAllowing(
+            $access->findRequired(
                 array(Token::T_BLOCK_OPEN),
                 array(Token::T_CLASS)
             )

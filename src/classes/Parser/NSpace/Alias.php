@@ -60,14 +60,14 @@ class Alias
     {
         $alias = new \vc\Data\Alias( $this->path->parsePath($access) );
 
-        $as = $access->findAllowing(
+        $as = $access->findRequired(
             array(Token::T_AS), array(Token::T_WHITESPACE), FALSE
         );
 
         if ( $as )
             $alias->setAlias( $this->path->parsePath($access) );
 
-        $access->findAllowing(
+        $access->findRequired(
             array(Token::T_SEMICOLON), array(Token::T_WHITESPACE)
         );
 

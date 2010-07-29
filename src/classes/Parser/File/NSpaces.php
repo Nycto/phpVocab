@@ -68,7 +68,7 @@ class NSpaces
      */
     private function findNS ( \vc\Tokens\Access $access )
     {
-        return NULL !== $access->findAllowing(
+        return NULL !== $access->findRequired(
             array( Token::T_NAMESPACE ),
             array( Token::T_OPEN_TAG, Token::T_WHITESPACE ),
             FALSE
@@ -90,7 +90,7 @@ class NSpaces
     {
         $nspace->setNamespace( $this->path->parsePath( $access ) );
 
-        $token = $access->findAllowing(
+        $token = $access->findRequired(
             array(Token::T_SEMICOLON, Token::T_BLOCK_OPEN),
             array(Token::T_WHITESPACE)
         );

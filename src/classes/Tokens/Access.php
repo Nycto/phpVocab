@@ -112,14 +112,14 @@ class Access implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Search, \vc\if
     }
 
     /**
-     * @see \vc\iface\Tokens\Search::findAllowing()
+     * @see \vc\iface\Tokens\Search::findRequired()
      */
-    public function findAllowing (
+    public function findRequired (
         array $types,
         array $allowing = array(),
         $fatal = TRUE
     ) {
-        return $this->search->findAllowing( $types, $allowing, $fatal );
+        return $this->search->findRequired( $types, $allowing, $fatal );
     }
 
     /**

@@ -40,7 +40,7 @@ class Value
      */
     public function parseValue ( \vc\iface\Tokens\Search $search )
     {
-        $token = $search->findAllowing(
+        $token = $search->findRequired(
             array(
                 Token::T_LNUMBER, Token::T_DNUMBER, Token::T_STRING,
                 Token::T_START_HEREDOC, Token::T_CONSTANT_ENCAPSED_STRING
@@ -59,10 +59,10 @@ class Value
 
             // HereDocs
             case Token::T_START_HEREDOC:
-                $token = $search->findAllowing(
+                $token = $search->findRequired(
                     array(Token::T_ENCAPSED_AND_WHITESPACE)
                 );
-                $search->findAllowing(array(Token::T_END_HEREDOC));
+                $search->findRequired(array(Token::T_END_HEREDOC));
 
                 return new \vc\Data\Value( $token->getContent(), "string" );
 

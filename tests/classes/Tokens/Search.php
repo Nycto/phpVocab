@@ -46,24 +46,24 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
         );
     }
 
-    public function testFindAllowing_EmptyTokenSet ()
+    public function testFindRequired_EmptyTokenSet ()
     {
         $reader = new \vc\Tokens\Search( $this->oneTokenReader() );
 
         try {
-            $reader->findAllowing(array(Token::T_CLASS));
+            $reader->findRequired(array(Token::T_CLASS));
             $this->fail("An expected exception was not thrown");
         }
         catch ( \vc\Tokens\UnexpectedEnd $err ) {}
     }
 
-    public function testFindAllowing_TokenGetsFound ()
+    public function testFindRequired_TokenGetsFound ()
     {
         $reader = $this->getTestReader();
 
         $this->assertIsTokenOf(
             Token::T_ECHO,
-            $reader->findAllowing(
+            $reader->findRequired(
                 array( Token::T_ECHO, Token::T_SEMICOLON ),
                 array( Token::T_OPEN_TAG, Token::T_CONSTANT_ENCAPSED_STRING )
             )
@@ -71,14 +71,14 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
 
         $this->assertIsTokenOf(
             Token::T_SEMICOLON,
-            $reader->findAllowing(
+            $reader->findRequired(
                 array( Token::T_ECHO, Token::T_SEMICOLON ),
                 array( Token::T_WHITESPACE, Token::T_CONSTANT_ENCAPSED_STRING )
             )
         );
 
         try {
-            $reader->findAllowing(
+            $reader->findRequired(
                 array( Token::T_CLASS ),
                 array( Token::T_CLOSE_TAG )
             );
@@ -87,7 +87,7 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
         catch ( \vc\Tokens\UnexpectedEnd $err ) {}
     }
 
-    public function testFindAllowing_UnexpectedToken ()
+    public function testFindRequired_UnexpectedToken ()
     {
         $reader = $this->oneTokenReader()->thenAnOpenTag()->thenAnEcho()
             ->thenSomeSpace()->thenAString("content")
@@ -96,7 +96,7 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
         $access = new \vc\Tokens\Search( $reader );
 
         try {
-            $access->findAllowing(
+            $access->findRequired(
                 array( Token::T_CLOSE_TAG, Token::T_SEMICOLON ),
                 array( Token::T_OPEN_TAG, Token::T_WHITESPACE )
             );
@@ -107,7 +107,7 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
         $this->assertHasToken( Token::T_ECHO, $reader );
     }
 
-    public function testFindAllowing_TokenNotFound ()
+    public function testFindRequired_TokenNotFound ()
     {
         $reader = $this->oneTokenReader()->thenAnOpenTag()->thenAnEcho()
             ->thenSomeSpace()->thenAString("content")
@@ -116,7 +116,7 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
         $access = new \vc\Tokens\Search( $reader );
 
         $this->assertNull(
-            $access->findAllowing(
+            $access->findRequired(
                 array( Token::T_CLOSE_TAG, Token::T_SEMICOLON ),
                 array( Token::T_OPEN_TAG, Token::T_WHITESPACE ),
                 FALSE

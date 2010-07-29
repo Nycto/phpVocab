@@ -50,7 +50,7 @@ class Search implements \vc\iface\Tokens\Search
     /**
      * @see \vc\iface\Tokens\Search::findAllowing
      */
-    public function findAllowing (
+    public function findRequired (
         array $types,
         array $allowing = array(),
         $fatal = TRUE
