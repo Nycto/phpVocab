@@ -31,24 +31,6 @@ interface Search
 {
 
     /**
-     * Returns the next token amongst the given type
-     *
-     * @param Array $types The list of types to search for
-     * @return \vc\Tokens\Token Returns NULL if an appropriate token can not
-     *      be found
-     */
-    public function find ( array $types );
-
-    /**
-     * Returns the next token expcluding the given types
-     *
-     * @param Array $types The list of types to exclude
-     * @return \vc\Tokens\Token Returns NULL if an appropriate token can not
-     *      be found
-     */
-    public function findExcluding ( array $types );
-
-    /**
      * Returns the next token amongst the given type, skipping any tokens
      * listed in the allowing list
      *

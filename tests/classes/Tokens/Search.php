@@ -46,68 +46,6 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
         );
     }
 
-    public function testFind_EmptyTokenSet ()
-    {
-        $reader = new \vc\Tokens\Search( $this->oneTokenReader() );
-
-        $this->assertNull(
-            $reader->find(array(Token::T_CLASS))
-        );
-    }
-
-    public function testFind_TokenGetsFound ()
-    {
-        $reader = $this->getTestReader();
-
-        $this->assertIsTokenOf(
-            Token::T_ECHO,
-            $reader->find(array( Token::T_ECHO, Token::T_SEMICOLON ))
-        );
-
-        $this->assertIsTokenOf(
-            Token::T_SEMICOLON,
-            $reader->find(array( Token::T_ECHO, Token::T_SEMICOLON ))
-        );
-
-        $this->assertNull(
-            $reader->find(array( Token::T_ECHO, Token::T_SEMICOLON ))
-        );
-    }
-
-    public function testFindExcluding_EmptyTokenSet ()
-    {
-        $reader = new \vc\Tokens\Search( $this->oneTokenReader() );
-
-        $this->assertNull(
-            $reader->find(array(Token::T_CLASS))
-        );
-    }
-
-    public function testFindExcluding_TokenGetsFound ()
-    {
-        $reader = $this->getTestReader();
-
-        $this->assertIsTokenOf(
-            Token::T_ECHO,
-            $reader->findExcluding(array(
-                Token::T_WHITESPACE,
-                Token::T_OPEN_TAG
-            ))
-        );
-
-        $this->assertIsTokenOf(
-            Token::T_SEMICOLON,
-            $reader->findExcluding(array(
-                Token::T_WHITESPACE,
-                Token::T_CONSTANT_ENCAPSED_STRING
-            ))
-        );
-
-        $this->assertNull(
-            $reader->findExcluding(array( Token::T_CLOSE_TAG ))
-        );
-    }
-
     public function testFindAllowing_EmptyTokenSet ()
     {
         $reader = new \vc\Tokens\Search( $this->oneTokenReader() );

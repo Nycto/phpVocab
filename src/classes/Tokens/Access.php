@@ -112,22 +112,6 @@ class Access implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Search, \vc\if
     }
 
     /**
-     * @see \vc\iface\Tokens\Search::find()
-     */
-    public function find ( array $types )
-    {
-        return $this->search->find( $types );
-    }
-
-    /**
-     * @see \vc\iface\Tokens\Search::findExcluding()
-     */
-    public function findExcluding ( array $types )
-    {
-        return $this->search->findExcluding( $types );
-    }
-
-    /**
      * @see \vc\iface\Tokens\Search::findAllowing()
      */
     public function findAllowing (

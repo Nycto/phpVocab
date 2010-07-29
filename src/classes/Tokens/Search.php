@@ -48,32 +48,6 @@ class Search implements \vc\iface\Tokens\Search
     }
 
     /**
-     * @see \vc\iface\Tokens\Search::find
-     */
-    public function find ( array $types )
-    {
-        while ( $this->reader->hasToken() ) {
-            $token = $this->reader->popToken();
-            if ( in_array($token->getType(), $types) )
-                return $token;
-        }
-        return NULL;
-    }
-
-    /**
-     * @see \vc\iface\Tokens\Search::findExcluding
-     */
-    public function findExcluding ( array $types )
-    {
-        while ( $this->reader->hasToken() ) {
-            $token = $this->reader->popToken();
-            if ( !in_array($token->getType(), $types) )
-                return $token;
-        }
-        return NULL;
-    }
-
-    /**
      * @see \vc\iface\Tokens\Search::findAllowing
      */
     public function findAllowing (

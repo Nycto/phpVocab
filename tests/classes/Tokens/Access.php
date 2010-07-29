@@ -49,25 +49,13 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
         $access = \vc\Tokens\Access::buildAccess(
             $reader = $this->oneTokenReader()
                 ->thenAClass()->thenAnOpenBlock()
-                ->thenAFunction()->thenAnEcho()
-                ->thenASemicolon()->thenACloseBlock()
         );
 
         $this->assertIsTokenOf(
             Token::T_BLOCK_OPEN,
-            $access->find(array( Token::T_BLOCK_OPEN ))
-        );
-
-        $this->assertIsTokenOf(
-            Token::T_ECHO,
-            $access->findExcluding(array( Token::T_FUNCTION ))
-        );
-
-        $this->assertIsTokenOf(
-            Token::T_BLOCK_CLOSE,
             $access->findAllowing(
-                array(Token::T_BLOCK_CLOSE),
-                array(Token::T_SEMICOLON)
+                array(Token::T_BLOCK_OPEN),
+                array(Token::T_CLASS)
             )
         );
     }
