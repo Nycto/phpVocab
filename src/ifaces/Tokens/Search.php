@@ -35,17 +35,22 @@ interface Search
      * listed in the allowing list
      *
      * @throws \vc\Tokens\UnexpectedToken If a token does not exist in either
-     *      input list, an exception will be thrown when fatal is TRUE
+     *      input list an exception will be thrown
      * @param Array $types The list of types to search for
-     * @param Boolean $fatal Whether to throw an exception or simply return
-     *      NULL when an unexpected token is encountered
-     * @return \vc\Tokens\Token|NULL
+     * @param Array $allowing The list of tokens to skip
+     * @return \vc\Tokens\Token
      */
-    public function findRequired (
-        array $types,
-        array $allowing = array(),
-        $fatal = TRUE
-    );
+    public function findRequired ( array $types, array $allowing = array() );
+
+    /**
+     * Returns the next token amongst the given type, skipping any tokens
+     * listed in the allowing list
+     *
+     * @param Array $types The list of types to search for
+     * @param Array $allowing The list of tokens to skip
+     * @return \vc\Tokens\Token|NULL Returns NULL if the token can't be found
+     */
+    public function find ( array $types, array $allowing = array() );
 
 }
 

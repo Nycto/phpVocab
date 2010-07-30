@@ -68,10 +68,9 @@ class NSpaces
      */
     private function findNS ( \vc\Tokens\Access $access )
     {
-        return NULL !== $access->findRequired(
+        return NULL !== $access->find(
             array( Token::T_NAMESPACE ),
-            array( Token::T_OPEN_TAG, Token::T_WHITESPACE ),
-            FALSE
+            array( Token::T_OPEN_TAG, Token::T_WHITESPACE )
         );
     }
 

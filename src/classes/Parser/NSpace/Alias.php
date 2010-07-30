@@ -60,8 +60,8 @@ class Alias
     {
         $alias = new \vc\Data\Alias( $this->path->parsePath($access) );
 
-        $as = $access->findRequired(
-            array(Token::T_AS), array(Token::T_WHITESPACE), FALSE
+        $as = $access->find(
+            array(Token::T_AS), array(Token::T_WHITESPACE)
         );
 
         if ( $as )

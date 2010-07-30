@@ -49,6 +49,7 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
         $access = \vc\Tokens\Access::buildAccess(
             $reader = $this->oneTokenReader()
                 ->thenAClass()->thenAnOpenBlock()
+                ->thenSomeSpace()->thenAFunction()
         );
 
         $this->assertIsTokenOf(
@@ -56,6 +57,14 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
             $access->findRequired(
                 array(Token::T_BLOCK_OPEN),
                 array(Token::T_CLASS)
+            )
+        );
+
+        $this->assertIsTokenOf(
+            Token::T_FUNCTION,
+            $access->find(
+                array(Token::T_FUNCTION),
+                array(Token::T_WHITESPACE)
             )
         );
     }
