@@ -30,6 +30,20 @@ require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 class test_classes_Tokens_Parser extends \vc\Test\TestCase
 {
 
+    public function testLookupToken ()
+    {
+        $this->assertEquals(
+           \vc\Tokens\Token::T_AMPERSAND,
+           \vc\Tokens\Parser::lookupToken('&')
+        );
+
+        try {
+            \vc\Tokens\Parser::lookupToken('blah');
+            $this->fail("An expected exception was not thrown");
+        }
+        catch ( \r8\Exception\Data $err ) {}
+    }
+
     public function test_EmptyInput ()
     {
         $parser = new \vc\Tokens\Parser( new \r8\Stream\In\Void );

@@ -57,7 +57,7 @@ class Parser implements \vc\iface\Tokens\Reader
         '}' => \vc\Tokens\Token::T_BLOCK_CLOSE,
         '@' => \vc\Tokens\Token::T_SUPPRESS,
         '*' => \vc\Tokens\Token::T_MULTIPLY,
-        '&' => \vc\Tokens\Token::T_BIT_AND,
+        '&' => \vc\Tokens\Token::T_AMPERSAND,
         '%' => \vc\Tokens\Token::T_MODULO,
         '+' => \vc\Tokens\Token::T_ADD,
         '$' => \vc\Tokens\Token::T_VAR_VARIABLE,
@@ -85,6 +85,23 @@ class Parser implements \vc\iface\Tokens\Reader
     private $current;
 
     /**
+     * Looks up a symbol token type from a string
+     *
+     * @param String $symbol
+     * @return Integer
+     */
+    static public function lookupToken ( $symbol )
+    {
+        // For some simple tokens, token_get_all will just return a string of
+        // the token. To normalize this, we have created new token values and
+        // mapped them to the appropriate stirngs
+        if ( !isset(self::$tokenMap[$symbol]) )
+            throw new \r8\Exception\Data($symbol, "Token", "Unrecognized Token");
+
+        return self::$tokenMap[$symbol];
+    }
+
+    /**
      * Constructor...
      *
      * @param \r8\iface\Stream\In $input The input stream
@@ -110,12 +127,6 @@ class Parser implements \vc\iface\Tokens\Reader
         if ( $input instanceof \vc\Tokens\Token )
             return $input;
 
-        // For some simple tokens, token_get_all will just return a string of
-        // the token. To normalize this, we have created new token values and
-        // mapped them to the appropriate stirngs
-        if ( !isset(self::$tokenMap[$input]) )
-            throw new \r8\Exception\Data($input, "Token", "Unrecognized Token");
-
         // For custom tokens, we need to derive the line number based on the
         // previous token. If the previous token contains a carriage return,
         // then we need to manually bump the value up
@@ -127,7 +138,11 @@ class Parser implements \vc\iface\Tokens\Reader
             $line++;
         }
 
-        return new \vc\Tokens\Token( self::$tokenMap[$input], $input, $line );
+        return new \vc\Tokens\Token(
+            self::lookupToken($input),
+            $input,
+            $line
+        );
     }
 
     /**
