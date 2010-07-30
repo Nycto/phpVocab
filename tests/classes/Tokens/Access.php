@@ -50,6 +50,7 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
             $reader = $this->oneTokenReader()
                 ->thenAClass()->thenAnOpenBlock()
                 ->thenSomeSpace()->thenAFunction()
+                ->thenSomeSpace()->thenAName('Func')
         );
 
         $this->assertIsTokenOf(
@@ -64,6 +65,14 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
             Token::T_FUNCTION,
             $access->find(
                 array(Token::T_FUNCTION),
+                array(Token::T_WHITESPACE)
+            )
+        );
+
+        $this->assertIsTokenOf(
+            Token::T_STRING,
+            $access->peekAtRequired(
+                array(Token::T_STRING),
                 array(Token::T_WHITESPACE)
             )
         );

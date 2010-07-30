@@ -128,6 +128,14 @@ class Access implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Search, \vc\if
     }
 
     /**
+     * @see \vc\iface\Tokens\Search::peekAtRequired()
+     */
+    public function peekAtRequired ( array $types, array $allowing = array() )
+    {
+        return $this->search->peekAtRequired( $types, $allowing );
+    }
+
+    /**
      * Returns the block comment associated with the current context
      *
      * @return \vc\Data\Comment

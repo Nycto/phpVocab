@@ -52,6 +52,18 @@ interface Search
      */
     public function find ( array $types, array $allowing = array() );
 
+    /**
+     * Returns the next token amongst the given type, without consuming that
+     * token. This will skip any tokens listed in the allowing list.
+     *
+     * @throws \vc\Tokens\UnexpectedToken If a token does not exist in either
+     *      input list an exception will be thrown
+     * @param Array $types The list of types to search for
+     * @param Array $allowing The list of tokens to skip
+     * @return \vc\Tokens\Token
+     */
+    public function peekAtRequired ( array $types, array $allowing = array() );
+
 }
 
 ?>

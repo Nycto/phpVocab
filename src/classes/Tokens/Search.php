@@ -48,9 +48,9 @@ class Search implements \vc\iface\Tokens\Search
     }
 
     /**
-     * @see \vc\iface\Tokens\Search::findRequired
+     * @see \vc\iface\Tokens\Search::peekAtRequired
      */
-    public function findRequired ( array $types, array $allowing = array() )
+    public function peekAtRequired ( array $types, array $allowing = array() )
     {
         while ( $this->reader->hasToken() ) {
 
@@ -58,7 +58,7 @@ class Search implements \vc\iface\Tokens\Search
             $type = $token->getType();
 
             if ( in_array($type, $types) )
-                return $this->reader->popToken();
+                return $token;
 
             else if ( !in_array($type, $allowing) )
                 throw new \vc\Tokens\UnexpectedToken($token, $types, $allowing);
@@ -70,25 +70,29 @@ class Search implements \vc\iface\Tokens\Search
     }
 
     /**
+     * @see \vc\iface\Tokens\Search::findRequired
+     */
+    public function findRequired ( array $types, array $allowing = array() )
+    {
+        $found = $this->peekAtRequired( $types, $allowing );
+        $this->reader->popToken();
+        return $found;
+    }
+
+    /**
      * @see \vc\iface\Tokens\Search::find
      */
     public function find ( array $types, array $allowing = array() )
     {
-        while ( $this->reader->hasToken() ) {
-
-            $token = $this->reader->peekAtToken();
-            $type = $token->getType();
-
-            if ( in_array($type, $types) )
-                return $this->reader->popToken();
-
-            else if ( !in_array($type, $allowing) )
-                return NULL;
-
-            $this->reader->popToken();
+        try {
+            return $this->findRequired( $types, $allowing );
         }
-
-        return NULL;
+        catch ( \vc\Tokens\UnexpectedToken $err ) {
+            return NULL;
+        }
+        catch ( \vc\Tokens\UnexpectedEnd $err ) {
+            return NULL;
+        }
     }
 
 }
