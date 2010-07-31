@@ -64,11 +64,11 @@ class test_classes_Data_Routine extends \vc\Test\TestCase
 
         $this->assertSame( array(), $routine->getArgs() );
 
-        $arg1 = new \vc\Data\Arg("arg1");
+        $arg1 = new \vc\Data\Arg;
         $this->assertSame( $routine, $routine->addArg($arg1) );
         $this->assertSame( array($arg1), $routine->getArgs() );
 
-        $arg2 = new \vc\Data\Arg("arg2");
+        $arg2 = new \vc\Data\Arg;
         $this->assertSame( $routine, $routine->addArg($arg2) );
         $this->assertSame( array($arg1, $arg2), $routine->getArgs() );
     }

@@ -52,17 +52,22 @@ class Arg
     private $default;
 
     /**
-     * Constructor...
+     * Whether this argument is passed by reference
      *
-     * @param String $variable The variable name of this argument
-     * @param String $type If specified, the type hinting for this argument
-     * @param String $default If specified, the default value for this argument
+     * @var Boolean
      */
-    public function __construct ( $variable, $type = NULL, $default = NULL )
+    private $reference = FALSE;
+
+    /**
+     * Sets the Variable name of this argument
+     *
+     * @param String $variable
+     * @return \vc\Data\Arg Returns a self reference
+     */
+    public function setVariable ( $variable )
     {
         $this->variable = (string) $variable;
-        $this->type = $type === NULL ? NULL : (string) $type;
-        $this->default = $default === NULL ? NULL : (string) $default;
+        return $this;
     }
 
     /**
@@ -76,6 +81,18 @@ class Arg
     }
 
     /**
+     * Sets the type hinting associated with this argument
+     *
+     * @param String $type
+     * @return \vc\Data\Arg Returns a self reference
+     */
+    public function setType ( $type )
+    {
+        $this->type = (string) $type ?: NULL;
+        return $this;
+    }
+
+    /**
      * Returns the Type hinting for this variable, if any
      *
      * @return String
@@ -86,13 +103,47 @@ class Arg
     }
 
     /**
+     * Sets the default value for this argument
+     *
+     * @param \vc\Data\Value $default
+     * @return \vc\Data\Arg Returns a self reference
+     */
+    public function setDefault ( \vc\Data\Value $default )
+    {
+        $this->default = $default;
+        return $this;
+    }
+
+    /**
      * Returns the Default value for this variable, if any
      *
-     * @return String
+     * @return \vc\Data\Value
      */
     public function getDefault ()
     {
         return $this->default;
+    }
+
+    /**
+     * Sets the whether this argument is passed by reference
+     *
+     * @param Boolean $reference
+     * @return \vc\Data\Arg Returns a self reference
+     */
+    public function setReference ( $reference )
+    {
+        $this->reference = (bool) $reference;
+        return $this;
+    }
+
+    /**
+     * Returns the whether this argument is passed by reference
+     *
+     * @return Boolean
+     */
+    public function getReference ()
+    {
+        return $this->reference;
     }
 
 }

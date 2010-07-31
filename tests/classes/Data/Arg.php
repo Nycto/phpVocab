@@ -30,18 +30,41 @@ require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 class test_classes_Data_Arg extends \vc\Test\TestCase
 {
 
-    public function testAccessors ()
+    public function testVariableAccess ()
     {
-        $arg = new \vc\Data\Arg("arg");
-        $this->assertSame( "arg", $arg->getVariable() );
+        $arg = new \vc\Data\Arg;
+        $this->assertNull( $arg->getVariable() );
+
+        $this->assertSame( $arg, $arg->setVariable('$name') );
+        $this->assertSame( '$name', $arg->getVariable() );
+    }
+
+    public function testTypeAccess ()
+    {
+        $arg = new \vc\Data\Arg;
         $this->assertNull( $arg->getType() );
+
+        $this->assertSame( $arg, $arg->setType('array') );
+        $this->assertSame( 'array', $arg->getType() );
+    }
+
+    public function testDefaultAccess ()
+    {
+        $arg = new \vc\Data\Arg;
         $this->assertNull( $arg->getDefault() );
 
+        $value = new \vc\Data\Value('str', 'string');
+        $this->assertSame( $arg, $arg->setDefault($value ) );
+        $this->assertSame( $value, $arg->getDefault() );
+    }
 
-        $arg = new \vc\Data\Arg("arg", "type", "default");
-        $this->assertSame( "arg", $arg->getVariable() );
-        $this->assertSame( "type", $arg->getType() );
-        $this->assertSame( "default", $arg->getDefault() );
+    public function testReferenceAccess ()
+    {
+        $arg = new \vc\Data\Arg;
+        $this->assertFalse( $arg->getReference() );
+
+        $this->assertSame( $arg, $arg->setReference(TRUE) );
+        $this->assertTrue( $arg->getReference() );
     }
 
 }
