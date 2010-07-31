@@ -300,6 +300,49 @@ class TokenReader implements \vc\iface\Tokens\Reader
             ->then( Token::T_END_HEREDOC, 'EOT', $line );
     }
 
+    /**
+     * Adds an Open Parenthesis token
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenOpenParens ( $line = 1 )
+    {
+        return $this->then( Token::T_PARENS_OPEN, "(", $line );
+    }
+
+    /**
+     * Adds an Open Parenthesis token
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenCloseParens ( $line = 1 )
+    {
+        return $this->then( Token::T_PARENS_CLOSE, ")", $line );
+    }
+
+    /**
+     * Adds an array definition to the token stream
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAnArrayValue ( array $value )
+    {
+        $content = trim( '<?php '. var_export( $value, TRUE ) );
+        $content = str_replace("\n", "", $content);
+        $content = token_get_all($content);
+        array_shift( $content );
+
+        foreach ( $content AS $token )
+        {
+            if ( is_array($token) )
+                $this->then( $token[0], $token[1], 1 );
+            else
+                $this->then(\vc\Tokens\Parser::lookupToken($token), $token, 1);
+        }
+
+        return $this;
+    }
+
 }
 
 ?>
