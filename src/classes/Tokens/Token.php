@@ -57,7 +57,7 @@ class Token
     const T_BLOCK_CLOSE = -118;
     const T_SUPPRESS = -119;
     const T_MULTIPLY = -120;
-    const T_BIT_AND = -121;
+    const T_AMPERSAND = -121;
     const T_MODULO = -122;
     const T_ADD = -123;
     const T_VAR_VARIABLE = -124;
