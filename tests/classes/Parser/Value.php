@@ -34,11 +34,11 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
 
     public function testParseValue_Integer ()
     {
-        $access = new \vc\Tokens\Search(
+        $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()->thenSomeSpace()->thenAnInteger('1')
         );
 
-        $parser = new \vc\Parser\Value;
+        $parser = new \vc\Parser\Value( new \vc\Parser\Brackets );
 
         $this->assertEquals(
             new \vc\Data\Value('1', 'int'),
@@ -49,11 +49,11 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
 
     public function testParseValue_Float ()
     {
-        $access = new \vc\Tokens\Search(
+        $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()->thenSomeSpace()->thenAFloat('1.23')
         );
 
-        $parser = new \vc\Parser\Value;
+        $parser = new \vc\Parser\Value( new \vc\Parser\Brackets );
 
         $this->assertEquals(
             new \vc\Data\Value('1.23', 'float'),
@@ -63,11 +63,11 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
 
     public function testParseValue_String ()
     {
-        $access = new \vc\Tokens\Search(
+        $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()->thenSomeSpace()->thenAString('str')
         );
 
-        $parser = new \vc\Parser\Value;
+        $parser = new \vc\Parser\Value( new \vc\Parser\Brackets );
 
         $this->assertEquals(
             new \vc\Data\Value('str', 'string'),
@@ -77,11 +77,11 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
 
     public function testParseValue_True ()
     {
-        $access = new \vc\Tokens\Search(
+        $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()->thenSomeSpace()->thenAName('true')
         );
 
-        $parser = new \vc\Parser\Value;
+        $parser = new \vc\Parser\Value( new \vc\Parser\Brackets );
 
         $this->assertEquals(
             new \vc\Data\Value('true', 'bool'),
@@ -91,11 +91,11 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
 
     public function testParseValue_False ()
     {
-        $access = new \vc\Tokens\Search(
+        $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()->thenSomeSpace()->thenAName('false')
         );
 
-        $parser = new \vc\Parser\Value;
+        $parser = new \vc\Parser\Value( new \vc\Parser\Brackets );
 
         $this->assertEquals(
             new \vc\Data\Value('false', 'bool'),
@@ -105,11 +105,11 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
 
     public function testParseValue_Null ()
     {
-        $access = new \vc\Tokens\Search(
+        $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()->thenSomeSpace()->thenAName('null')
         );
 
-        $parser = new \vc\Parser\Value;
+        $parser = new \vc\Parser\Value( new \vc\Parser\Brackets );
 
         $this->assertEquals(
             new \vc\Data\Value('null', 'null'),
@@ -119,11 +119,11 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
 
     public function testParseValue_InvalidName ()
     {
-        $access = new \vc\Tokens\Search(
+        $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()->thenSomeSpace()->thenAName('other')
         );
 
-        $parser = new \vc\Parser\Value;
+        $parser = new \vc\Parser\Value( new \vc\Parser\Brackets );
 
         try {
             $parser->parseValue( $access );
@@ -134,11 +134,11 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
 
     public function testParseValue_HereDoc ()
     {
-        $access = new \vc\Tokens\Search(
+        $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()->thenSomeSpace()->thenAHereDoc('str')
         );
 
-        $parser = new \vc\Parser\Value;
+        $parser = new \vc\Parser\Value( new \vc\Parser\Brackets );
 
         $this->assertEquals(
             new \vc\Data\Value('str', 'string'),
@@ -146,13 +146,27 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
         );
     }
 
+    public function testParseValue_Array ()
+    {
+        $access = \vc\Tokens\Access::buildAccess(
+            $this->oneTokenReader()->thenAnArrayValue(array(1,2))
+        );
+
+        $parser = new \vc\Parser\Value( new \vc\Parser\Brackets );
+
+        $this->assertEquals(
+            new \vc\Data\Value('array(  0 => 1,  1 => 2,)', 'array'),
+            $parser->parseValue( $access )
+        );
+    }
+
     public function testParseValue_InvalidToken ()
     {
-        $access = new \vc\Tokens\Search(
+        $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()->thenAClass()
         );
 
-        $parser = new \vc\Parser\Value;
+        $parser = new \vc\Parser\Value( new \vc\Parser\Brackets );
 
         try {
             $parser->parseValue( $access );
@@ -163,13 +177,13 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
 
     public function testParseValue_WithEquals ()
     {
-        $access = new \vc\Tokens\Search(
+        $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()
                 ->thenSomeSpace()->thenAnEquals()->thenSomeSpace()
                 ->thenAnInteger('1')
         );
 
-        $parser = new \vc\Parser\Value;
+        $parser = new \vc\Parser\Value( new \vc\Parser\Brackets );
 
         $this->assertEquals(
             new \vc\Data\Value('1', 'int'),

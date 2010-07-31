@@ -33,17 +33,105 @@ class Value
 {
 
     /**
-     * Parses a value from a token stream
+     * The parser used for extracting arrays
      *
-     * @param  \vc\iface\Tokens\Search $search
+     * @var \vc\Parser\Brackets
+     */
+    private $brackets;
+
+    /**
+     * Constructor...
+     *
+     * @param \vc\Parser\Brackets $brackets
+     */
+    public function __construct ( \vc\Parser\Brackets $brackets )
+    {
+        $this->brackets = $brackets;
+    }
+
+    /**
+     * Pareses a quoted string
+     *
+     * @param \vc\Tokens\Token $token
      * @return \vc\Data\Value
      */
-    public function parseValue ( \vc\iface\Tokens\Search $search )
+    private function parseString ( \vc\Tokens\Token $token )
     {
-        $token = $search->findRequired(
+        return new \vc\Data\Value(
+            substr($token->getContent(), 1, -1),
+            "string"
+        );
+    }
+
+    /**
+     * Parese a HereDoc declaration
+     *
+     * @param \vc\Tokens\Access $access
+     * @return \vc\Data\Value
+     */
+    private function parseHereDoc ( \vc\Tokens\Access $access )
+    {
+        $token = $access->findRequired(
+            array(Token::T_ENCAPSED_AND_WHITESPACE)
+        );
+        $access->findRequired(array(Token::T_END_HEREDOC));
+
+        return new \vc\Data\Value( $token->getContent(), "string" );
+    }
+
+    /**
+     * Parses a keyword
+     *
+     * @return \vc\Data\Value
+     */
+    private function parseKeyword ( \vc\Tokens\Token $token )
+    {
+        $type = strtolower( $token->getContent() );
+
+        if ( $type == "true" ||  $type == "false" ) {
+            $type = "bool";
+        }
+        else if ( $type != "null" ) {
+            throw r8(new \r8\Exception\Data("Invalid String token value"))
+                ->addData("Type", $type)
+                ->addData("Token", $token);
+        }
+
+        return new \vc\Data\Value( $token->getContent(), $type );
+    }
+
+    /**
+     * Parses an array
+     *
+     * @param \vc\Tokens\Access $access
+     * @return \vc\Data\Value
+     */
+    private function parseArray ( \vc\Tokens\Access $access )
+    {
+        $token = $access->findRequired(
+            array(Token::T_PARENS_OPEN),
+            array(Token::T_WHITESPACE)
+        );
+
+        return new \vc\Data\Value(
+            sprintf('array(%s)', $this->brackets->parseParens($access)),
+            'array'
+        );
+    }
+
+    /**
+     * Parses a value from a token stream
+     *
+     * @param \vc\Tokens\Access $access
+     * @return \vc\Data\Value
+     */
+    public function parseValue ( \vc\Tokens\Access $access )
+    {
+        $token = $access->findRequired(
             array(
                 Token::T_LNUMBER, Token::T_DNUMBER, Token::T_STRING,
-                Token::T_START_HEREDOC, Token::T_CONSTANT_ENCAPSED_STRING
+                Token::T_START_HEREDOC, Token::T_CONSTANT_ENCAPSED_STRING,
+                Token::T_ARRAY
             ),
             array(Token::T_WHITESPACE, Token::T_EQUALS)
         );
@@ -52,19 +140,11 @@ class Value
 
             // Strings
             case Token::T_CONSTANT_ENCAPSED_STRING:
-                return new \vc\Data\Value(
-                    substr($token->getContent(), 1, -1),
-                    "string"
-                );
+                return $this->parseString( $token );
 
             // HereDocs
             case Token::T_START_HEREDOC:
-                $token = $search->findRequired(
-                    array(Token::T_ENCAPSED_AND_WHITESPACE)
-                );
-                $search->findRequired(array(Token::T_END_HEREDOC));
-
-                return new \vc\Data\Value( $token->getContent(), "string" );
+                return $this->parseHereDoc( $access );
 
             // Integers
             case Token::T_LNUMBER:
@@ -76,18 +156,11 @@ class Value
 
             // Keywords like true, false or null
             case Token::T_STRING:
-                $type = strtolower( $token->getContent() );
+                return $this->parseKeyword( $token );
 
-                if ( $type == "true" ||  $type == "false" ) {
-                    $type = "bool";
-                }
-                else if ( $type != "null" ) {
-                    throw r8(new \r8\Exception\Data("Invalid String token value"))
-                        ->addData("Type", $type)
-                        ->addData("Token", $token);
-                }
-
-                return new \vc\Data\Value( $token->getContent(), $type );
+            // Arrays
+            case Token::T_ARRAY:
+                return $this->parseArray( $access );
 
             default:
                 throw new \RuntimeException("Unexpected Type");
