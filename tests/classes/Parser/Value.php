@@ -155,7 +155,7 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
         $parser = new \vc\Parser\Value( new \vc\Parser\Brackets );
 
         $this->assertEquals(
-            new \vc\Data\Value('array(  0 => 1,  1 => 2,)', 'array'),
+            new \vc\Data\Value('array( 0 => 1, 1 => 2,)', 'array'),
             $parser->parseValue( $access )
         );
     }

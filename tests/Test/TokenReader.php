@@ -334,10 +334,20 @@ class TokenReader implements \vc\iface\Tokens\Reader
 
         foreach ( $content AS $token )
         {
-            if ( is_array($token) )
-                $this->then( $token[0], $token[1], 1 );
-            else
-                $this->then(\vc\Tokens\Parser::lookupToken($token), $token, 1);
+            if ( is_array($token) ) {
+                $this->then(
+                    $token[0],
+                    $token[0] == Token::T_WHITESPACE ? ' ' : $token[1],
+                    1
+                );
+            }
+            else {
+                $this->then(
+                    \vc\Tokens\Parser::lookupToken($token),
+                    $token,
+                    1
+                );
+            }
         }
 
         return $this;

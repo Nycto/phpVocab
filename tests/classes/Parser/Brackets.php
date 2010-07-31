@@ -65,7 +65,7 @@ class test_classes_Parser_Brackets extends \vc\Test\TestCase
             ->thenSomeSpace()->thenCloseParens();
 
         $this->assertSame(
-            " function MyFunc(array (  0 =>   array (  ),  1 => 2,  2 => 3,)) ",
+            " function MyFunc(array ( 0 => array ( ), 1 => 2, 2 => 3,)) ",
             r8(new \vc\Parser\Brackets)->parseParens( $reader )
         );
     }
