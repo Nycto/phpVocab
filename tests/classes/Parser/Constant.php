@@ -42,7 +42,9 @@ class test_classes_Parser_Constant extends \vc\Test\TestCase
                 ->thenAClass()
         );
 
-        $parser = new \vc\Parser\Constant( new \vc\Parser\Value );
+        $parser = new \vc\Parser\Constant(
+            new \vc\Parser\Value( new \vc\Parser\Brackets )
+        );
 
         $this->assertEquals(
             r8(new \vc\Data\Constant('CONSTANT'))
@@ -63,7 +65,9 @@ class test_classes_Parser_Constant extends \vc\Test\TestCase
                 ->thenAClass()
         );
 
-        $parser = new \vc\Parser\Constant( new \vc\Parser\Value );
+        $parser = new \vc\Parser\Constant(
+            new \vc\Parser\Value( new \vc\Parser\Brackets )
+        );
 
         $this->assertEquals(
             r8(new \vc\Data\Constant('NAME'))
@@ -84,7 +88,9 @@ class test_classes_Parser_Constant extends \vc\Test\TestCase
                 ->thenAClass()
         );
 
-        $parser = new \vc\Parser\Constant( new \vc\Parser\Value );
+        $parser = new \vc\Parser\Constant(
+            new \vc\Parser\Value( new \vc\Parser\Brackets )
+        );
 
         $this->assertEquals(
             r8(new \vc\Data\Constant('NAME'))
@@ -105,7 +111,9 @@ class test_classes_Parser_Constant extends \vc\Test\TestCase
                 ->thenAClass()
         );
 
-        $parser = new \vc\Parser\Constant( new \vc\Parser\Value );
+        $parser = new \vc\Parser\Constant(
+            new \vc\Parser\Value( new \vc\Parser\Brackets )
+        );
 
         $this->assertEquals(
             r8(new \vc\Data\Constant('NAME'))
@@ -126,7 +134,9 @@ class test_classes_Parser_Constant extends \vc\Test\TestCase
                 ->thenAClass()
         );
 
-        $parser = new \vc\Parser\Constant( new \vc\Parser\Value );
+        $parser = new \vc\Parser\Constant(
+            new \vc\Parser\Value( new \vc\Parser\Brackets )
+        );
 
         $this->assertEquals(
             r8(new \vc\Data\Constant('NAME'))
@@ -147,7 +157,9 @@ class test_classes_Parser_Constant extends \vc\Test\TestCase
                 ->thenAClass()
         );
 
-        $parser = new \vc\Parser\Constant( new \vc\Parser\Value );
+        $parser = new \vc\Parser\Constant(
+            new \vc\Parser\Value( new \vc\Parser\Brackets )
+        );
 
         $this->assertEquals(
             r8(new \vc\Data\Constant('NAME'))
