@@ -353,6 +353,37 @@ class TokenReader implements \vc\iface\Tokens\Reader
         return $this;
     }
 
+    /**
+     * Adds an array token to the stream
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAnArray ( $line = 1 )
+    {
+        return $this->then( Token::T_ARRAY, 'array', $line );
+    }
+
+    /**
+     * Adds a variable name to this token list
+     *
+     * @param String $name The variable name
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAVariable ( $name, $line = 1 )
+    {
+        return $this->then( Token::T_VARIABLE, $name, $line );
+    }
+
+    /**
+     * Adds a comma to the token list
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAComma ( $line = 1 )
+    {
+        return $this->then( Token::T_COMMA, ',', $line );
+    }
+
 }
 
 ?>
