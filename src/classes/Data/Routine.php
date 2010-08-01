@@ -113,14 +113,16 @@ abstract class Routine
     }
 
     /**
-     * Adds a new argument to this routine
+     * Sets the arguments for this routine
      *
-     * @param \vc\Data\Arg $arg
+     * @param Array $args
      * @return \vc\Data\Routine Returns a self reference
      */
-    public function addArg ( \vc\Data\Arg $arg )
+    public function setArgs ( array $args )
     {
-        $this->args[] = $arg;
+        $this->args = array_filter($args, function ($arg) {
+            return $arg instanceof \vc\Data\Arg;
+        });
         return $this;
     }
 

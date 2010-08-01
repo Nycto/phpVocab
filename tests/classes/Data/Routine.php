@@ -47,10 +47,7 @@ class test_classes_Data_Routine extends \vc\Test\TestCase
 
     public function testNameAccess ()
     {
-        $routine = $this->getMockForAbstractClass(
-            '\vc\Data\Routine',
-            array(123, new \vc\Data\Comment)
-        );
+        $routine = $this->getMockForAbstractClass('\vc\Data\Routine', array(123));
 
         $this->assertNull( $routine->getName() );
         $this->assertSame( $routine, $routine->setName("method") );
@@ -59,19 +56,12 @@ class test_classes_Data_Routine extends \vc\Test\TestCase
 
     public function testArgAccess ()
     {
-        $routine = $this->getMockForAbstractClass(
-            '\vc\Data\Routine',
-            array(123, new \vc\Data\Comment)
-        );
-
+        $routine = $this->getMockForAbstractClass('\vc\Data\Routine', array(123));
         $this->assertSame( array(), $routine->getArgs() );
 
         $arg1 = new \vc\Data\Arg;
-        $this->assertSame( $routine, $routine->addArg($arg1) );
-        $this->assertSame( array($arg1), $routine->getArgs() );
-
         $arg2 = new \vc\Data\Arg;
-        $this->assertSame( $routine, $routine->addArg($arg2) );
+        $this->assertSame( $routine, $routine->setArgs(array($arg1, $arg2)) );
         $this->assertSame( array($arg1, $arg2), $routine->getArgs() );
     }
 
