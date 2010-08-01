@@ -128,11 +128,11 @@ class Access implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Search, \vc\if
     }
 
     /**
-     * @see \vc\iface\Tokens\Search::peekAtRequired()
+     * @see \vc\iface\Tokens\Search::peekToRequired()
      */
-    public function peekAtRequired ( array $types, array $allowing = array() )
+    public function peekToRequired ( array $types, array $allowing = array() )
     {
-        return $this->search->peekAtRequired( $types, $allowing );
+        return $this->search->peekToRequired( $types, $allowing );
     }
 
     /**

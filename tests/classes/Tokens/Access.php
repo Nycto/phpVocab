@@ -71,7 +71,7 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
 
         $this->assertIsTokenOf(
             Token::T_STRING,
-            $access->peekAtRequired(
+            $access->peekToRequired(
                 array(Token::T_STRING),
                 array(Token::T_WHITESPACE)
             )

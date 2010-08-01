@@ -32,18 +32,18 @@ require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 class test_classes_Tokens_Search extends \vc\Test\TestCase
 {
 
-    public function testPeekAtRequired_EmptyTokenSet ()
+    public function testpeekToRequired_EmptyTokenSet ()
     {
         $reader = new \vc\Tokens\Search( $this->oneTokenReader() );
 
         try {
-            $reader->peekAtRequired(array(Token::T_CLASS));
+            $reader->peekToRequired(array(Token::T_CLASS));
             $this->fail("An expected exception was not thrown");
         }
         catch ( \vc\Tokens\UnexpectedEnd $err ) {}
     }
 
-    public function testPeekAtRequired_TokenGetsFound ()
+    public function testpeekToRequired_TokenGetsFound ()
     {
         $reader = $this->oneTokenReader()->thenAnOpenTag()->thenAnEcho()
                 ->thenSomeSpace()->thenAString("content")
@@ -53,7 +53,7 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
 
         $this->assertIsTokenOf(
             Token::T_ECHO,
-            $search->peekAtRequired(
+            $search->peekToRequired(
                 array( Token::T_ECHO, Token::T_SEMICOLON ),
                 array( Token::T_OPEN_TAG, Token::T_CONSTANT_ENCAPSED_STRING )
             )
@@ -62,7 +62,7 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
         $this->assertHasToken( Token::T_ECHO, $reader );
     }
 
-    public function testPeekAtRequired_UnexpectedToken ()
+    public function testpeekToRequired_UnexpectedToken ()
     {
         $reader = $this->oneTokenReader()->thenAnOpenTag()->thenAnEcho()
             ->thenSomeSpace()->thenAString("content")
@@ -71,7 +71,7 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
         $access = new \vc\Tokens\Search( $reader );
 
         try {
-            $access->peekAtRequired(
+            $access->peekToRequired(
                 array( Token::T_CLOSE_TAG, Token::T_SEMICOLON ),
                 array( Token::T_OPEN_TAG, Token::T_WHITESPACE )
             );

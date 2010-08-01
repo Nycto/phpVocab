@@ -62,7 +62,7 @@ interface Search
      * @param Array $allowing The list of tokens to skip
      * @return \vc\Tokens\Token
      */
-    public function peekAtRequired ( array $types, array $allowing = array() );
+    public function peekToRequired ( array $types, array $allowing = array() );
 
 }
 

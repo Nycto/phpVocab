@@ -48,9 +48,9 @@ class Search implements \vc\iface\Tokens\Search
     }
 
     /**
-     * @see \vc\iface\Tokens\Search::peekAtRequired
+     * @see \vc\iface\Tokens\Search::peekToRequired
      */
-    public function peekAtRequired ( array $types, array $allowing = array() )
+    public function peekToRequired ( array $types, array $allowing = array() )
     {
         while ( $this->reader->hasToken() ) {
 
@@ -74,7 +74,7 @@ class Search implements \vc\iface\Tokens\Search
      */
     public function findRequired ( array $types, array $allowing = array() )
     {
-        $found = $this->peekAtRequired( $types, $allowing );
+        $found = $this->peekToRequired( $types, $allowing );
         $this->reader->popToken();
         return $found;
     }
