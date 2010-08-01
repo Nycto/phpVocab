@@ -31,6 +31,26 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     * Returns an access object loaded with the given reader and comment
+     *
+     * @return \vc\Tokens\Access
+     */
+    public function getAccessParserWithComment (
+        \vc\Data\Comment $comment,
+        \vc\iface\Tokens\Reader $reader
+    ) {
+        $comParse = $this->getMock('\vc\iface\Tokens\Comments');
+        $comParse->expects( $this->any() )->method( "getComment" )
+            ->will( $this->returnValue( $comment ) );
+
+        return new \vc\Tokens\Access(
+            $reader,
+            new \vc\Tokens\Search( $reader ),
+            $comParse
+        );
+    }
+
+    /**
      * Asserts that an Enum equals the given value
      *
      * @param String|Integer $expected
