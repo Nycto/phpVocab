@@ -32,13 +32,15 @@ class test_classes_Data_Routine extends \vc\Test\TestCase
 
     public function testConstruct ()
     {
-        $comment = new \vc\Data\Comment;
+        $routine = $this->getMockForAbstractClass('\vc\Data\Routine', array(123));
+        $this->assertSame( 123, $routine->getLine() );
+        $this->assertEquals( new \vc\Data\Comment, $routine->getComment() );
 
+        $comment = new \vc\Data\Comment;
         $routine = $this->getMockForAbstractClass(
             '\vc\Data\Routine',
             array(123, $comment)
         );
-
         $this->assertSame( 123, $routine->getLine() );
         $this->assertSame( $comment, $routine->getComment() );
     }
