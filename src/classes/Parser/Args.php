@@ -147,6 +147,7 @@ class Args
             $args[] = $this->parseArg( $access );
         }
 
+        $access->popToken();
         return $args;
     }
 

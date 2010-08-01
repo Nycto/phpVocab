@@ -53,6 +53,8 @@ class test_classes_Parser_Args extends \vc\Test\TestCase
         );
 
         $this->assertSame( array(), $this->getArgParser()->parseArgs($access) );
+
+        $this->assertEndOfTokens($access);
     }
 
     public function testParseArgs_BasicArgument ()
@@ -66,6 +68,8 @@ class test_classes_Parser_Args extends \vc\Test\TestCase
             array( \r8(new \vc\Data\Arg)->setVariable('$test') ),
             $this->getArgParser()->parseArgs($access)
         );
+
+        $this->assertEndOfTokens($access);
     }
 
     public function testParseArgs_MultipleArguments ()
@@ -86,6 +90,8 @@ class test_classes_Parser_Args extends \vc\Test\TestCase
             ),
             $this->getArgParser()->parseArgs($access)
         );
+
+        $this->assertEndOfTokens($access);
     }
 
     public function testParseArgs_AbsoluteClassTypeHinting ()
@@ -105,6 +111,8 @@ class test_classes_Parser_Args extends \vc\Test\TestCase
             ),
             $this->getArgParser()->parseArgs($access)
         );
+
+        $this->assertEndOfTokens($access);
     }
 
     public function testParseArgs_RelativeClassTypeHinting ()
@@ -124,6 +132,8 @@ class test_classes_Parser_Args extends \vc\Test\TestCase
             ),
             $this->getArgParser()->parseArgs($access)
         );
+
+        $this->assertEndOfTokens($access);
     }
 
     public function testParseArgs_ArrayTypeHinting ()
@@ -141,6 +151,8 @@ class test_classes_Parser_Args extends \vc\Test\TestCase
             ),
             $this->getArgParser()->parseArgs($access)
         );
+
+        $this->assertEndOfTokens($access);
     }
 
     public function testParseArgs_PassByReferenceValue ()
@@ -158,6 +170,8 @@ class test_classes_Parser_Args extends \vc\Test\TestCase
             ),
             $this->getArgParser()->parseArgs($access)
         );
+
+        $this->assertEndOfTokens($access);
     }
 
     public function testParseArgs_DefaultValue ()
@@ -178,6 +192,8 @@ class test_classes_Parser_Args extends \vc\Test\TestCase
             ),
             $this->getArgParser()->parseArgs($access)
         );
+
+        $this->assertEndOfTokens($access);
     }
 
     public function testParseArgs_Combined ()
@@ -217,6 +233,8 @@ class test_classes_Parser_Args extends \vc\Test\TestCase
             ),
             $this->getArgParser()->parseArgs($access)
         );
+
+        $this->assertEndOfTokens($access);
     }
 
 }
