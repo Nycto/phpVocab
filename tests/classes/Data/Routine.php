@@ -65,6 +65,15 @@ class test_classes_Data_Routine extends \vc\Test\TestCase
         $this->assertSame( array($arg1, $arg2), $routine->getArgs() );
     }
 
+    public function testReturnRefAccess ()
+    {
+        $routine = $this->getMockForAbstractClass('\vc\Data\Routine', array(123));
+        $this->assertFalse( $routine->getReturnRef() );
+
+        $this->assertSame( $routine, $routine->setReturnRef(TRUE) );
+        $this->assertTrue( $routine->getReturnRef() );
+    }
+
 }
 
 ?>

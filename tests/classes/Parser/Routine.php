@@ -48,7 +48,7 @@ class test_classes_Parser_Routine extends \vc\Test\TestCase
         );
     }
 
-    public function testParseFunc_WithoutArgs ()
+    public function testParseReference_WithoutArgs ()
     {
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()->thenAFunction()
@@ -65,7 +65,7 @@ class test_classes_Parser_Routine extends \vc\Test\TestCase
         $this->assertEndOfTokens( $access );
     }
 
-    public function testParseFunc_WithArgs ()
+    public function testParseReference_WithArgs ()
     {
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()->thenAFunction()
@@ -85,6 +85,25 @@ class test_classes_Parser_Routine extends \vc\Test\TestCase
             array( r8(new \vc\Data\Arg)->setVariable('$var') ),
             $routine->getArgs()
         );
+        $this->assertEndOfTokens( $access );
+    }
+
+    public function testParseRoutine_ReturnReference ()
+    {
+        $access = \vc\Tokens\Access::buildAccess(
+            $this->oneTokenReader()->thenAFunction()
+                ->thenSomeSpace()->thenAnAmpersand()
+                ->thenAName('MyFunc')
+                ->thenOpenParens()->thenCloseParens()
+                ->thenAnOpenBlock()->thenACloseBlock()
+        );
+
+        $routine = $this->getMockForAbstractClass('\vc\Data\Routine', array(1));
+
+        $this->getFuncParser()->parseRoutine( $routine, $access );
+
+        $this->assertEquals('MyFunc', $routine->getName());
+        $this->assertTrue( $routine->getReturnRef() );
         $this->assertEndOfTokens( $access );
     }
 

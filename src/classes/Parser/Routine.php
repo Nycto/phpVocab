@@ -72,15 +72,24 @@ class Routine
         \vc\Data\Routine $routine,
         \vc\Tokens\Access $access
     ) {
-        $token = $access->findRequired(
+        $access->findRequired(
             array(Token::T_FUNCTION), array(Token::T_WHITESPACE)
         );
 
-        $name = $access->findRequired(
-            array(Token::T_STRING), array(Token::T_WHITESPACE)
+        $token = $access->findRequired(
+            array(Token::T_STRING, Token::T_AMPERSAND),
+            array(Token::T_WHITESPACE)
         );
 
-        $routine->setName( $name->getContent() );
+        // Handle routines that return a reference
+        if ( $token->is(Token::T_AMPERSAND) ) {
+            $routine->setReturnRef(TRUE);
+            $token = $access->findRequired(
+                array(Token::T_STRING), array(Token::T_WHITESPACE)
+            );
+        }
+
+        $routine->setName( $token->getContent() );
         $routine->setArgs( $this->args->parseArgs($access) );
 
         $access->findRequired(

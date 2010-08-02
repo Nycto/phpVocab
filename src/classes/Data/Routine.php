@@ -59,6 +59,13 @@ abstract class Routine
     private $args = array();
 
     /**
+     * Whether this method returns values by reference
+     *
+     * @var Boolean
+     */
+    private $returnRef = FALSE;
+
+    /**
      * Constructor...
      *
      * @param Integer $line The line this routine starts on
@@ -134,6 +141,28 @@ abstract class Routine
     public function getArgs ()
     {
         return $this->args;
+    }
+
+    /**
+     * Sets the whether this routine returns value by reference
+     *
+     * @param Boolean $returnRef
+     * @return \vc\Data\Routine Returns a self reference
+     */
+    public function setReturnRef ( $returnRef )
+    {
+        $this->returnRef = (bool) $returnRef;
+        return $this;
+    }
+
+    /**
+     * Returns the whether this routine returns value by reference
+     *
+     * @return Boolean
+     */
+    public function getReturnRef ()
+    {
+        return $this->returnRef;
     }
 
 }
