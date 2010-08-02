@@ -38,17 +38,19 @@ class test_classes_Parser_Func extends \vc\Test\TestCase
     public function getFuncParser ()
     {
         return new \vc\Parser\Func(
-            new \vc\Parser\Args(
-                new \vc\Parser\Path,
-                new \vc\Parser\Value(
-                    new \vc\Parser\Brackets
-                )
-            ),
-            new \vc\Parser\Brackets
+            new \vc\Parser\Routine(
+                new \vc\Parser\Args(
+                    new \vc\Parser\Path,
+                    new \vc\Parser\Value(
+                        new \vc\Parser\Brackets
+                    )
+                ),
+                new \vc\Parser\Brackets
+            )
         );
     }
 
-    public function testParseFunc_WithoutArgs ()
+    public function testParseFunc ()
     {
         $access = $this->getAccessParserWithComment(
             new \vc\Data\Comment('Data'),
@@ -60,28 +62,6 @@ class test_classes_Parser_Func extends \vc\Test\TestCase
 
         $this->assertEquals(
             r8(new \vc\Data\Routine\Func(123, new \vc\Data\Comment('Data')))
-                ->setName('MyFunc'),
-            $this->getFuncParser()->parseFunc( $access )
-        );
-
-        $this->assertEndOfTokens( $access );
-    }
-
-    public function testParseFunc_WithArgs ()
-    {
-        $access = $this->getAccessParserWithComment(
-            new \vc\Data\Comment('Data'),
-            $this->oneTokenReader()->thenAFunction( 123 )
-                ->thenSomeSpace()->thenAName('MyFunc')
-                ->thenOpenParens()->thenAVariable('$var')
-                ->thenCloseParens()->thenAnOpenBlock()
-                ->thenAnEcho()->thenSomeSpace()->thenAString('test')
-                ->thenASemicolon()->thenACloseBlock()
-        );
-
-        $this->assertEquals(
-            r8(new \vc\Data\Routine\Func(123, new \vc\Data\Comment('Data')))
-                ->setArgs(array( r8(new \vc\Data\Arg)->setVariable('$var') ))
                 ->setName('MyFunc'),
             $this->getFuncParser()->parseFunc( $access )
         );

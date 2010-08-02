@@ -27,48 +27,67 @@ namespace vc\Parser;
 use \vc\Tokens\Token as Token;
 
 /**
- * Parses a function declaration
+ * Parses the shared parts of a method or function
  */
-class Func
+class Routine
 {
 
     /**
-     * A parser for extracting the meat of a function
+     * A parser for picking out the function arguments
      *
-     * @var \vc\Parser\Routine
+     * @var \vc\Parser\Args
      */
-    private $routine;
+    private $args;
+
+    /**
+     * A parser for collecting the content of a function
+     *
+     * @var \vc\Parser\Brackets
+     */
+    private $brackets;
 
     /**
      * Constructor...
      *
-     * @param \vc\Parser\Routine $routine A parser for extracting the meat of
-     *      a function
+     * @param \vc\Parser\Args $args A parser for pulling out the function arguments
+     * @param \vc\Parser\Brackets $brackets A parser for collecting the content
+     *      of a function
      */
-    public function __construct ( \vc\Parser\Routine $routine )
-    {
-        $this->routine = $routine;
+    public function __construct (
+        \vc\Parser\Args $args,
+        \vc\Parser\Brackets $brackets
+    ) {
+        $this->args = $args;
+        $this->brackets = $brackets;
     }
 
     /**
      * Parse a function out of the given token reader
      *
+     * @param \vc\Data\Routine $routine The object to fill with data
      * @param \vc\Tokens\Access $access The token access
      * @return \vc\Data\Routine\Func
      */
-    public function parseFunc ( \vc\Tokens\Access $access )
-    {
-        $token = $access->peekToRequired(
+    public function parseRoutine (
+        \vc\Data\Routine $routine,
+        \vc\Tokens\Access $access
+    ) {
+        $token = $access->findRequired(
             array(Token::T_FUNCTION), array(Token::T_WHITESPACE)
         );
 
-        $func = new \vc\Data\Routine\Func(
-            $token->getLine(), $access->getComment()
+        $name = $access->findRequired(
+            array(Token::T_STRING), array(Token::T_WHITESPACE)
         );
 
-        $this->routine->parseRoutine( $func, $access );
+        $routine->setName( $name->getContent() );
+        $routine->setArgs( $this->args->parseArgs($access) );
 
-        return $func;
+        $access->findRequired(
+            array(Token::T_BLOCK_OPEN), array(Token::T_WHITESPACE)
+        );
+
+        $this->brackets->parseCurlies( $access );
     }
 
 }
