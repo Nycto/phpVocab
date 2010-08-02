@@ -430,6 +430,16 @@ class TokenReader implements \vc\iface\Tokens\Reader
         return $this;
     }
 
+    /**
+     * Adds an ampersand token to the stream
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAnAmpersand ( $line = 1 )
+    {
+        return $this->then( Token::T_AMPERSAND, '&', $line );
+    }
+
 }
 
 ?>

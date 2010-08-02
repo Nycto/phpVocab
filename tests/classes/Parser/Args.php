@@ -159,7 +159,7 @@ class test_classes_Parser_Args extends \vc\Test\TestCase
     {
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()->thenOpenParens()
-                ->then(Token::T_AMPERSAND, '&')
+                ->thenAnAmpersand()
                 ->thenAVariable('$test')
                 ->thenCloseParens()
         );
@@ -202,14 +202,14 @@ class test_classes_Parser_Args extends \vc\Test\TestCase
             $this->oneTokenReader()->thenOpenParens()
 
                 ->thenANamespacePath('\path\to\class')->thenSomeSpace()
-                ->then(Token::T_AMPERSAND, '&')->thenSomeSpace()
+                ->thenAnAmpersand()->thenSomeSpace()
                 ->thenAVariable('$test')
                 ->thenSomeSpace()->thenAnEquals()
                 ->thenSomeSpace()->thenAnInteger(123)
                 ->thenAComma()
 
                 ->thenAnArray()->thenSomeSpace()
-                ->then(Token::T_AMPERSAND, '&')->thenSomeSpace()
+                ->thenAnAmpersand()->thenSomeSpace()
                 ->thenAVariable('$test2')
                 ->thenSomeSpace()->thenAnEquals()
                 ->thenSomeSpace()->thenAnArrayValue(array(1))
