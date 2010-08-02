@@ -384,6 +384,52 @@ class TokenReader implements \vc\iface\Tokens\Reader
         return $this->then( Token::T_COMMA, ',', $line );
     }
 
+    /**
+     * Adds a abstract keyword to the token list
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAnAbstract ( $line = 1 )
+    {
+        return $this->then( Token::T_ABSTRACT, 'abstract', $line );
+    }
+
+    /**
+     * Adds an extends token to this stream
+     *
+     * @param String $path The path that is being extended
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAnExtends ( $path, $line = 1 )
+    {
+        return $this->then( Token::T_EXTENDS, ',', $line )
+            ->thenSomeSpace( $line )
+            ->thenANamespacePath( $path, $line );
+    }
+
+    /**
+     * Adds an extends token to this stream
+     *
+     * @param Array $paths The path to mark as implemented
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAnImplements ( array $paths, $line = 1 )
+    {
+        $this->then( Token::T_IMPLEMENTS, ',', $line );
+
+        $first = TRUE;
+        foreach( $paths AS $path ) {
+            if ( $first )
+                $first = FALSE;
+            else
+                $this->thenAComma();
+
+            $this->thenSomeSpace($line)->thenANamespacePath($path, $line);
+        }
+
+        return $this;
+    }
+
 }
 
 ?>
