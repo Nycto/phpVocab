@@ -30,20 +30,6 @@ require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 class test_classes_Data_Property extends \vc\Test\TestCase
 {
 
-    public function testBuild ()
-    {
-        $comment = new \vc\Data\Comment;
-        $sig = new \vc\Data\Signature( 123, $comment );
-        $sig->setVisibility( \vc\Data\Visibility::vPrivate() );
-        $sig->setStatic( TRUE );
-
-        $prop = \vc\Data\Property::build( $sig );
-        $this->assertSame( 123, $prop->getLine() );
-        $this->assertSame( $comment, $prop->getComment() );
-        $this->assertTrue( $prop->getStatic() );
-        $this->assertEnum(\vc\Data\Visibility::vPRIVATE, $prop->getVisibility());
-    }
-
     public function testConstruct ()
     {
         $comment = new \vc\Data\Comment;

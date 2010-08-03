@@ -142,6 +142,32 @@ class Signature
         return $this->static;
     }
 
+    /**
+     * Builds a new method using this signature as the source
+     *
+     * @return \vc\Data\Method
+     */
+    public function buildMethod ()
+    {
+        $method = new \vc\Data\Routine\Method($this->line, $this->comment);
+        $method->setStatic( $this->static );
+        $method->setVisibility( $this->visibility );
+        return $method;
+    }
+
+    /**
+     * Builds a new property using this signature as the source
+     *
+     * @return \vc\Data\Property
+     */
+    public function buildProperty ()
+    {
+        $prop = new \vc\Data\Property( $this->line, $this->comment );
+        $prop->setStatic( $this->static );
+        $prop->setVisibility( $this->visibility );
+        return $prop;
+    }
+
 }
 
 ?>

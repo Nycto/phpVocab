@@ -57,6 +57,34 @@ class test_classes_Data_Signature extends \vc\Test\TestCase
         $this->assertTrue( $sig->getStatic() );
     }
 
+    public function testBuildMethod ()
+    {
+        $comment = new \vc\Data\Comment;
+        $sig = new \vc\Data\Signature( 123, $comment );
+        $sig->setVisibility( \vc\Data\Visibility::vPrivate() );
+        $sig->setStatic( TRUE );
+
+        $meth = $sig->buildMethod();
+        $this->assertSame( 123, $meth->getLine() );
+        $this->assertSame( $comment, $meth->getComment() );
+        $this->assertTrue( $meth->getStatic() );
+        $this->assertEnum(\vc\Data\Visibility::vPRIVATE, $meth->getVisibility());
+    }
+
+    public function testBuildProperty ()
+    {
+        $comment = new \vc\Data\Comment;
+        $sig = new \vc\Data\Signature( 123, $comment );
+        $sig->setVisibility( \vc\Data\Visibility::vPrivate() );
+        $sig->setStatic( TRUE );
+
+        $prop = $sig->buildProperty();
+        $this->assertSame( 123, $prop->getLine() );
+        $this->assertSame( $comment, $prop->getComment() );
+        $this->assertTrue( $prop->getStatic() );
+        $this->assertEnum(\vc\Data\Visibility::vPRIVATE, $prop->getVisibility());
+    }
+
 }
 
 ?>
