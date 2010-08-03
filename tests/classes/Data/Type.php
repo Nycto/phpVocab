@@ -45,14 +45,26 @@ class test_classes_Data_Type extends \vc\Test\TestCase
 
     public function testNameAccess ()
     {
-        $type = $this->getMockForAbstractClass(
-            '\vc\Data\Type',
-            array(123, new \vc\Data\Comment)
-        );
+        $type = $this->getMockForAbstractClass('\vc\Data\Type', array(123));
 
         $this->assertNull( $type->getName() );
         $this->assertSame( $type, $type->setName("method") );
         $this->assertSame( "method", $type->getName() );
+    }
+
+    public function testMethodAccess ()
+    {
+        $type = $this->getMockForAbstractClass('\vc\Data\Type', array(123));
+
+        $this->assertSame( array(), $type->getMethods() );
+
+        $meth1 = new \vc\Data\Routine\Method(1);
+        $this->assertSame( $type, $type->addMethod($meth1) );
+        $this->assertSame( array($meth1), $type->getMethods() );
+
+        $meth2 = new \vc\Data\Routine\Method(1);
+        $this->assertSame( $type, $type->addMethod($meth2) );
+        $this->assertSame( array($meth1, $meth2), $type->getMethods() );
     }
 
 }

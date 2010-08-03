@@ -52,11 +52,11 @@ abstract class Type
     private $comment;
 
     /**
-     * The list of references this type extends
+     * The list of methods in this type
      *
-     * @var Array
+     * @var Array An array of \vc\Data\Routine\Method objects
      */
-    private $extends = array();
+    private $methods = array();
 
     /**
      * Constructor...
@@ -67,7 +67,7 @@ abstract class Type
     public function __construct ( $line, \vc\Data\Comment $comment = NULL )
     {
         $this->line = (int) $line;
-        $this->comment = $comment;
+        $this->comment = $comment ?: new \vc\Data\Comment;
     }
 
     /**
@@ -110,6 +110,28 @@ abstract class Type
     public function getName ()
     {
         return $this->name;
+    }
+
+    /**
+     * Adds a method to this type
+     *
+     * @param \vc\Data\Routine\Method $method
+     * @return \vc\Data\Type Returns a self reference
+     */
+    public function addMethod ( \vc\Data\Routine\Method $method )
+    {
+        $this->methods[] = $method;
+        return $this;
+    }
+
+    /**
+     * Returns the Methods loaded in this type
+     *
+     * @return Array An array of \vc\Data\Routine\Method objects
+     */
+    public function getMethods ()
+    {
+        return $this->methods;
     }
 
 }
