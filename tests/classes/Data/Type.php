@@ -55,7 +55,6 @@ class test_classes_Data_Type extends \vc\Test\TestCase
     public function testMethodAccess ()
     {
         $type = $this->getMockForAbstractClass('\vc\Data\Type', array(123));
-
         $this->assertSame( array(), $type->getMethods() );
 
         $meth1 = new \vc\Data\Routine\Method(1);
@@ -65,6 +64,20 @@ class test_classes_Data_Type extends \vc\Test\TestCase
         $meth2 = new \vc\Data\Routine\Method(1);
         $this->assertSame( $type, $type->addMethod($meth2) );
         $this->assertSame( array($meth1, $meth2), $type->getMethods() );
+    }
+
+    public function testConstantAccess ()
+    {
+        $type = $this->getMockForAbstractClass('\vc\Data\Type', array(123));
+        $this->assertSame( array(), $type->getConstants() );
+
+        $const1 = new \vc\Data\Constant(1);
+        $this->assertSame( $type, $type->addConstant($const1) );
+        $this->assertSame( array($const1), $type->getConstants() );
+
+        $const2 = new \vc\Data\Constant(1);
+        $this->assertSame( $type, $type->addConstant($const2) );
+        $this->assertSame( array($const1, $const2), $type->getConstants() );
     }
 
 }

@@ -59,6 +59,15 @@ abstract class Type
     private $methods = array();
 
     /**
+     * The list of constants loaded in this type
+     *
+     * Betcha didn't know that interfaces could have constants? I didn't.
+     *
+     * @var Array An array of \vc\Data\Constant objects
+     */
+    private $constants = array();
+
+    /**
      * Constructor...
      *
      * @param Integer $line The line this type starts on
@@ -132,6 +141,28 @@ abstract class Type
     public function getMethods ()
     {
         return $this->methods;
+    }
+
+    /**
+     * Adds a Constant to this type
+     *
+     * @param \vc\Data\Constant $constant
+     * @return \vc\Data\Type Returns a self reference
+     */
+    public function addConstant ( \vc\Data\Constant $constant )
+    {
+        $this->constants[] = $constant;
+        return $this;
+    }
+
+    /**
+     * Returns the Constants loaded in this type
+     *
+     * @return Array Returns an array of \vc\Data\Constant objects
+     */
+    public function getConstants ()
+    {
+        return $this->constants;
     }
 
 }
