@@ -445,7 +445,7 @@ class TokenReader implements \vc\iface\Tokens\Reader
      *
      * @return \vc\iface\Tokens\Reader Returns a self reference
      */
-    public function thenAPublic ( $line = 1)
+    public function thenAPublic ( $line = 1 )
     {
         return $this->then( Token::T_PUBLIC, 'public', $line );
     }
@@ -455,7 +455,7 @@ class TokenReader implements \vc\iface\Tokens\Reader
      *
      * @return \vc\iface\Tokens\Reader Returns a self reference
      */
-    public function thenAPrivate ( $line = 1)
+    public function thenAPrivate ( $line = 1 )
     {
         return $this->then( Token::T_PRIVATE, 'private', $line );
     }
@@ -465,7 +465,7 @@ class TokenReader implements \vc\iface\Tokens\Reader
      *
      * @return \vc\iface\Tokens\Reader Returns a self reference
      */
-    public function thenAProtected ( $line = 1)
+    public function thenAProtected ( $line = 1 )
     {
         return $this->then( Token::T_PROTECTED, 'protected', $line );
     }
@@ -475,9 +475,19 @@ class TokenReader implements \vc\iface\Tokens\Reader
      *
      * @return \vc\iface\Tokens\Reader Returns a self reference
      */
-    public function thenAStatic ( $line = 1)
+    public function thenAStatic ( $line = 1 )
     {
         return $this->then( Token::T_STATIC, 'static', $line );
+    }
+
+    /**
+     * Adds a final token
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAFinal ( $line = 1 )
+    {
+        return $this->then( Token::T_FINAL, 'final', $line );
     }
 
 }
