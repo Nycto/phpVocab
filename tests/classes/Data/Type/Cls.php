@@ -32,10 +32,7 @@ class test_classes_Data_Type_Cls extends \vc\Test\TestCase
 
     public function testFinalAccess ()
     {
-        $cls = $this->getMockForAbstractClass(
-            '\vc\Data\Type\Cls',
-            array(123, new \vc\Data\Comment)
-        );
+        $cls = new \vc\Data\Type\Cls(123);
 
         $this->assertFalse( $cls->getFinal() );
         $this->assertSame( $cls, $cls->setFinal(TRUE) );
@@ -44,10 +41,7 @@ class test_classes_Data_Type_Cls extends \vc\Test\TestCase
 
     public function testAbstractAccess ()
     {
-        $cls = $this->getMockForAbstractClass(
-            '\vc\Data\Type\Cls',
-            array(123, new \vc\Data\Comment)
-        );
+        $cls = new \vc\Data\Type\Cls(123);
 
         $this->assertFalse( $cls->getAbstract() );
         $this->assertSame( $cls, $cls->setAbstract(TRUE) );
@@ -56,10 +50,7 @@ class test_classes_Data_Type_Cls extends \vc\Test\TestCase
 
     public function testExtendsAccess ()
     {
-        $cls = $this->getMockForAbstractClass(
-            '\vc\Data\Type\Cls',
-            array(123, new \vc\Data\Comment)
-        );
+        $cls = new \vc\Data\Type\Cls(123);
 
         $this->assertNull( $cls->getExtends() );
         $this->assertSame( $cls, $cls->setExtends('parent') );
@@ -68,16 +59,27 @@ class test_classes_Data_Type_Cls extends \vc\Test\TestCase
 
     public function testIFaceAccess ()
     {
-        $cls = $this->getMockForAbstractClass(
-            '\vc\Data\Type\Cls',
-            array(123, new \vc\Data\Comment)
-        );
+        $cls = new \vc\Data\Type\Cls(123);
 
         $this->assertSame( array(), $cls->getIFaces() );
         $this->assertSame( $cls, $cls->addIFace('parent') );
         $this->assertSame( array('parent'), $cls->getIFaces() );
         $this->assertSame( $cls, $cls->addIFace('parent2') );
         $this->assertSame( array('parent', 'parent2'), $cls->getIFaces() );
+    }
+
+    public function testPropertiesAccess ()
+    {
+        $cls = new \vc\Data\Type\Cls(123);
+        $this->assertSame( array(), $cls->getProperties() );
+
+        $prop1 = new \vc\Data\Property(1);
+        $this->assertSame( $cls, $cls->addProperty($prop1) );
+        $this->assertSame( array($prop1), $cls->getProperties() );
+
+        $prop2 = new \vc\Data\Property(1);
+        $this->assertSame( $cls, $cls->addProperty($prop2) );
+        $this->assertSame( array($prop1, $prop2), $cls->getProperties() );
     }
 
 }

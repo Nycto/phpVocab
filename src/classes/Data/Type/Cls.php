@@ -59,6 +59,13 @@ class Cls extends \vc\Data\Type
     private $implements = array();
 
     /**
+     * The properties of this class
+     *
+     * @var Array An array of \vc\Data\Property objects
+     */
+    private $properties = array();
+
+    /**
      * Sets whether this method is final
      *
      * @param Boolean $final
@@ -144,6 +151,28 @@ class Cls extends \vc\Data\Type
     public function getIFaces ()
     {
         return $this->implements;
+    }
+
+    /**
+     * Adds a property to this class
+     *
+     * @param \vc\Data\Property $property
+     * @return \vc\Data\Type\Cls Returns a self reference
+     */
+    public function addProperty ( \vc\Data\Property $property )
+    {
+        $this->properties[] = $property;
+        return $this;
+    }
+
+    /**
+     * Returns the Properties in this class
+     *
+     * @return Array Returns an array of \vc\Data\Property objects
+     */
+    public function getProperties ()
+    {
+        return $this->properties;
     }
 
 }
