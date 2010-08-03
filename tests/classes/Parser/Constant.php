@@ -36,6 +36,7 @@ class test_classes_Parser_Constant extends \vc\Test\TestCase
     {
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()
+                ->thenAConst()->thenSomeSpace()
                 ->thenAName('CONSTANT')->thenSomeSpace()
                 ->thenAnEquals()->thenSomeSpace()
                 ->thenAnInteger(123)->thenASemicolon()
@@ -59,6 +60,7 @@ class test_classes_Parser_Constant extends \vc\Test\TestCase
     {
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()
+                ->thenAConst()->thenSomeSpace()
                 ->thenAName('NAME')->thenSomeSpace()
                 ->thenAnEquals()->thenSomeSpace()
                 ->thenAFloat(12.3)->thenASemicolon()
@@ -82,6 +84,7 @@ class test_classes_Parser_Constant extends \vc\Test\TestCase
     {
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()
+                ->thenAConst()->thenSomeSpace()
                 ->thenAName('NAME')->thenSomeSpace()
                 ->thenAnEquals()->thenSomeSpace()
                 ->thenAString('string', "'")->thenASemicolon()
@@ -105,6 +108,7 @@ class test_classes_Parser_Constant extends \vc\Test\TestCase
     {
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()
+                ->thenAConst()->thenSomeSpace()
                 ->thenAName('NAME')->thenSomeSpace()
                 ->thenAnEquals()->thenSomeSpace()
                 ->thenAString('string', '"')->thenASemicolon()
@@ -128,6 +132,7 @@ class test_classes_Parser_Constant extends \vc\Test\TestCase
     {
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()
+                ->thenAConst()->thenSomeSpace()
                 ->thenAName('NAME')->thenSomeSpace()
                 ->thenAnEquals()->thenSomeSpace()
                 ->thenAName('NULL')->thenASemicolon()
@@ -151,6 +156,7 @@ class test_classes_Parser_Constant extends \vc\Test\TestCase
     {
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()
+                ->thenAConst()->thenSomeSpace()
                 ->thenAName('NAME')->thenSomeSpace()
                 ->thenAnEquals()->thenSomeSpace()
                 ->thenAHereDoc('contents')->thenASemicolon()

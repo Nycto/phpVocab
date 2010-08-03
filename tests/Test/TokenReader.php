@@ -490,6 +490,16 @@ class TokenReader implements \vc\iface\Tokens\Reader
         return $this->then( Token::T_FINAL, 'final', $line );
     }
 
+    /**
+     * Adds a const token
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAConst ( $line = 1 )
+    {
+        return $this->then( Token::T_CONST, 'const', $line );
+    }
+
 }
 
 ?>
