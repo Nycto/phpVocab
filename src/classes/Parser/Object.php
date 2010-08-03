@@ -40,14 +40,26 @@ class Object
     private $path;
 
     /**
+     * A parser for adding properties, methods and constants to a class
+     *
+     * @var \vc\Parser\Object\Members
+     */
+    private $members;
+
+    /**
      * Constructor...
      *
      * @param \vc\Parser\Path $path Parser for extracting namespace paths for
      *      extends and implements clauses
+     * @param \vc\Parser\Object\Members $members A parser for adding properties,
+     *      methods and constants to a class
      */
-    public function __construct ( \vc\Parser\Path $path )
-    {
+    public function __construct (
+        \vc\Parser\Path $path,
+        \vc\Parser\Object\Members $members
+    ) {
         $this->path = $path;
+        $this->members = $members;
     }
 
     /**
@@ -138,6 +150,8 @@ class Object
             $this->parseExtends( $class, $access );
         else if ( $token->is(Token::T_IMPLEMENTS) )
             $this->parseImplements( $class, $access );
+
+        $this->members->parseMembers( $class, $access );
 
         return $class;
     }

@@ -39,8 +39,16 @@ class test_classes_Parser_Object extends \vc\Test\TestCase
      */
     public function getObjectParser ()
     {
+        $members = $this->getStub('\vc\Parser\Object\Members');
+        $members->expects( $this->once() )->method( "parseMembers" )
+            ->with(
+                $this->isInstanceOf('\vc\Data\Type\Cls'),
+                $this->isInstanceOf('\vc\Tokens\Access')
+            );
+
         return new \vc\Parser\Object(
-            new \vc\Parser\Path
+            new \vc\Parser\Path,
+            $members
         );
     }
 
