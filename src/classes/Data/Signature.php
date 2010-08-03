@@ -71,10 +71,10 @@ class Signature
      * @param Integer $line The line this signature starts on
      * @param \vc\Data\Comment $comment The comment describing this signature
      */
-    public function __construct ( $line, \vc\Data\Comment $comment )
+    public function __construct ( $line, \vc\Data\Comment $comment = NULL )
     {
         $this->line = (int) $line;
-        $this->comment = $comment;
+        $this->comment = $comment ?: new \vc\Data\Comment;
         $this->visibility = \vc\Data\Visibility::vPublic();
     }
 

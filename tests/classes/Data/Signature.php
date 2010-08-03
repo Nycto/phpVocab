@@ -33,10 +33,14 @@ class test_classes_Data_Signature extends \vc\Test\TestCase
     public function testConstruct ()
     {
         $comment = new \vc\Data\Comment;
-
         $sig = new \vc\Data\Signature( 123, $comment );
         $this->assertSame( 123, $sig->getLine() );
         $this->assertSame( $comment, $sig->getComment() );
+
+
+        $sig = new \vc\Data\Signature( 123 );
+        $this->assertSame( 123, $sig->getLine() );
+        $this->assertEquals( new \vc\Data\Comment, $sig->getComment() );
     }
 
     public function testVisibilityAccess ()
