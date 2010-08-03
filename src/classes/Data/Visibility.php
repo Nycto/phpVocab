@@ -24,6 +24,8 @@
 
 namespace vc\Data;
 
+use \vc\Tokens\Token as Token;
+
 /**
  * The visibility of a method or property
  */
@@ -32,6 +34,25 @@ class Visibility extends \r8\Enum
     const vPUBLIC = 'public';
     const vPRIVATE = 'private';
     const vPROTECTED = 'protected';
+
+    /**
+     * Builds a new instance of this enum using a token to determine the value
+     *
+     * @param \vc\Tokens\Token $token
+     * @return \vc\Data\Visibility
+     */
+    static public function fromToken ( \vc\Tokens\Token $token )
+    {
+        if ( $token->is(Token::T_PUBLIC) )
+            return self::vPublic();
+        else if ( $token->is(Token::T_PROTECTED) )
+            return self::vProtected();
+        else if ( $token->is(Token::T_PRIVATE) )
+            return self::vPrivate();
+
+        throw new \r8\Exception\Argument(0, "Token", "Invalid token source");
+    }
+
 }
 
 ?>
