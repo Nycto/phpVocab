@@ -48,6 +48,9 @@ class test_classes_Parser_Object extends \vc\Test\TestCase
 
         return new \vc\Parser\Object(
             new \vc\Parser\Path,
+            new \vc\Parser\PathList(
+                new \vc\Parser\Path
+            ),
             $members
         );
     }
@@ -105,25 +108,7 @@ class test_classes_Parser_Object extends \vc\Test\TestCase
         );
     }
 
-    public function testParseClass_SingleImplements ()
-    {
-        $access = $this->getAccessParserWithComment(
-            new \vc\Data\Comment('Data'),
-            $this->oneTokenReader()
-                ->thenSomeSpace()->thenAClass()->thenSomeSpace()
-                ->thenAName('MyClass')->thenSomeSpace()
-                ->thenAnImplements(array('one'))
-                ->thenSomeSpace()->thenAnOpenBlock()->thenACloseBlock()
-        );
-
-        $this->assertEquals(
-            r8(new \vc\Data\Type\Cls(1, new \vc\Data\Comment('Data')))
-                ->setName('MyClass')->addIFace('one'),
-            $this->getObjectParser()->parseClass( $access )
-        );
-    }
-
-    public function testParseClass_ManyImplements ()
+    public function testParseClass_Implements ()
     {
         $access = $this->getAccessParserWithComment(
             new \vc\Data\Comment('Data'),
@@ -137,12 +122,12 @@ class test_classes_Parser_Object extends \vc\Test\TestCase
         $this->assertEquals(
             r8(new \vc\Data\Type\Cls(1, new \vc\Data\Comment('Data')))
                 ->setName('MyClass')
-                ->addIFace('one')->addIFace('\path\two'),
+                ->setIFaces(array('one', '\path\two')),
             $this->getObjectParser()->parseClass( $access )
         );
     }
 
-    public function _testParseClass_Full ()
+    public function testParseClass_Full ()
     {
         $access = $this->getAccessParserWithComment(
             new \vc\Data\Comment('Data'),
@@ -157,7 +142,7 @@ class test_classes_Parser_Object extends \vc\Test\TestCase
         $this->assertEquals(
             r8(new \vc\Data\Type\Cls(123, new \vc\Data\Comment('Data')))
                 ->setName('MyClass')->setAbstract(TRUE)->setExtends('parent')
-                ->addIFace('one')->addIFace('\path\two'),
+                ->setIFaces(array('one', '\path\two')),
             $this->getObjectParser()->parseClass( $access )
         );
     }

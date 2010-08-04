@@ -40,6 +40,13 @@ class Object
     private $path;
 
     /**
+     * A parser that is used for pulling out the list of interface implementations
+     *
+     * @var \vc\Parser\PathList
+     */
+    private $pathList;
+
+    /**
      * A parser for adding properties, methods and constants to a class
      *
      * @var \vc\Parser\Object\Members
@@ -50,62 +57,20 @@ class Object
      * Constructor...
      *
      * @param \vc\Parser\Path $path Parser for extracting namespace paths for
-     *      extends and implements clauses
+     *      extends clauses
+     * @param \vc\Parser\PathList $pathList A parser that is used for pulling
+     *      out the list of interface implementations
      * @param \vc\Parser\Object\Members $members A parser for adding properties,
      *      methods and constants to a class
      */
     public function __construct (
         \vc\Parser\Path $path,
+        \vc\Parser\PathList $pathList,
         \vc\Parser\Object\Members $members
     ) {
         $this->path = $path;
+        $this->pathList = $pathList;
         $this->members = $members;
-    }
-
-    /**
-     * Parses an extends clause
-     *
-     * @param \vc\Data\Type\Cls $class The class to insert data into
-     * @param \vc\Tokens\Access $access The token access
-     * @return NULL
-     */
-    private function parseImplements (
-        \vc\Data\Type\Cls $class,
-        \vc\Tokens\Access $access
-    ) {
-        $class->addIFace( $this->path->parsePath($access) );
-
-        $token = $access->findRequired(
-            array(Token::T_COMMA, Token::T_BLOCK_OPEN),
-            array(Token::T_WHITESPACE)
-        );
-
-        // Recursively collect the implemented paths
-        if ( $token->is(Token::T_COMMA) )
-            $this->parseImplements( $class, $access );
-    }
-
-    /**
-     * Parses an extends clause
-     *
-     * @param \vc\Data\Type\Cls $class The class to insert data into
-     * @param \vc\Tokens\Access $access The token access
-     * @return NULL
-     */
-    private function parseExtends (
-        \vc\Data\Type\Cls $class,
-        \vc\Tokens\Access $access
-    ) {
-        $class->setExtends( $this->path->parsePath($access) );
-
-        // Look for any interfaces
-        $token = $access->findRequired(
-            array(Token::T_IMPLEMENTS, Token::T_BLOCK_OPEN),
-            array(Token::T_WHITESPACE)
-        );
-
-        if ( $token->is(Token::T_IMPLEMENTS) )
-            $this->parseImplements( $class, $access );
     }
 
     /**
@@ -133,24 +98,41 @@ class Object
             );
         }
 
+        // Searches for the name of the class
         $token = $access->findRequired(
             array(Token::T_STRING),array(Token::T_WHITESPACE)
         );
 
-        // Pull the name of the class
+        // Set the name of the class
         $class->setName( $token->getContent() );
 
-        // Look for classes and interfaces
+        // Look for parent classes and interfaces
         $token = $access->findRequired(
             array(Token::T_EXTENDS, Token::T_IMPLEMENTS, Token::T_BLOCK_OPEN),
             array(Token::T_WHITESPACE)
         );
 
-        if ( $token->is(Token::T_EXTENDS) )
-            $this->parseExtends( $class, $access );
-        else if ( $token->is(Token::T_IMPLEMENTS) )
-            $this->parseImplements( $class, $access );
+        // Add the parent class
+        if ( $token->is(Token::T_EXTENDS) ) {
+            $class->setExtends( $this->path->parsePath($access) );
 
+            // Look for any interfaces
+            $token = $access->findRequired(
+                array(Token::T_IMPLEMENTS, Token::T_BLOCK_OPEN),
+                array(Token::T_WHITESPACE)
+            );
+        }
+
+        // Add any interface implementations
+        if ( $token->is(Token::T_IMPLEMENTS) ) {
+            $class->setIFaces( $this->pathList->parsePathList($access) );
+
+            $access->findRequired(
+                array(Token::T_BLOCK_OPEN), array(Token::T_WHITESPACE)
+            );
+        }
+
+        // Finally, parse out the content of the class
         $this->members->parseMembers( $class, $access );
 
         return $class;

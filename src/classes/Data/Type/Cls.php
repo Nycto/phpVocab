@@ -132,14 +132,14 @@ class Cls extends \vc\Data\Type
     }
 
     /**
-     * Adds a new interface that this class implements
+     * Sets the list of interfaces this class implements
      *
-     * @param String $implements
+     * @param Array $ifaces A list of namespace path strings
      * @return \vc\Data\Type\Cls Returns a self reference
      */
-    public function addIFace ( $iface )
+    public function setIfaces ( array $iface )
     {
-        $this->implements[] = $iface;
+        $this->implements = array_filter( array_map('strval', $iface) );
         return $this;
     }
 

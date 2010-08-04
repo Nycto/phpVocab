@@ -60,12 +60,10 @@ class test_classes_Data_Type_Cls extends \vc\Test\TestCase
     public function testIFaceAccess ()
     {
         $cls = new \vc\Data\Type\Cls(123);
-
         $this->assertSame( array(), $cls->getIFaces() );
-        $this->assertSame( $cls, $cls->addIFace('parent') );
-        $this->assertSame( array('parent'), $cls->getIFaces() );
-        $this->assertSame( $cls, $cls->addIFace('parent2') );
-        $this->assertSame( array('parent', 'parent2'), $cls->getIFaces() );
+
+        $this->assertSame( $cls, $cls->setIfaces(array('parent', '\another')) );
+        $this->assertSame( array('parent', '\another'), $cls->getIFaces() );
     }
 
     public function testPropertiesAccess ()
