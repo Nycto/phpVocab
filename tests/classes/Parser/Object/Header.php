@@ -24,12 +24,12 @@
 
 use \vc\Tokens\Token as Token;
 
-require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
+require_once rtrim( __DIR__, "/" ) ."/../../../setup.php";
 
 /**
  * Unit tests
  */
-class test_classes_Parser_Object extends \vc\Test\TestCase
+class test_classes_Parser_Object_Header extends \vc\Test\TestCase
 {
 
     /**
@@ -46,7 +46,7 @@ class test_classes_Parser_Object extends \vc\Test\TestCase
                 $this->isInstanceOf('\vc\Tokens\Access')
             );
 
-        return new \vc\Parser\Object(
+        return new \vc\Parser\Object\Header(
             new \vc\Parser\Path,
             new \vc\Parser\PathList(
                 new \vc\Parser\Path

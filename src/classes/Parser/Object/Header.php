@@ -22,14 +22,14 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-namespace vc\Parser;
+namespace vc\Parser\Object;
 
 use \vc\Tokens\Token as Token;
 
 /**
  * Parses a class declaration
  */
-class Object
+class Header
 {
 
     /**
