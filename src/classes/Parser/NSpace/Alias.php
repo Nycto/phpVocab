@@ -58,6 +58,10 @@ class Alias
      */
     public function parseAlias ( \vc\Tokens\Access $access )
     {
+        $access->findRequired(
+            array(Token::T_USE), array(Token::T_WHITESPACE)
+        );
+
         $alias = new \vc\Data\Alias( $this->path->parsePath($access) );
 
         $as = $access->find(

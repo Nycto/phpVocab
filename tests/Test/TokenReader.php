@@ -500,6 +500,16 @@ class TokenReader implements \vc\iface\Tokens\Reader
         return $this->then( Token::T_CONST, 'const', $line );
     }
 
+    /**
+     * Adds a use token
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAUse ( $line = 1 )
+    {
+        return $this->then( Token::T_USE, 'use', $line );
+    }
+
 }
 
 ?>

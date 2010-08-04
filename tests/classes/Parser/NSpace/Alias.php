@@ -36,6 +36,7 @@ class test_classes_Parser_NSpace_Alias extends \vc\Test\TestCase
     {
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()
+                ->thenAUse()->thenSomeSpace()
                 ->thenANamespacePath('sub1\sub2')->thenASemicolon()
                 ->thenAClass()
         );
@@ -53,7 +54,9 @@ class test_classes_Parser_NSpace_Alias extends \vc\Test\TestCase
     public function testParseAlias_WithAs ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenANamespacePath('sub1\sub2')
+            $this->oneTokenReader()
+                ->thenAUse()->thenSomeSpace()
+                ->thenANamespacePath('sub1\sub2')
                 ->thenSomeSpace()->then( Token::T_AS, 'as' )
                 ->thenSomeSpace()->thenAName('renamed')
                 ->thenASemicolon()
@@ -73,7 +76,9 @@ class test_classes_Parser_NSpace_Alias extends \vc\Test\TestCase
     public function testParseAlias_MissingSemicolon ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenANamespacePath('sub1\sub2')
+            $this->oneTokenReader()
+                ->thenAUse()->thenSomeSpace()
+                ->thenANamespacePath('sub1\sub2')
                 ->thenSomeSpace()->then( Token::T_AS, 'as' )
                 ->thenSomeSpace()->thenAName('renamed')
         );
