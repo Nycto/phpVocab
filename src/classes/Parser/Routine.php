@@ -93,7 +93,8 @@ class Routine
         $routine->setArgs( $this->args->parseArgs($access) );
 
         $access->findRequired(
-            array(Token::T_BLOCK_OPEN), array(Token::T_WHITESPACE)
+            array(Token::T_BLOCK_OPEN, Token::T_SEMICOLON),
+            array(Token::T_WHITESPACE)
         );
 
         $this->brackets->parseCurlies( $access );

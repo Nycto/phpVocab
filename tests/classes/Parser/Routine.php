@@ -107,6 +107,23 @@ class test_classes_Parser_Routine extends \vc\Test\TestCase
         $this->assertEndOfTokens( $access );
     }
 
+    public function testParseReference_EndsWithASemiColon ()
+    {
+        $access = \vc\Tokens\Access::buildAccess(
+            $this->oneTokenReader()->thenAFunction()
+                ->thenSomeSpace()->thenAName('MyFunc')
+                ->thenOpenParens()->thenCloseParens()
+                ->thenASemicolon()
+        );
+
+        $routine = $this->getMockForAbstractClass('\vc\Data\Routine', array(1));
+
+        $this->getFuncParser()->parseRoutine( $routine, $access );
+
+        $this->assertEquals('MyFunc', $routine->getName());
+        $this->assertEndOfTokens( $access );
+    }
+
 }
 
 ?>
