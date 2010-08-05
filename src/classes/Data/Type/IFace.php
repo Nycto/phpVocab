@@ -38,14 +38,14 @@ class IFace extends \vc\Data\Type
     private $extends = array();
 
     /**
-     * Adds a new reference that this interface extends
+     * Sets the path references that this interface extends
      *
-     * @param String $ref
+     * @param Array $extends The list of paths this interface extends
      * @return \vc\Data\Type\IFace Returns a self reference
      */
-    public function addExtends ( $extends )
+    public function setExtends ( array $extends )
     {
-        $this->extends[] = trim( (string) $extends );
+        $this->extends = array_filter( array_map('strval', $extends) );
         return $this;
     }
 

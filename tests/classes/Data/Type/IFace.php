@@ -38,8 +38,8 @@ class test_classes_Data_Type_IFace extends \vc\Test\TestCase
         );
         $this->assertSame( array(), $iface->getExtends() );
 
-        $this->assertSame( $iface, $iface->addExtends('parent') );
-        $this->assertSame( array('parent'), $iface->getExtends() );
+        $this->assertSame( $iface, $iface->setExtends(array('one', 'two')) );
+        $this->assertSame( array('one', 'two'), $iface->getExtends() );
     }
 
 }
