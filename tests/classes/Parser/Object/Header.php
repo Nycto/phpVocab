@@ -97,7 +97,8 @@ class test_classes_Parser_Object_Header extends \vc\Test\TestCase
             $this->oneTokenReader()
                 ->thenSomeSpace()->thenAClass()
                 ->thenSomeSpace()->thenAName('MyClass')
-                ->thenSomeSpace()->thenAnExtends('\path\to\parent')
+                ->thenSomeSpace()->thenAnExtends()
+                ->thenSomeSpace()->thenANamespacePath('\path\to\parent')
                 ->thenSomeSpace()->thenAnOpenBlock()->thenACloseBlock()
         );
 
@@ -134,7 +135,8 @@ class test_classes_Parser_Object_Header extends \vc\Test\TestCase
             $this->oneTokenReader()->thenAnAbstract(123)
                 ->thenSomeSpace()->thenAClass()->thenSomeSpace()
                 ->thenAName('MyClass')->thenSomeSpace()
-                ->thenAnExtends('parent')->thenSomeSpace()
+                ->thenSomeSpace()->thenAnExtends()
+                ->thenSomeSpace()->thenANamespacePath('parent')
                 ->thenAnImplements(array('one', '\path\two'))
                 ->thenSomeSpace()->thenAnOpenBlock()->thenACloseBlock()
         );

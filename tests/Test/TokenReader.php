@@ -400,11 +400,29 @@ class TokenReader implements \vc\iface\Tokens\Reader
      * @param String $path The path that is being extended
      * @return \vc\iface\Tokens\Reader Returns a self reference
      */
-    public function thenAnExtends ( $path, $line = 1 )
+    public function thenAnExtends ( $line = 1 )
     {
-        return $this->then( Token::T_EXTENDS, ',', $line )
-            ->thenSomeSpace( $line )
-            ->thenANamespacePath( $path, $line );
+        return $this->then( Token::T_EXTENDS, 'extends', $line );
+    }
+
+    /**
+     * Adds an extends token to this stream
+     *
+     * @param Array $paths The path to mark as implemented
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAPathList ( array $paths, $line = 1 )
+    {
+        $first = TRUE;
+        foreach( $paths AS $path ) {
+            if ( $first )
+                $first = FALSE;
+            else
+                $this->thenAComma($line)->thenSomeSpace($line);
+
+            $this->thenANamespacePath($path, $line);
+        }
+        return $this;
     }
 
     /**
@@ -415,19 +433,9 @@ class TokenReader implements \vc\iface\Tokens\Reader
      */
     public function thenAnImplements ( array $paths, $line = 1 )
     {
-        $this->then( Token::T_IMPLEMENTS, ',', $line );
-
-        $first = TRUE;
-        foreach( $paths AS $path ) {
-            if ( $first )
-                $first = FALSE;
-            else
-                $this->thenAComma();
-
-            $this->thenSomeSpace($line)->thenANamespacePath($path, $line);
-        }
-
-        return $this;
+        return $this->then( Token::T_IMPLEMENTS, 'implements', $line )
+            ->thenSomeSpace()
+            ->thenAPathList( $paths );
     }
 
     /**
@@ -508,6 +516,16 @@ class TokenReader implements \vc\iface\Tokens\Reader
     public function thenAUse ( $line = 1 )
     {
         return $this->then( Token::T_USE, 'use', $line );
+    }
+
+    /**
+     * Adds an interface token
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAnInterface ( $line = 1 )
+    {
+        return $this->then( Token::T_INTERFACE, 'interface', $line );
     }
 
 }
