@@ -42,7 +42,7 @@ class Signature
     /**
      * The parser for reading methods
      *
-     * @var \vc\Parser\Object\Method
+     * @var \vc\Parser\Routine\Method
      */
     private $methods;
 
@@ -51,7 +51,7 @@ class Signature
      */
     public function __construct (
         \vc\Parser\Object\Property $properties,
-        \vc\Parser\Object\Method $methods
+        \vc\Parser\Routine\Method $methods
     ) {
         $this->properties = $properties;
         $this->methods = $methods;

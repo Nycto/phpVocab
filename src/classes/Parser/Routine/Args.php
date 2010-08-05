@@ -22,7 +22,7 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-namespace vc\Parser;
+namespace vc\Parser\Routine;
 
 use \vc\Tokens\Token as Token;
 

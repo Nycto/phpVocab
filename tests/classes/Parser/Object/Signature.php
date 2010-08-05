@@ -43,7 +43,7 @@ class test_classes_Parser_Object_Signature extends \vc\Test\TestCase
         $property = $this->getStub('\vc\Parser\Object\Property');
         $property->expects( $this->never() )->method( "parserProperty" );
 
-        $method = $this->getStub('\vc\Parser\Object\Method');
+        $method = $this->getStub('\vc\Parser\Routine\Method');
         $method->expects( $this->once() )->method( "parseMethod" )
             ->with(
                 $this->isInstanceOf('\vc\Data\Signature' ),
@@ -70,7 +70,7 @@ class test_classes_Parser_Object_Signature extends \vc\Test\TestCase
             )
             ->will( $this->returnCallback($callback) );
 
-        $method = $this->getStub('\vc\Parser\Object\Method');
+        $method = $this->getStub('\vc\Parser\Routine\Method');
         $method->expects( $this->never() )->method( "parseMethod" );
 
         return new \vc\Parser\Object\Signature( $property, $method );

@@ -22,23 +22,23 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
+require_once rtrim( __DIR__, "/" ) ."/../../../setup.php";
 
 /**
  * Unit tests
  */
-class test_classes_Parser_Routine extends \vc\Test\TestCase
+class test_classes_Parser_Routine_Body extends \vc\Test\TestCase
 {
 
     /**
      * Returns a Routine parser
      *
-     * @return \vc\Parser\Func
+     * @return \vc\Parser\Routine\Body
      */
     public function getFuncParser ()
     {
-        return new \vc\Parser\Routine(
-            new \vc\Parser\Args(
+        return new \vc\Parser\Routine\Body(
+            new \vc\Parser\Routine\Args(
                 new \vc\Parser\Path,
                 new \vc\Parser\Value(
                     new \vc\Parser\Brackets

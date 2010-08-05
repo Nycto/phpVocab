@@ -22,24 +22,24 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
+require_once rtrim( __DIR__, "/" ) ."/../../../setup.php";
 
 use \vc\Tokens\Token as Token;
 
 /**
  * Unit tests
  */
-class test_classes_Parser_Args extends \vc\Test\TestCase
+class test_classes_Parser_Routine_Args extends \vc\Test\TestCase
 {
 
     /**
      * Returns am Argument Parser
      *
-     * @return \vc\Parser\Args
+     * @return \vc\Parser\Routine\Args
      */
     public function getArgParser ()
     {
-        return new \vc\Parser\Args(
+        return new \vc\Parser\Routine\Args(
             new \vc\Parser\Path,
             new \vc\Parser\Value( new \vc\Parser\Brackets )
         );

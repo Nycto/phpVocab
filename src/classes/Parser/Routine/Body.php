@@ -22,20 +22,20 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-namespace vc\Parser;
+namespace vc\Parser\Routine;
 
 use \vc\Tokens\Token as Token;
 
 /**
- * Parses the shared parts of a method or function
+ * Parses the shared body of a method or function
  */
-class Routine
+class Body
 {
 
     /**
      * A parser for picking out the function arguments
      *
-     * @var \vc\Parser\Args
+     * @var \vc\Parser\Routine\Args
      */
     private $args;
 
@@ -49,12 +49,12 @@ class Routine
     /**
      * Constructor...
      *
-     * @param \vc\Parser\Args $args A parser for pulling out the function arguments
+     * @param \vc\Parser\Routine\Args $args A parser for pulling out the function arguments
      * @param \vc\Parser\Brackets $brackets A parser for collecting the content
      *      of a function
      */
     public function __construct (
-        \vc\Parser\Args $args,
+        \vc\Parser\Routine\Args $args,
         \vc\Parser\Brackets $brackets
     ) {
         $this->args = $args;

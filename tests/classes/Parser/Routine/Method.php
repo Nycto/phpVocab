@@ -29,19 +29,19 @@ use \vc\Tokens\Token as Token;
 /**
  * Unit tests
  */
-class test_classes_Parser_Object_Method extends \vc\Test\TestCase
+class test_classes_Parser_Routine_Method extends \vc\Test\TestCase
 {
 
     /**
      * Returns a Method Parser
      *
-     * @return \vc\Parser\Object\Method
+     * @return \vc\Parser\Routine\Method
      */
     public function getMethodParser ()
     {
-        return new \vc\Parser\Object\Method(
-            new \vc\Parser\Routine(
-                new \vc\Parser\Args(
+        return new \vc\Parser\Routine\Method(
+            new \vc\Parser\Routine\Body(
+                new \vc\Parser\Routine\Args(
                     new \vc\Parser\Path,
                     new \vc\Parser\Value(
                         new \vc\Parser\Brackets

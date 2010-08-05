@@ -22,7 +22,7 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-namespace vc\Parser\Object;
+namespace vc\Parser\Routine;
 
 use \vc\Tokens\Token as Token;
 
@@ -42,10 +42,10 @@ class Method
     /**
      * Constructor...
      *
-     * @param \vc\Parser\Routine $routine A parser for extracting the meat of
+     * @param \vc\Parser\Routine\Body $routine A parser for extracting the meat of
      *      a function
      */
-    public function __construct ( \vc\Parser\Routine $routine )
+    public function __construct ( \vc\Parser\Routine\Body $routine )
     {
         $this->routine = $routine;
     }
