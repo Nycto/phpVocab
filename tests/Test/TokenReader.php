@@ -538,6 +538,17 @@ class TokenReader implements \vc\iface\Tokens\Reader
         return $this->then( Token::T_INTERFACE, 'interface', $line );
     }
 
+    /**
+     * Adds a regular inline comment
+     *
+     * @param String $comment
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAComment ( $comment, $line = 1 )
+    {
+        return $this->then( Token::T_COMMENT, '// '. $comment, $line );
+    }
+
 }
 
 ?>

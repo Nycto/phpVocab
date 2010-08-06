@@ -25,7 +25,7 @@
 require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 
 /**
- * Unit test for running all the tests
+ * Unit test
  */
 class test_classes_Tokens_Comments extends \vc\Test\TestCase
 {

@@ -115,7 +115,13 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             $tokens->hasToken(),
             "Token Reader does not have any tokens remaining"
         );
-        $this->assertIsTokenOf( $type, $tokens->popToken() );
+        $peek = $tokens->peekAtToken();
+        $this->assertIsTokenOf( $type, $peek );
+        $this->assertSame(
+            $peek,
+            $tokens->popToken(),
+            "Popped token does not match peeked at token"
+        );
     }
 
     /**
