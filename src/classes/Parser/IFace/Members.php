@@ -32,6 +32,93 @@ use \vc\Tokens\Token as Token;
 class Members
 {
 
+    /**
+     * A parser for reading default values
+     *
+     * @var \vc\Parser\Constant
+     */
+    private $constant;
+
+    /**
+     * A parser for reading methods
+     *
+     * @var \vc\Parser\Routine\Method
+     */
+    private $method;
+
+    /**
+     * Constructor...
+     *
+     * @param \vc\Parser\Constant $value A parser for reading default values
+     * @param \vc\Parser\Routine\Method $method A parser for reading methods
+     */
+    public function __construct (
+        \vc\Parser\Constant $constant,
+        \vc\Parser\Routine\Method $method
+    ) {
+        $this->constant = $constant;
+        $this->method = $method;
+    }
+
+    /**
+     * Parses the given token reader
+     *
+     * @param \vc\Data\Type\IFace $iface The interface to fill with data
+     * @param \vc\Tokens\Access $access The token access
+     * @return NULL
+     */
+    public function parseMembers (
+        \vc\Data\Type\IFace $iface,
+        \vc\Tokens\Access $access
+    ) {
+        $last = NULL;
+
+        // Limit the token stream to just the current block scope
+        $access = $access->untilBlockEnds();
+
+        // Keep looking until we have consumed all the members of this class
+        while ( $access->hasToken() ) {
+
+            $token = $access->peekToRequired(
+                array(
+                    Token::T_CONST,
+                    Token::T_STATIC, Token::T_FUNCTION,
+                    Token::T_PUBLIC, Token::T_PROTECTED, Token::T_PRIVATE,
+                ),
+                array(Token::T_WHITESPACE)
+            );
+
+            // This loop doesn't itself pop any tokens off, so this check just
+            // ensures that the parsers below this one don't do anything
+            // stupid.
+            if ( $token === $last ) {
+                throw new \RuntimeException(
+                    'Possible Infinite Loop Detected. '
+                    .'Current token has already been parsed'
+                );
+            }
+
+            $last = $token;
+
+            // Otherwise, we delegate to the appropraite parser
+            if ( $token->is(Token::T_CONST) ) {
+                $iface->addConstant(
+                    $this->constant->parseConstant($access)
+                );
+            }
+            else {
+                $iface->addMethod(
+                    $this->method->parseMethod(
+                        new \vc\Data\Signature(
+                            $token->getLine(), $access->getComment()
+                        ),
+                        $access
+                    )
+                );
+            }
+        }
+    }
+
 }
 
 ?>

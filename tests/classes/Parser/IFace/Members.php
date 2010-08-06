@@ -31,7 +31,83 @@ use \vc\Tokens\Token as Token;
  */
 class test_classes_Parser_IFace_Members extends \vc\Test\TestCase
 {
-    
+
+    /**
+     * Asserts that a reader will add a method to an interface
+     *
+     * @return NULL
+     */
+    public function assertAddsAMethod ( \vc\iface\Tokens\Reader $reader )
+    {
+        $constParser = $this->getStub('\vc\Parser\Constant');
+        $constParser->expects( $this->never() )->method( "parseConstant" );
+
+        $methParser = $this->getStub('\vc\Parser\Routine\Method');
+        $methParser->expects( $this->once() )->method( "parseMethod" )
+            ->will( $this->returnCallback( function ( $signature, $access ) {
+                $access->popToken();
+                return new \vc\Data\Routine\Method(1);
+            } ) );
+
+        $parser = new \vc\Parser\IFace\Members( $constParser, $methParser );
+
+        $iface = new \vc\Data\Type\IFace(1);
+        $parser->parseMembers($iface, \vc\Tokens\Access::buildAccess($reader));
+
+        $this->assertEquals( 0, count($iface->getConstants()) );
+        $this->assertEquals( 1, count($iface->getMethods()) );
+        $this->assertEndOfTokens( $reader );
+    }
+
+    public function testParseIFace_Constant ()
+    {
+        $access = \vc\Tokens\Access::buildAccess(
+            $this->oneTokenReader()->thenAConst()->thenSomeSpace()
+                ->thenAName('CONST')->thenSomeSpace()
+                ->thenAnEquals()->thenSomeSpace()->thenAnInteger(123)
+                ->thenASemicolon()
+        );
+
+        $iface = new \vc\Data\Type\IFace(1);
+
+        $parser = new \vc\Parser\IFace\Members(
+            new \vc\Parser\Constant(
+                new \vc\Parser\Value( new \vc\Parser\Brackets )
+            ),
+            $this->getStub('\vc\Parser\Routine\Method')
+        );
+
+        $parser->parseMembers( $iface, $access );
+
+        $this->assertEquals( 1, count($iface->getConstants()) );
+        $this->assertEndOfTokens( $access );
+    }
+
+    public function testParseIFace_Static ()
+    {
+        $this->assertAddsAMethod( $this->oneTokenReader()->thenAStatic );
+    }
+
+    public function testParseIFace_Public ()
+    {
+        $this->assertAddsAMethod( $this->oneTokenReader()->thenAPublic );
+    }
+
+    public function testParseIFace_Private ()
+    {
+        $this->assertAddsAMethod( $this->oneTokenReader()->thenAPrivate );
+    }
+
+    public function testParseIFace_Protected ()
+    {
+        $this->assertAddsAMethod( $this->oneTokenReader()->thenAProtected );
+    }
+
+    public function testParseIFace_Function ()
+    {
+        $this->assertAddsAMethod( $this->oneTokenReader()->thenAFunction );
+    }
+
 }
 
 ?>
