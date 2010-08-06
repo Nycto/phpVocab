@@ -95,6 +95,23 @@ class Search implements \vc\iface\Tokens\Search
         }
     }
 
+    /**
+     * @see \vc\iface\Tokens\Search::findSkipping
+     */
+    public function peekToSkipping ( array $types )
+    {
+        while ( $this->reader->hasToken() ) {
+
+            $token = $this->reader->peekAtToken();
+            $type = $token->getType();
+
+            if ( in_array($type, $types) )
+                return $token;
+
+            $this->reader->popToken();
+        }
+    }
+
 }
 
 ?>

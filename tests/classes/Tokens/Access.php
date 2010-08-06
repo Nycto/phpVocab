@@ -51,6 +51,7 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
                 ->thenAClass->thenAnOpenBlock
                 ->thenSomeSpace->thenAFunction
                 ->thenSomeSpace->thenAName('Func')
+                ->thenSomeSpace->thenAClass
         );
 
         $this->assertIsTokenOf(
@@ -75,6 +76,11 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
                 array(Token::T_STRING),
                 array(Token::T_WHITESPACE)
             )
+        );
+
+        $this->assertIsTokenOf(
+            Token::T_CLASS,
+            $access->peekToSkipping(array(Token::T_CLASS))
         );
     }
 

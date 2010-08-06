@@ -64,6 +64,16 @@ interface Search
      */
     public function peekToRequired ( array $types, array $allowing = array() );
 
+    /**
+     * Searches for a token in the given list, passing by all other tokens
+     *
+     * This will not consume the token, but queue it up the be popped off next
+     *
+     * @param Array $types The list of types to search for
+     * @return \vc\Tokens\Token|NULL Returns NULL if a token can't be found
+     */
+    public function peekToSkipping ( array $types );
+
 }
 
 ?>

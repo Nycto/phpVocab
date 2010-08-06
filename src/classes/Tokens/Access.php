@@ -136,9 +136,15 @@ class Access implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Search, \vc\if
     }
 
     /**
-     * Returns the block comment associated with the current context
-     *
-     * @return \vc\Data\Comment
+     * @see \vc\iface\Tokens\Search::findSkipping
+     */
+    public function peekToSkipping ( array $types )
+    {
+        return $this->search->peekToSkipping($types);
+    }
+
+    /**
+     * @see \vc\iface\Tokens\Comments::getComment
      */
     public function getComment ()
     {

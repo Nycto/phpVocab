@@ -167,6 +167,35 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
         $this->assertHasToken( Token::T_ECHO, $reader );
     }
 
+    public function testPeekToSkipping_TokenFound ()
+    {
+        $reader = $this->oneTokenReader()->thenAnOpenTag->thenAnEcho
+            ->thenSomeSpace->thenAString("content")
+            ->thenASemiColon->thenACloseTag;
+
+        $access = new \vc\Tokens\Search( $reader );
+
+        $this->assertIsTokenOf(
+            Token::T_ECHO,
+            $access->peekToSkipping(array(Token::T_ECHO, Token::T_SEMICOLON))
+        );
+    }
+
+    public function testPeekToSkipping_TokenNotFound ()
+    {
+        $reader = $this->oneTokenReader()->thenAnOpenTag->thenAnEcho
+            ->thenSomeSpace->thenAString("content")
+            ->thenASemiColon->thenACloseTag;
+
+        $access = new \vc\Tokens\Search( $reader );
+
+        $this->assertNull(
+            $access->peekToSkipping(array(Token::T_CLASS, Token::T_USE))
+        );
+
+        $this->assertEndOfTokens( $reader );
+    }
+
 }
 
 ?>
