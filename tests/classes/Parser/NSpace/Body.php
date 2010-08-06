@@ -22,14 +22,135 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
+require_once rtrim( __DIR__, "/" ) ."/../../../setup.php";
 
 /**
  * Unit tests
  */
-class test_classes_Parser_NSpace extends \vc\Test\TestCase
+class test_classes_Parser_NSpace_Body extends \vc\Test\TestCase
 {
-    
+
+    /**
+     * Returns a test Namespace body parser
+     *
+     * @return \vc\Parser\NSpace\Body
+     */
+    public function getNSpaceParser ()
+    {
+        $constant = $this->getStub('\vc\Parser\Constant');
+        $constant->expects( $this->any() )->method( "parseConstant" )
+            ->will( $this->returnCallback( function ( $access ) {
+                $access->popToken();
+                return new \vc\Data\Constant('CONST');
+            }) );
+
+        $func = $this->getStub('\vc\Parser\Routine\Func');
+        $func->expects( $this->any() )->method( "parseFunc" )
+            ->will( $this->returnCallback( function ( $access ) {
+                $access->popToken();
+                return new \vc\Data\Routine\Func(1);
+            }) );
+
+        $cls = $this->getStub('\vc\Parser\Object\Header');
+        $cls->expects( $this->any() )->method( "parseClass" )
+            ->will( $this->returnCallback( function ( $access ) {
+                $access->popToken();
+                return new \vc\Data\Type\Cls(1);
+            }) );
+
+        $iface = $this->getStub('\vc\Parser\IFace\Header');
+        $iface->expects( $this->any() )->method( "parseIFace" )
+            ->will( $this->returnCallback( function ( $access ) {
+                $access->popToken();
+                return new \vc\Data\Type\IFace(1);
+            }) );
+
+        return new \vc\Parser\NSpace\Body(
+            $constant, $func, $cls, $iface
+        );
+    }
+
+    public function testParseNSpace_Constant ()
+    {
+        $access = \vc\Tokens\Access::buildAccess(
+            $this->oneTokenReader()->thenAConst
+        );
+
+        $nspace = new \vc\Data\NSpace(1);
+        $this->getNSpaceParser()->parseNSpace( $nspace, $access );
+
+        $this->assertEquals(1, count($nspace->getConstants()));
+        $this->assertEndOfTokens( $access );
+    }
+
+    public function testParseNSpace_Abstract ()
+    {
+        $access = \vc\Tokens\Access::buildAccess(
+            $this->oneTokenReader()->thenAnAbstract
+        );
+
+        $nspace = new \vc\Data\NSpace(1);
+        $this->getNSpaceParser()->parseNSpace( $nspace, $access );
+
+        $this->assertEquals(1, count($nspace->getTypes()));
+        $this->assertEndOfTokens( $access );
+    }
+
+    public function testParseNSpace_Class ()
+    {
+        $access = \vc\Tokens\Access::buildAccess(
+            $this->oneTokenReader()->thenAClass
+        );
+
+        $nspace = new \vc\Data\NSpace(1);
+        $this->getNSpaceParser()->parseNSpace( $nspace, $access );
+
+        $this->assertEquals(1, count($nspace->getTypes()));
+        $this->assertEndOfTokens( $access );
+    }
+
+    public function testParseNSpace_Function ()
+    {
+        $access = \vc\Tokens\Access::buildAccess(
+            $this->oneTokenReader()->thenAFunction
+        );
+
+        $nspace = new \vc\Data\NSpace(1);
+        $this->getNSpaceParser()->parseNSpace( $nspace, $access );
+
+        $this->assertEquals(1, count($nspace->getFunctions()));
+        $this->assertEndOfTokens( $access );
+    }
+
+    public function testParseNSpace_Interfaces ()
+    {
+        $access = \vc\Tokens\Access::buildAccess(
+            $this->oneTokenReader()->thenAnInterface
+        );
+
+        $nspace = new \vc\Data\NSpace(1);
+        $this->getNSpaceParser()->parseNSpace( $nspace, $access );
+
+        $this->assertEquals(1, count($nspace->getTypes()));
+        $this->assertEndOfTokens( $access );
+    }
+
+    public function testParseNSpace_Many ()
+    {
+        $access = \vc\Tokens\Access::buildAccess(
+            $this->oneTokenReader()->thenAnInterface->thenAClass
+                ->thenAConst->thenAFunction
+        );
+
+        $nspace = new \vc\Data\NSpace(1);
+        $this->getNSpaceParser()->parseNSpace( $nspace, $access );
+
+        $this->assertEquals(2, count($nspace->getTypes()));
+        $this->assertEquals(1, count($nspace->getConstants()));
+        $this->assertEquals(1, count($nspace->getFunctions()));
+        $this->assertEndOfTokens( $access );
+    }
+
 }
 
 ?>

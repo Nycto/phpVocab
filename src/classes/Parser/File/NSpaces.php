@@ -50,11 +50,11 @@ class NSpaces
      * Constructor...
      *
      * @param \vc\Parser\Path $path The parser for reading namespace paths
-     * @param \vc\Parser\NSPace $nspace The parser for a given namespace
+     * @param \vc\Parser\NSPace\Body $nspace The parser for a given namespace
      */
     public function __construct (
         \vc\Parser\Path $path,
-        \vc\Parser\NSPace $nspace
+        \vc\Parser\NSPace\Body $nspace
     ) {
         $this->path = $path;
         $this->nspace = $nspace;
@@ -119,7 +119,7 @@ class NSpaces
                 $inner = $access->untilTokens(array(Token::T_NAMESPACE));
 
             $file->addNamespace( $nspace );
-            $this->nspace->parse( $nspace, $inner );
+            $this->nspace->parseNSpace( $nspace, $inner );
         }
     }
 

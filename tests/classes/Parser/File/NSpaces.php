@@ -39,8 +39,8 @@ class test_classes_Parser_File_NSpaces extends \vc\Test\TestCase
      */
     public function getNSpaceParser ( $count = 1 )
     {
-        $inner = $this->getStub('\vc\Parser\NSpace');
-        $inner->expects( $this->exactly($count) )->method( "parse" )
+        $inner = $this->getStub('\vc\Parser\NSpace\Body');
+        $inner->expects( $this->exactly($count) )->method( "parseNSpace" )
             ->will($this->returnCallback(function ( $nspace, $access ) {
                 $access->popToken();
             }));

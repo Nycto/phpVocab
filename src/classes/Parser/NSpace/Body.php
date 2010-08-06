@@ -22,13 +22,63 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-namespace vc\Parser;
+namespace vc\Parser\NSpace;
+
+use \vc\Tokens\Token as Token;
 
 /**
- * Parses the contents of a namespace
+ * Parses the body of a namespace
  */
-class NSpace
+class Body
 {
+
+    /**
+     * The parser for picking up namespace constants
+     *
+     * @var \vc\Parser\Constant
+     */
+    private $constant;
+
+    /**
+     * A parser for picking up function declarations
+     *
+     * @var \vc\Parser\Routine\Func
+     */
+    private $func;
+
+    /**
+     * A parser for picking up class declarations
+     *
+     * @var \vc\Parser\Object\Header
+     */
+    private $object;
+
+    /**
+     * A parser for picking up interfaces
+     *
+     * @var \vc\Parser\IFace\Header
+     */
+    private $iface;
+
+    /**
+     * Constructor...
+     *
+     * @param \vc\Parser\Constant $constant
+     * @param \vc\Parser\Routine\Func $func
+     * @param \vc\Parser\Object\Header $object
+     * @param \vc\Parser\IFace\Header $iface
+     */
+    public function __construct (
+        \vc\Parser\Constant $constant,
+        \vc\Parser\Routine\Func $func,
+        \vc\Parser\Object\Header $object,
+        \vc\Parser\IFace\Header $iface
+    ) {
+        $this->constant = $constant;
+        $this->func = $func;
+        $this->object = $object;
+        $this->iface = $iface;
+    }
 
     /**
      * Parses the given token reader
@@ -37,8 +87,43 @@ class NSpace
      * @param \vc\Tokens\Search $access The token access
      * @return NULL
      */
-    public function parse ( \vc\Data\NSpace $nspace, \vc\Tokens\Access $access )
-    {
+    public function parseNSpace (
+        \vc\Data\NSpace $nspace,
+        \vc\Tokens\Access $access
+    ) {
+        $last = NULL;
+
+        while ( $access->hasToken() ) {
+
+            $token = $access->peekToSkipping(array(
+                Token::T_CLASS, Token::T_ABSTRACT,
+                Token::T_CONST,
+                Token::T_INTERFACE,
+                Token::T_FUNCTION
+            ));
+
+            if ( $token === $last ) {
+                throw new \RuntimeException(
+                    'Possible Infinite Loop Detected. '
+                    .'Current token has already been parsed'
+                );
+            }
+
+            $last = $token;
+
+            if ( $token->is(array(Token::T_CLASS, Token::T_ABSTRACT)) )
+                $nspace->addType( $this->object->parseClass($access) );
+
+            else if ( $token->is(Token::T_FUNCTION) )
+                $nspace->addFunction( $this->func->parseFunc($access) );
+
+            else if ( $token->is(Token::T_INTERFACE) )
+                $nspace->addType( $this->iface->parseIFace($access) );
+
+            else if ( $token->is(Token::T_CONST) )
+                $nspace->addConstant( $this->constant->parseConstant($access) );
+        }
+
     }
 
 }
