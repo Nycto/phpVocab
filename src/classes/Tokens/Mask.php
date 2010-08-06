@@ -47,6 +47,19 @@ class Mask implements \vc\iface\Tokens\Reader
     private $mask;
 
     /**
+     * Creates a mask that will filter out comments
+     *
+     * @param \vc\iface\Tokens\Reader $inner The token reader being wrapped
+     * @return \vc\Tokens\Mask
+     */
+    static public function comments ( \vc\iface\Tokens\Reader $inner )
+    {
+        return new self($inner, array(
+            Token::T_COMMENT, Token::T_ML_COMMENT
+        ));
+    }
+
+    /**
      * Constructor...
      *
      * @param \vc\iface\Tokens\Reader $inner The token reader being wrapped

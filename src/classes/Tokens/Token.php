@@ -147,6 +147,7 @@ class Token
     const T_LOGICAL_XOR = \T_LOGICAL_XOR;
     const T_METHOD_C = \T_METHOD_C;
     const T_MINUS_EQUAL = \T_MINUS_EQUAL;
+    const T_ML_COMMENT = \T_COMMENT;
     const T_MOD_EQUAL = \T_MOD_EQUAL;
     const T_MUL_EQUAL = \T_MUL_EQUAL;
     const T_NAMESPACE = \T_NAMESPACE;

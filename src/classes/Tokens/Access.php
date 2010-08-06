@@ -63,9 +63,12 @@ class Access implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Search, \vc\if
             new \vc\Parser\Comment,
             $reader
         );
+
+        $reader = \vc\Tokens\Mask::comments( $comments );
+
         return new \vc\Tokens\Access(
-            $comments,
-            new \vc\Tokens\Search( $comments ),
+            $reader,
+            new \vc\Tokens\Search( $reader ),
             $comments
         );
     }

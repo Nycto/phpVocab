@@ -62,6 +62,19 @@ class test_classes_Tokens_Mask extends \vc\Test\TestCase
         $this->assertEndOfTokens( $ignore );
     }
 
+    public function testCommentsMask ()
+    {
+        $access = $this->oneTokenReader()
+            ->thenAComment('comment')
+            ->then( Token::T_ML_COMMENT, '/* comment */' )
+            ->thenAnEcho;
+
+        $ignore = \vc\Tokens\Mask::comments( $access );
+
+        $this->assertThat( $ignore, $this->isInstanceOf( '\vc\Tokens\Mask' ) );
+        $this->assertHasToken( Token::T_ECHO, $ignore );
+    }
+
 }
 
 ?>
