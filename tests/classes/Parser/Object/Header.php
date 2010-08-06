@@ -60,9 +60,9 @@ class test_classes_Parser_Object_Header extends \vc\Test\TestCase
         $access = $this->getAccessParserWithComment(
             new \vc\Data\Comment('Data'),
             $this->oneTokenReader()->thenAClass(25)
-                ->thenSomeSpace()->thenAName('MyClass')
-                ->thenSomeSpace()->thenAnOpenBlock()
-                ->thenACloseBlock()
+                ->thenSomeSpace->thenAName('MyClass')
+                ->thenSomeSpace->thenAnOpenBlock
+                ->thenACloseBlock
         );
 
         $this->assertEquals(
@@ -77,10 +77,10 @@ class test_classes_Parser_Object_Header extends \vc\Test\TestCase
         $access = $this->getAccessParserWithComment(
             new \vc\Data\Comment('Data'),
             $this->oneTokenReader()->thenAnAbstract(25)
-                ->thenSomeSpace()->thenAClass()
-                ->thenSomeSpace()->thenAName('MyClass')
-                ->thenSomeSpace()->thenAnOpenBlock()
-                ->thenACloseBlock()
+                ->thenSomeSpace->thenAClass
+                ->thenSomeSpace->thenAName('MyClass')
+                ->thenSomeSpace->thenAnOpenBlock
+                ->thenACloseBlock
         );
 
         $this->assertEquals(
@@ -95,11 +95,11 @@ class test_classes_Parser_Object_Header extends \vc\Test\TestCase
         $access = $this->getAccessParserWithComment(
             new \vc\Data\Comment('Data'),
             $this->oneTokenReader()
-                ->thenSomeSpace()->thenAClass()
-                ->thenSomeSpace()->thenAName('MyClass')
-                ->thenSomeSpace()->thenAnExtends()
-                ->thenSomeSpace()->thenANamespacePath('\path\to\parent')
-                ->thenSomeSpace()->thenAnOpenBlock()->thenACloseBlock()
+                ->thenSomeSpace->thenAClass
+                ->thenSomeSpace->thenAName('MyClass')
+                ->thenSomeSpace->thenAnExtends
+                ->thenSomeSpace->thenANamespacePath('\path\to\parent')
+                ->thenSomeSpace->thenAnOpenBlock->thenACloseBlock
         );
 
         $this->assertEquals(
@@ -114,10 +114,10 @@ class test_classes_Parser_Object_Header extends \vc\Test\TestCase
         $access = $this->getAccessParserWithComment(
             new \vc\Data\Comment('Data'),
             $this->oneTokenReader()
-                ->thenSomeSpace()->thenAClass()->thenSomeSpace()
-                ->thenAName('MyClass')->thenSomeSpace()
+                ->thenSomeSpace->thenAClass->thenSomeSpace
+                ->thenAName('MyClass')->thenSomeSpace
                 ->thenAnImplements(array('one', '\path\two'))
-                ->thenSomeSpace()->thenAnOpenBlock()->thenACloseBlock()
+                ->thenSomeSpace->thenAnOpenBlock->thenACloseBlock
         );
 
         $this->assertEquals(
@@ -133,12 +133,12 @@ class test_classes_Parser_Object_Header extends \vc\Test\TestCase
         $access = $this->getAccessParserWithComment(
             new \vc\Data\Comment('Data'),
             $this->oneTokenReader()->thenAnAbstract(123)
-                ->thenSomeSpace()->thenAClass()->thenSomeSpace()
-                ->thenAName('MyClass')->thenSomeSpace()
-                ->thenSomeSpace()->thenAnExtends()
-                ->thenSomeSpace()->thenANamespacePath('parent')
+                ->thenSomeSpace->thenAClass->thenSomeSpace
+                ->thenAName('MyClass')->thenSomeSpace
+                ->thenSomeSpace->thenAnExtends
+                ->thenSomeSpace->thenANamespacePath('parent')
                 ->thenAnImplements(array('one', '\path\two'))
-                ->thenSomeSpace()->thenAnOpenBlock()->thenACloseBlock()
+                ->thenSomeSpace->thenAnOpenBlock->thenACloseBlock
         );
 
         $this->assertEquals(

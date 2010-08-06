@@ -55,10 +55,10 @@ class test_classes_Parser_Routine_Method extends \vc\Test\TestCase
     public function testParseMethod_Sparse ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenAFunction()
-                ->thenSomeSpace()->thenAName('MyFunc')
-                ->thenOpenParens()->thenCloseParens()
-                ->thenAnOpenBlock()->thenACloseBlock()
+            $this->oneTokenReader()->thenAFunction
+                ->thenSomeSpace->thenAName('MyFunc')
+                ->thenOpenParens->thenCloseParens
+                ->thenAnOpenBlock->thenACloseBlock
         );
 
         $sig = new \vc\Data\Signature(123, new \vc\Data\Comment('Note'));
@@ -74,11 +74,11 @@ class test_classes_Parser_Routine_Method extends \vc\Test\TestCase
     public function testParseMethod_Public ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenAPublic()
-                ->thenSomeSpace()->thenAFunction()
-                ->thenSomeSpace()->thenAName('MyFunc')
-                ->thenOpenParens()->thenCloseParens()
-                ->thenAnOpenBlock()->thenACloseBlock()
+            $this->oneTokenReader()->thenAPublic
+                ->thenSomeSpace->thenAFunction
+                ->thenSomeSpace->thenAName('MyFunc')
+                ->thenOpenParens->thenCloseParens
+                ->thenAnOpenBlock->thenACloseBlock
         );
 
         $sig = new \vc\Data\Signature(123, new \vc\Data\Comment('Note'));
@@ -94,12 +94,12 @@ class test_classes_Parser_Routine_Method extends \vc\Test\TestCase
     public function testParseMethod_StaticFinalProtectedMethod ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenAStatic()->thenSomeSpace()
-                ->thenAFinal()->thenSomeSpace()->thenAProtected()
-                ->thenSomeSpace()->thenAFunction()
-                ->thenSomeSpace()->thenAName('MyFunc')
-                ->thenOpenParens()->thenCloseParens()
-                ->thenAnOpenBlock()->thenACloseBlock()
+            $this->oneTokenReader()->thenAStatic->thenSomeSpace
+                ->thenAFinal->thenSomeSpace->thenAProtected
+                ->thenSomeSpace->thenAFunction
+                ->thenSomeSpace->thenAName('MyFunc')
+                ->thenOpenParens->thenCloseParens
+                ->thenAnOpenBlock->thenACloseBlock
         );
 
         $sig = new \vc\Data\Signature(123);
@@ -115,12 +115,12 @@ class test_classes_Parser_Routine_Method extends \vc\Test\TestCase
     public function testParseMethod_AbstractPrivateMethod ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenAnAbstract()
-                ->thenSomeSpace()->thenAPrivate()
-                ->thenSomeSpace()->thenAFunction()
-                ->thenSomeSpace()->thenAName('MyFunc')
-                ->thenOpenParens()->thenCloseParens()
-                ->thenAnOpenBlock()->thenACloseBlock()
+            $this->oneTokenReader()->thenAnAbstract
+                ->thenSomeSpace->thenAPrivate
+                ->thenSomeSpace->thenAFunction
+                ->thenSomeSpace->thenAName('MyFunc')
+                ->thenOpenParens->thenCloseParens
+                ->thenAnOpenBlock->thenACloseBlock
         );
 
         $sig = new \vc\Data\Signature(123);

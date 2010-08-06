@@ -50,6 +50,16 @@ class TokenReader implements \vc\iface\Tokens\Reader
     }
 
     /**
+     * A helper function that exposes the builder methods as properties
+     *
+     * @return \vc\Tokens\Stub Returns a self reference
+     */
+    public function __get ( $value )
+    {
+        return $this->$value();
+    }
+
+    /**
      * Adds a token to this list
      *
      * @param Integer $type The type of token
@@ -254,7 +264,7 @@ class TokenReader implements \vc\iface\Tokens\Reader
     public function thenANamespace ( $namespace, $line = 1 )
     {
         return $this->then( Token::T_NAMESPACE, 'namespace', $line )
-            ->thenSomeSpace()
+            ->thenSomeSpace
             ->thenANamespacePath($namespace);
     }
 
@@ -434,7 +444,7 @@ class TokenReader implements \vc\iface\Tokens\Reader
     public function thenAnImplements ( array $paths, $line = 1 )
     {
         return $this->then( Token::T_IMPLEMENTS, 'implements', $line )
-            ->thenSomeSpace()
+            ->thenSomeSpace
             ->thenAPathList( $paths );
     }
 

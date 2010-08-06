@@ -33,7 +33,7 @@ class test_classes_Parser_File_Comment extends \vc\Test\TestCase
     public function testCommentFound ()
     {
         $reader = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenAnOpenTag()->thenSomeSpace()
+            $this->oneTokenReader()->thenAnOpenTag->thenSomeSpace
                 ->thenADocComment('This is a file comment')
         );
 
@@ -55,8 +55,8 @@ class test_classes_Parser_File_Comment extends \vc\Test\TestCase
     public function testNoCommentFound ()
     {
         $reader = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenAnOpenTag()->thenSomeSpace()
-                ->thenAClass()->thenADocComment('This is a file comment')
+            $this->oneTokenReader()->thenAnOpenTag->thenSomeSpace
+                ->thenAClass->thenADocComment('This is a file comment')
         );
 
         $parser = new \vc\Parser\File\Comment(

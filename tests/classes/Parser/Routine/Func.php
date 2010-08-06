@@ -55,9 +55,9 @@ class test_classes_Parser_Routine_Func extends \vc\Test\TestCase
         $access = $this->getAccessParserWithComment(
             new \vc\Data\Comment('Data'),
             $this->oneTokenReader()->thenAFunction( 123 )
-                ->thenSomeSpace()->thenAName('MyFunc')
-                ->thenOpenParens()->thenCloseParens()
-                ->thenAnOpenBlock()->thenACloseBlock()
+                ->thenSomeSpace->thenAName('MyFunc')
+                ->thenOpenParens->thenCloseParens
+                ->thenAnOpenBlock->thenACloseBlock
         );
 
         $this->assertEquals(

@@ -35,9 +35,9 @@ class test_classes_Tokens_BlockTrack extends \vc\Test\TestCase
     public function test_TrackingWhenFirstTokenIsNotACurly ()
     {
         $reader = new \vc\Tokens\BlockTrack(
-            $this->oneTokenReader()->thenAClass()->thenAnOpenBlock()
-                ->thenAFunction()->thenACloseblock()->thenACloseblock()
-                ->thenACloseTag()
+            $this->oneTokenReader()->thenAClass->thenAnOpenBlock
+                ->thenAFunction->thenACloseblock->thenACloseblock
+                ->thenACloseTag
         );
 
         $this->assertHasToken( Token::T_CLASS, $reader );
@@ -51,9 +51,9 @@ class test_classes_Tokens_BlockTrack extends \vc\Test\TestCase
     public function test_TrackingWhenFirstTokenIsACurly ()
     {
         $reader = new \vc\Tokens\BlockTrack(
-            $this->oneTokenReader()->thenAnOpenBlock()->thenAFunction()
-                ->thenAnOpenBlock()->thenACloseblock()->thenACloseblock()
-                ->thenACloseTag()
+            $this->oneTokenReader()->thenAnOpenBlock->thenAFunction
+                ->thenAnOpenBlock->thenACloseblock->thenACloseblock
+                ->thenACloseTag
         );
 
         $this->assertHasToken( Token::T_BLOCK_OPEN, $reader );
@@ -67,8 +67,8 @@ class test_classes_Tokens_BlockTrack extends \vc\Test\TestCase
     public function testPeekAtToken ()
     {
         $reader = new \vc\Tokens\BlockTrack(
-            $this->oneTokenReader()->thenAnOpenBlock()->thenAFunction()
-                ->thenACloseblock()->thenACloseTag()
+            $this->oneTokenReader()->thenAnOpenBlock->thenAFunction
+                ->thenACloseblock->thenACloseTag
         );
 
         $this->assertIsTokenOf( Token::T_BLOCK_OPEN, $reader->peekAtToken() );

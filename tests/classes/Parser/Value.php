@@ -35,7 +35,7 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
     public function testParseValue_Integer ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenSomeSpace()->thenAnInteger('1')
+            $this->oneTokenReader()->thenSomeSpace->thenAnInteger('1')
         );
 
         $parser = new \vc\Parser\Value( new \vc\Parser\Brackets );
@@ -50,7 +50,7 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
     public function testParseValue_Float ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenSomeSpace()->thenAFloat('1.23')
+            $this->oneTokenReader()->thenSomeSpace->thenAFloat('1.23')
         );
 
         $parser = new \vc\Parser\Value( new \vc\Parser\Brackets );
@@ -64,7 +64,7 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
     public function testParseValue_String ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenSomeSpace()->thenAString('str')
+            $this->oneTokenReader()->thenSomeSpace->thenAString('str')
         );
 
         $parser = new \vc\Parser\Value( new \vc\Parser\Brackets );
@@ -78,7 +78,7 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
     public function testParseValue_True ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenSomeSpace()->thenAName('true')
+            $this->oneTokenReader()->thenSomeSpace->thenAName('true')
         );
 
         $parser = new \vc\Parser\Value( new \vc\Parser\Brackets );
@@ -92,7 +92,7 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
     public function testParseValue_False ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenSomeSpace()->thenAName('false')
+            $this->oneTokenReader()->thenSomeSpace->thenAName('false')
         );
 
         $parser = new \vc\Parser\Value( new \vc\Parser\Brackets );
@@ -106,7 +106,7 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
     public function testParseValue_Null ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenSomeSpace()->thenAName('null')
+            $this->oneTokenReader()->thenSomeSpace->thenAName('null')
         );
 
         $parser = new \vc\Parser\Value( new \vc\Parser\Brackets );
@@ -120,7 +120,7 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
     public function testParseValue_InvalidName ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenSomeSpace()->thenAName('other')
+            $this->oneTokenReader()->thenSomeSpace->thenAName('other')
         );
 
         $parser = new \vc\Parser\Value( new \vc\Parser\Brackets );
@@ -135,7 +135,7 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
     public function testParseValue_HereDoc ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenSomeSpace()->thenAHereDoc('str')
+            $this->oneTokenReader()->thenSomeSpace->thenAHereDoc('str')
         );
 
         $parser = new \vc\Parser\Value( new \vc\Parser\Brackets );
@@ -163,7 +163,7 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
     public function testParseValue_InvalidToken ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenAClass()
+            $this->oneTokenReader()->thenAClass
         );
 
         $parser = new \vc\Parser\Value( new \vc\Parser\Brackets );
@@ -179,7 +179,7 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
     {
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()
-                ->thenSomeSpace()->thenAnEquals()->thenSomeSpace()
+                ->thenSomeSpace->thenAnEquals->thenSomeSpace
                 ->thenAnInteger('1')
         );
 

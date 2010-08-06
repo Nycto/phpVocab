@@ -36,11 +36,11 @@ class test_classes_Parser_Constant extends \vc\Test\TestCase
     {
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()
-                ->thenAConst()->thenSomeSpace()
-                ->thenAName('CONSTANT')->thenSomeSpace()
-                ->thenAnEquals()->thenSomeSpace()
-                ->thenAnInteger(123)->thenASemicolon()
-                ->thenAClass()
+                ->thenAConst->thenSomeSpace
+                ->thenAName('CONSTANT')->thenSomeSpace
+                ->thenAnEquals->thenSomeSpace
+                ->thenAnInteger(123)->thenASemicolon
+                ->thenAClass
         );
 
         $parser = new \vc\Parser\Constant(
@@ -60,11 +60,11 @@ class test_classes_Parser_Constant extends \vc\Test\TestCase
     {
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()
-                ->thenAConst()->thenSomeSpace()
-                ->thenAName('NAME')->thenSomeSpace()
-                ->thenAnEquals()->thenSomeSpace()
-                ->thenAFloat(12.3)->thenASemicolon()
-                ->thenAClass()
+                ->thenAConst->thenSomeSpace
+                ->thenAName('NAME')->thenSomeSpace
+                ->thenAnEquals->thenSomeSpace
+                ->thenAFloat(12.3)->thenASemicolon
+                ->thenAClass
         );
 
         $parser = new \vc\Parser\Constant(
@@ -84,11 +84,11 @@ class test_classes_Parser_Constant extends \vc\Test\TestCase
     {
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()
-                ->thenAConst()->thenSomeSpace()
-                ->thenAName('NAME')->thenSomeSpace()
-                ->thenAnEquals()->thenSomeSpace()
-                ->thenAString('string', "'")->thenASemicolon()
-                ->thenAClass()
+                ->thenAConst->thenSomeSpace
+                ->thenAName('NAME')->thenSomeSpace
+                ->thenAnEquals->thenSomeSpace
+                ->thenAString('string', "'")->thenASemicolon
+                ->thenAClass
         );
 
         $parser = new \vc\Parser\Constant(
@@ -108,11 +108,11 @@ class test_classes_Parser_Constant extends \vc\Test\TestCase
     {
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()
-                ->thenAConst()->thenSomeSpace()
-                ->thenAName('NAME')->thenSomeSpace()
-                ->thenAnEquals()->thenSomeSpace()
-                ->thenAString('string', '"')->thenASemicolon()
-                ->thenAClass()
+                ->thenAConst->thenSomeSpace
+                ->thenAName('NAME')->thenSomeSpace
+                ->thenAnEquals->thenSomeSpace
+                ->thenAString('string', '"')->thenASemicolon
+                ->thenAClass
         );
 
         $parser = new \vc\Parser\Constant(
@@ -132,11 +132,11 @@ class test_classes_Parser_Constant extends \vc\Test\TestCase
     {
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()
-                ->thenAConst()->thenSomeSpace()
-                ->thenAName('NAME')->thenSomeSpace()
-                ->thenAnEquals()->thenSomeSpace()
-                ->thenAName('NULL')->thenASemicolon()
-                ->thenAClass()
+                ->thenAConst->thenSomeSpace
+                ->thenAName('NAME')->thenSomeSpace
+                ->thenAnEquals->thenSomeSpace
+                ->thenAName('NULL')->thenASemicolon
+                ->thenAClass
         );
 
         $parser = new \vc\Parser\Constant(
@@ -156,11 +156,11 @@ class test_classes_Parser_Constant extends \vc\Test\TestCase
     {
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()
-                ->thenAConst()->thenSomeSpace()
-                ->thenAName('NAME')->thenSomeSpace()
-                ->thenAnEquals()->thenSomeSpace()
-                ->thenAHereDoc('contents')->thenASemicolon()
-                ->thenAClass()
+                ->thenAConst->thenSomeSpace
+                ->thenAName('NAME')->thenSomeSpace
+                ->thenAnEquals->thenSomeSpace
+                ->thenAHereDoc('contents')->thenASemicolon
+                ->thenAClass
         );
 
         $parser = new \vc\Parser\Constant(

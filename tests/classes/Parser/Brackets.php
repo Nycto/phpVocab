@@ -34,9 +34,9 @@ class test_classes_Parser_Brackets extends \vc\Test\TestCase
 
     public function testParseParens_OpenParensAsFirstToken ()
     {
-        $reader = $this->oneTokenReader()->thenOpenParens()
-            ->thenSomeSpace()->thenAFunction()->thenSomeSpace()
-            ->thenAName("MyFunc")->thenSomeSpace()->thenCloseParens();
+        $reader = $this->oneTokenReader()->thenOpenParens
+            ->thenSomeSpace->thenAFunction->thenSomeSpace
+            ->thenAName("MyFunc")->thenSomeSpace->thenCloseParens;
 
         $this->assertSame(
             ' function MyFunc ',
@@ -47,8 +47,8 @@ class test_classes_Parser_Brackets extends \vc\Test\TestCase
     public function testParseParens_WithoutCloseParens ()
     {
         $reader = $this->oneTokenReader()
-            ->thenSomeSpace()->thenAFunction()->thenSomeSpace()
-            ->thenAName("MyFunc")->thenSomeSpace();
+            ->thenSomeSpace->thenAFunction->thenSomeSpace
+            ->thenAName("MyFunc")->thenSomeSpace;
 
         $this->assertSame(
             ' function MyFunc ',
@@ -58,11 +58,11 @@ class test_classes_Parser_Brackets extends \vc\Test\TestCase
 
     public function testParseParens_NestedParens ()
     {
-        $reader = $this->oneTokenReader()->thenOpenParens()
-            ->thenSomeSpace()->thenAFunction()->thenSomeSpace()
-            ->thenAName("MyFunc")->thenOpenParens()
-            ->thenAnArrayValue(array(array(), 2, 3))->thenCloseParens()
-            ->thenSomeSpace()->thenCloseParens();
+        $reader = $this->oneTokenReader()->thenOpenParens
+            ->thenSomeSpace->thenAFunction->thenSomeSpace
+            ->thenAName("MyFunc")->thenOpenParens
+            ->thenAnArrayValue(array(array(), 2, 3))->thenCloseParens
+            ->thenSomeSpace->thenCloseParens;
 
         $this->assertSame(
             " function MyFunc(array ( 0 => array ( ), 1 => 2, 2 => 3,)) ",
@@ -73,13 +73,13 @@ class test_classes_Parser_Brackets extends \vc\Test\TestCase
     public function testParseCurlies ()
     {
         $reader = $this->oneTokenReader()
-            ->thenAFunction()->thenSomeSpace()
-            ->thenAName("MyFunc")->thenOpenParens()->thenCloseParens()
-            ->thenAnOpenBlock()->thenACloseBlock()
-            ->thenSomeSpace()->thenAFunction()->thenSomeSpace()
-            ->thenAName("OtherFunc")->thenOpenParens()->thenCloseParens()
-            ->thenAnOpenBlock()->thenACloseBlock()->thenSomeSpace()
-            ->thenACloseBlock();
+            ->thenAFunction->thenSomeSpace
+            ->thenAName("MyFunc")->thenOpenParens->thenCloseParens
+            ->thenAnOpenBlock->thenACloseBlock
+            ->thenSomeSpace->thenAFunction->thenSomeSpace
+            ->thenAName("OtherFunc")->thenOpenParens->thenCloseParens
+            ->thenAnOpenBlock->thenACloseBlock->thenSomeSpace
+            ->thenACloseBlock;
 
         $this->assertSame(
             "function MyFunc(){} function OtherFunc(){} ",

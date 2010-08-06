@@ -52,7 +52,7 @@ class test_classes_Parser_File_NSpaces extends \vc\Test\TestCase
         $file = new \vc\Data\File('path.php');
 
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenAFunction()
+            $this->oneTokenReader()->thenAFunction
         );
 
         $parser = new \vc\Parser\File\NSpaces(
@@ -75,8 +75,8 @@ class test_classes_Parser_File_NSpaces extends \vc\Test\TestCase
 
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()
-                ->thenANamespace('sub\\sub2')->thenASemicolon()
-                ->thenAFunction()
+                ->thenANamespace('sub\\sub2')->thenASemicolon
+                ->thenAFunction
         );
 
         $parser = new \vc\Parser\File\NSpaces(
@@ -99,8 +99,8 @@ class test_classes_Parser_File_NSpaces extends \vc\Test\TestCase
 
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()
-                ->thenANamespace('sub\\sub2')->thenSomeSpace()->thenAnOpenBlock()
-                ->thenAFunction()
+                ->thenANamespace('sub\\sub2')->thenSomeSpace->thenAnOpenBlock
+                ->thenAFunction
         );
 
         $parser = new \vc\Parser\File\NSpaces(
@@ -123,10 +123,10 @@ class test_classes_Parser_File_NSpaces extends \vc\Test\TestCase
 
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()
-                ->thenANamespace('sub\\sub2')->thenSomeSpace()->thenAnOpenBlock()
-                ->thenAFunction()
-                ->thenANamespace('ns2')->thenSomeSpace()->thenAnOpenBlock()
-                ->thenAFunction()
+                ->thenANamespace('sub\\sub2')->thenSomeSpace->thenAnOpenBlock
+                ->thenAFunction
+                ->thenANamespace('ns2')->thenSomeSpace->thenAnOpenBlock
+                ->thenAFunction
         );
 
         $parser = new \vc\Parser\File\NSpaces(
@@ -152,10 +152,10 @@ class test_classes_Parser_File_NSpaces extends \vc\Test\TestCase
 
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()
-                ->thenANamespace('sub\\sub2')->thenASemicolon()
-                ->thenAFunction()
-                ->thenANamespace('ns2')->thenASemicolon()
-                ->thenAFunction()
+                ->thenANamespace('sub\\sub2')->thenASemicolon
+                ->thenAFunction
+                ->thenANamespace('ns2')->thenASemicolon
+                ->thenAFunction
         );
 
         $parser = new \vc\Parser\File\NSpaces(

@@ -55,7 +55,7 @@ class test_classes_Tokens_Comments extends \vc\Test\TestCase
         $reader = new \vc\Tokens\Comments(
             new \vc\Parser\Comment,
             $this->oneTokenReader()
-                ->thenADocComment('Comment')->thenAClass()
+                ->thenADocComment('Comment')->thenAClass
         );
 
         $this->assertEmptyComment( $reader->getComment() );
@@ -75,7 +75,7 @@ class test_classes_Tokens_Comments extends \vc\Test\TestCase
         $reader = new \vc\Tokens\Comments(
             new \vc\Parser\Comment,
             $this->oneTokenReader()
-                ->thenADocComment('Comment')->thenASemicolon()
+                ->thenADocComment('Comment')->thenASemicolon
         );
 
         $this->assertEmptyComment( $reader->getComment() );
@@ -91,7 +91,7 @@ class test_classes_Tokens_Comments extends \vc\Test\TestCase
     {
         $comments = new \vc\Tokens\Comments(
             new \vc\Parser\Comment,
-            $this->oneTokenReader()->thenAClass()
+            $this->oneTokenReader()->thenAClass
         );
 
         $this->assertIsTokenOf( T_CLASS, $comments->peekAtToken() );

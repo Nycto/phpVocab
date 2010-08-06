@@ -50,8 +50,8 @@ class test_classes_Parser_Object_Property extends \vc\Test\TestCase
     {
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()->then(Token::T_VAR, 'var')
-                ->thenSomeSpace()->thenAVariable('$var')
-                ->thenASemicolon()
+                ->thenSomeSpace->thenAVariable('$var')
+                ->thenASemicolon
         );
 
         $sig = new \vc\Data\Signature(120, new \vc\Data\Comment('Note'));
@@ -68,9 +68,9 @@ class test_classes_Parser_Object_Property extends \vc\Test\TestCase
     public function testParseProperty_public ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenAPublic()
-                ->thenSomeSpace()->thenAVariable('$var')
-                ->thenASemicolon()
+            $this->oneTokenReader()->thenAPublic
+                ->thenSomeSpace->thenAVariable('$var')
+                ->thenASemicolon
         );
 
         $sig = new \vc\Data\Signature(120, new \vc\Data\Comment('Note'));
@@ -88,9 +88,9 @@ class test_classes_Parser_Object_Property extends \vc\Test\TestCase
     public function testParseProperty_private ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenAPrivate()
-                ->thenSomeSpace()->thenAVariable('$var')
-                ->thenASemicolon()
+            $this->oneTokenReader()->thenAPrivate
+                ->thenSomeSpace->thenAVariable('$var')
+                ->thenASemicolon
         );
 
         $sig = new \vc\Data\Signature(120, new \vc\Data\Comment('Note'));
@@ -108,9 +108,9 @@ class test_classes_Parser_Object_Property extends \vc\Test\TestCase
     public function testParseProperty_protected ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenAProtected()
-                ->thenSomeSpace()->thenAVariable('$var')
-                ->thenASemicolon()
+            $this->oneTokenReader()->thenAProtected
+                ->thenSomeSpace->thenAVariable('$var')
+                ->thenASemicolon
         );
 
         $sig = new \vc\Data\Signature(120, new \vc\Data\Comment('Note'));
@@ -128,10 +128,10 @@ class test_classes_Parser_Object_Property extends \vc\Test\TestCase
     public function testParseProperty_static ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenAPublic()
-                ->thenSomeSpace()->thenAStatic()
-                ->thenSomeSpace()->thenAVariable('$var')
-                ->thenASemicolon()
+            $this->oneTokenReader()->thenAPublic
+                ->thenSomeSpace->thenAStatic
+                ->thenSomeSpace->thenAVariable('$var')
+                ->thenASemicolon
         );
 
         $sig = new \vc\Data\Signature(120, new \vc\Data\Comment('Note'));
@@ -148,10 +148,10 @@ class test_classes_Parser_Object_Property extends \vc\Test\TestCase
     public function testParseProperty_defaultValue ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenAPublic()
-                ->thenSomeSpace()->thenAVariable('$var')
-                ->thenSomeSpace()->thenAnEquals()->thenAnInteger(789)
-                ->thenASemicolon()
+            $this->oneTokenReader()->thenAPublic
+                ->thenSomeSpace->thenAVariable('$var')
+                ->thenSomeSpace->thenAnEquals->thenAnInteger(789)
+                ->thenASemicolon
         );
 
         $sig = new \vc\Data\Signature(120, new \vc\Data\Comment('Note'));

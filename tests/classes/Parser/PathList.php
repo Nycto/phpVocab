@@ -47,7 +47,7 @@ class test_classes_Parser_PathList extends \vc\Test\TestCase
     public function testParsePathList_NoPaths ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenSomeSpace()->thenAnOpenBlock()
+            $this->oneTokenReader()->thenSomeSpace->thenAnOpenBlock
         );
 
         try {
@@ -60,9 +60,9 @@ class test_classes_Parser_PathList extends \vc\Test\TestCase
     public function testParsePathList_OnePath ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenSomeSpace()
-                ->thenANamespacePath('path\to\cls')->thenSomeSpace()
-                ->thenAnOpenBlock()
+            $this->oneTokenReader()->thenSomeSpace
+                ->thenANamespacePath('path\to\cls')->thenSomeSpace
+                ->thenAnOpenBlock
         );
 
         $this->assertEquals(
@@ -74,10 +74,10 @@ class test_classes_Parser_PathList extends \vc\Test\TestCase
     public function testParsePathList_TwoPaths ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenSomeSpace()
-                ->thenANamespacePath('path\to\cls')->thenAComma()->thenSomeSpace()
-                ->thenANamespacePath('\stdClass')->thenSomeSpace()
-                ->thenAnOpenBlock()
+            $this->oneTokenReader()->thenSomeSpace
+                ->thenANamespacePath('path\to\cls')->thenAComma->thenSomeSpace
+                ->thenANamespacePath('\stdClass')->thenSomeSpace
+                ->thenAnOpenBlock
         );
 
         $this->assertEquals(
@@ -89,11 +89,11 @@ class test_classes_Parser_PathList extends \vc\Test\TestCase
     public function testParsePathList_ThreePaths ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenSomeSpace()
-                ->thenANamespacePath('path\to\cls')->thenAComma()->thenSomeSpace()
-                ->thenANamespacePath('AnObject')->thenAComma()->thenSomeSpace()
-                ->thenANamespacePath('\stdClass')->thenSomeSpace()
-                ->thenAnOpenBlock()
+            $this->oneTokenReader()->thenSomeSpace
+                ->thenANamespacePath('path\to\cls')->thenAComma->thenSomeSpace
+                ->thenANamespacePath('AnObject')->thenAComma->thenSomeSpace
+                ->thenANamespacePath('\stdClass')->thenSomeSpace
+                ->thenAnOpenBlock
         );
 
         $this->assertEquals(

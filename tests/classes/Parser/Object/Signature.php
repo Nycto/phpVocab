@@ -162,7 +162,7 @@ class test_classes_Parser_Object_Signature extends \vc\Test\TestCase
     {
         $this->assertTokenStreamCreatesMethod(
             new \vc\Data\Comment('Note'),
-            $this->oneTokenReader()->thenAPublic(50)->thenAFunction(),
+            $this->oneTokenReader()->thenAPublic(50)->thenAFunction,
             r8( new \vc\Data\Signature(50, new \vc\Data\Comment('Note')) )
         );
     }
@@ -171,8 +171,8 @@ class test_classes_Parser_Object_Signature extends \vc\Test\TestCase
     {
         $this->assertTokenStreamCreatesMethod(
             new \vc\Data\Comment('Note'),
-            $this->oneTokenReader()->thenAStatic(50)->thenSomeSpace()
-                ->thenAPrivate()->thenSomeSpace()->thenAFunction(),
+            $this->oneTokenReader()->thenAStatic(50)->thenSomeSpace
+                ->thenAPrivate->thenSomeSpace->thenAFunction,
             r8( new \vc\Data\Signature(50, new \vc\Data\Comment('Note')) )
                 ->setStatic( TRUE )
                 ->setVisibility( \vc\Data\Visibility::vPrivate() )
@@ -184,7 +184,7 @@ class test_classes_Parser_Object_Signature extends \vc\Test\TestCase
         $this->assertTokenStreamCreatesMethod(
             new \vc\Data\Comment('Note'),
             $this->oneTokenReader()->thenAPrivate(50)
-                ->thenSomeSpace()->thenAnAbstract(),
+                ->thenSomeSpace->thenAnAbstract,
             r8( new \vc\Data\Signature(50, new \vc\Data\Comment('Note')) )
                 ->setVisibility( \vc\Data\Visibility::vPrivate() )
         );
@@ -213,8 +213,8 @@ class test_classes_Parser_Object_Signature extends \vc\Test\TestCase
         $this->assertTokenStreamCreatesProperty(
             new \vc\Data\Comment('Note'),
             $this->oneTokenReader()->thenAStatic(50)
-                ->thenSomeSpace()->thenAPrivate()
-                ->thenSomeSpace()->thenAVariable('$var'),
+                ->thenSomeSpace->thenAPrivate
+                ->thenSomeSpace->thenAVariable('$var'),
             r8( new \vc\Data\Signature(50, new \vc\Data\Comment('Note')) )
                 ->setStatic(TRUE)
                 ->setVisibility( \vc\Data\Visibility::vPrivate() )
@@ -226,7 +226,7 @@ class test_classes_Parser_Object_Signature extends \vc\Test\TestCase
         $this->assertTokenStreamCreatesProperty(
             new \vc\Data\Comment('Note'),
             $this->oneTokenReader()->thenAPublic(50)
-                ->thenSomeSpace()->thenAVariable('$var'),
+                ->thenSomeSpace->thenAVariable('$var'),
             r8( new \vc\Data\Signature(50, new \vc\Data\Comment('Note')) )
         );
     }
@@ -236,7 +236,7 @@ class test_classes_Parser_Object_Signature extends \vc\Test\TestCase
         $this->assertTokenStreamCreatesProperty(
             new \vc\Data\Comment('Note'),
             $this->oneTokenReader()->thenAProtected(50)
-                ->thenSomeSpace()->thenAVariable('$var'),
+                ->thenSomeSpace->thenAVariable('$var'),
             r8( new \vc\Data\Signature(50, new \vc\Data\Comment('Note')) )
                 ->setVisibility( \vc\Data\Visibility::vProtected() )
         );

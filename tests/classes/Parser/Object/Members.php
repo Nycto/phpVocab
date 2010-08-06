@@ -65,7 +65,7 @@ class test_classes_Parser_Object_Members extends \vc\Test\TestCase
     public function testParseConstant ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenAConst()
+            $this->oneTokenReader()->thenAConst
         );
 
         $constant = new \vc\Data\Constant('CONST');
@@ -93,19 +93,19 @@ class test_classes_Parser_Object_Members extends \vc\Test\TestCase
 
     public function testParseSignature_Final ()
     {
-        $this->assertParsesToSignature( $this->oneTokenReader()->thenAFinal() );
+        $this->assertParsesToSignature( $this->oneTokenReader()->thenAFinal );
     }
 
     public function testParseSignature_Static ()
     {
-        $this->assertParsesToSignature( $this->oneTokenReader()->thenAStatic() );
+        $this->assertParsesToSignature( $this->oneTokenReader()->thenAStatic );
     }
 
     public function testParseSignature_Visibility ()
     {
-        $this->assertParsesToSignature( $this->oneTokenReader()->thenAPublic() );
-        $this->assertParsesToSignature( $this->oneTokenReader()->thenAPrivate() );
-        $this->assertParsesToSignature( $this->oneTokenReader()->thenAProtected() );
+        $this->assertParsesToSignature( $this->oneTokenReader()->thenAPublic );
+        $this->assertParsesToSignature( $this->oneTokenReader()->thenAPrivate );
+        $this->assertParsesToSignature( $this->oneTokenReader()->thenAProtected );
     }
 
     public function testParseSignature_Var ()
@@ -118,7 +118,7 @@ class test_classes_Parser_Object_Members extends \vc\Test\TestCase
     public function testParseSignature_Function ()
     {
         $this->assertParsesToSignature(
-            $this->oneTokenReader()->thenSomeSpace()->thenAFunction()
+            $this->oneTokenReader()->thenSomeSpace->thenAFunction
         );
     }
 

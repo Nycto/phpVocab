@@ -35,8 +35,8 @@ class test_classes_Parser_Path extends \vc\Test\TestCase
     public function testParsePath_UntilUnrecognizedToken ()
     {
         $reader = $this->oneTokenReader()
-            ->thenSomeSpace()->thenANamespacePath( 'sub1\sub2\sub3' )
-            ->thenAClass();
+            ->thenSomeSpace->thenANamespacePath( 'sub1\sub2\sub3' )
+            ->thenAClass;
 
         $parser = new \vc\Parser\Path;
 
@@ -47,7 +47,7 @@ class test_classes_Parser_Path extends \vc\Test\TestCase
     public function testParsePath_UntilEndOfTokens ()
     {
         $reader = $this->oneTokenReader()
-            ->thenSomeSpace()->thenANamespacePath( 'sub1\sub2\sub3' );
+            ->thenSomeSpace->thenANamespacePath( 'sub1\sub2\sub3' );
 
         $parser = new \vc\Parser\Path;
 
@@ -57,7 +57,7 @@ class test_classes_Parser_Path extends \vc\Test\TestCase
 
     public function testParsePath_EndOfTokensWithoutReadingAnyPath ()
     {
-        $reader = $this->oneTokenReader()->thenSomeSpace();
+        $reader = $this->oneTokenReader()->thenSomeSpace;
 
         $parser = new \vc\Parser\Path;
 
@@ -70,7 +70,7 @@ class test_classes_Parser_Path extends \vc\Test\TestCase
 
     public function testParsePath_UnexpectedTokenWithoutANamespace ()
     {
-        $reader = $this->oneTokenReader()->thenAClass();
+        $reader = $this->oneTokenReader()->thenAClass;
 
         $parser = new \vc\Parser\Path;
 

@@ -36,9 +36,9 @@ class test_classes_Parser_NSpace_Alias extends \vc\Test\TestCase
     {
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()
-                ->thenAUse()->thenSomeSpace()
-                ->thenANamespacePath('sub1\sub2')->thenASemicolon()
-                ->thenAClass()
+                ->thenAUse->thenSomeSpace
+                ->thenANamespacePath('sub1\sub2')->thenASemicolon
+                ->thenAClass
         );
 
         $parser = new \vc\Parser\NSpace\Alias( new \vc\Parser\Path );
@@ -55,12 +55,12 @@ class test_classes_Parser_NSpace_Alias extends \vc\Test\TestCase
     {
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()
-                ->thenAUse()->thenSomeSpace()
+                ->thenAUse->thenSomeSpace
                 ->thenANamespacePath('sub1\sub2')
-                ->thenSomeSpace()->then( Token::T_AS, 'as' )
-                ->thenSomeSpace()->thenAName('renamed')
-                ->thenASemicolon()
-                ->thenAClass()
+                ->thenSomeSpace->then( Token::T_AS, 'as' )
+                ->thenSomeSpace->thenAName('renamed')
+                ->thenASemicolon
+                ->thenAClass
         );
 
         $parser = new \vc\Parser\NSpace\Alias( new \vc\Parser\Path );
@@ -77,10 +77,10 @@ class test_classes_Parser_NSpace_Alias extends \vc\Test\TestCase
     {
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()
-                ->thenAUse()->thenSomeSpace()
+                ->thenAUse->thenSomeSpace
                 ->thenANamespacePath('sub1\sub2')
-                ->thenSomeSpace()->then( Token::T_AS, 'as' )
-                ->thenSomeSpace()->thenAName('renamed')
+                ->thenSomeSpace->then( Token::T_AS, 'as' )
+                ->thenSomeSpace->thenAName('renamed')
         );
 
         $parser = new \vc\Parser\NSpace\Alias( new \vc\Parser\Path );

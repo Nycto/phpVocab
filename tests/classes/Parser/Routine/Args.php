@@ -48,8 +48,8 @@ class test_classes_Parser_Routine_Args extends \vc\Test\TestCase
     public function testParseArgs_NoArguments ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenOpenParens()->thenSomeSpace()
-                ->thenCloseParens()
+            $this->oneTokenReader()->thenOpenParens->thenSomeSpace
+                ->thenCloseParens
         );
 
         $this->assertSame( array(), $this->getArgParser()->parseArgs($access) );
@@ -60,8 +60,8 @@ class test_classes_Parser_Routine_Args extends \vc\Test\TestCase
     public function testParseArgs_BasicArgument ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenOpenParens()
-                ->thenAVariable('$test')->thenCloseParens()
+            $this->oneTokenReader()->thenOpenParens
+                ->thenAVariable('$test')->thenCloseParens
         );
 
         $this->assertEquals(
@@ -75,11 +75,11 @@ class test_classes_Parser_Routine_Args extends \vc\Test\TestCase
     public function testParseArgs_MultipleArguments ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenOpenParens()
-                ->thenAVariable('$test')->thenAComma()
-                ->thenAVariable('$test2')->thenAComma()
+            $this->oneTokenReader()->thenOpenParens
+                ->thenAVariable('$test')->thenAComma
+                ->thenAVariable('$test2')->thenAComma
                 ->thenAVariable('$test3')
-                ->thenCloseParens()
+                ->thenCloseParens
         );
 
         $this->assertEquals(
@@ -97,10 +97,10 @@ class test_classes_Parser_Routine_Args extends \vc\Test\TestCase
     public function testParseArgs_AbsoluteClassTypeHinting ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenOpenParens()
-                ->thenANamespacePath('\test\path')->thenSomeSpace()
+            $this->oneTokenReader()->thenOpenParens
+                ->thenANamespacePath('\test\path')->thenSomeSpace
                 ->thenAVariable('$test')
-                ->thenCloseParens()
+                ->thenCloseParens
         );
 
         $this->assertEquals(
@@ -118,10 +118,10 @@ class test_classes_Parser_Routine_Args extends \vc\Test\TestCase
     public function testParseArgs_RelativeClassTypeHinting ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenOpenParens()
-                ->thenANamespacePath('test\path')->thenSomeSpace()
+            $this->oneTokenReader()->thenOpenParens
+                ->thenANamespacePath('test\path')->thenSomeSpace
                 ->thenAVariable('$test')
-                ->thenCloseParens()
+                ->thenCloseParens
         );
 
         $this->assertEquals(
@@ -139,10 +139,10 @@ class test_classes_Parser_Routine_Args extends \vc\Test\TestCase
     public function testParseArgs_ArrayTypeHinting ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenOpenParens()
-                ->thenAnArray('array')->thenSomeSpace()
+            $this->oneTokenReader()->thenOpenParens
+                ->thenAnArray('array')->thenSomeSpace
                 ->thenAVariable('$test')
-                ->thenCloseParens()
+                ->thenCloseParens
         );
 
         $this->assertEquals(
@@ -158,10 +158,10 @@ class test_classes_Parser_Routine_Args extends \vc\Test\TestCase
     public function testParseArgs_PassByReferenceValue ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenOpenParens()
-                ->thenAnAmpersand()
+            $this->oneTokenReader()->thenOpenParens
+                ->thenAnAmpersand
                 ->thenAVariable('$test')
-                ->thenCloseParens()
+                ->thenCloseParens
         );
 
         $this->assertEquals(
@@ -177,11 +177,11 @@ class test_classes_Parser_Routine_Args extends \vc\Test\TestCase
     public function testParseArgs_DefaultValue ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenOpenParens()
+            $this->oneTokenReader()->thenOpenParens
                 ->thenAVariable('$test')
-                ->thenSomeSpace()->thenAnEquals()
-                ->thenSomeSpace()->thenAnInteger(123)
-                ->thenCloseParens()
+                ->thenSomeSpace->thenAnEquals
+                ->thenSomeSpace->thenAnInteger(123)
+                ->thenCloseParens
         );
 
         $this->assertEquals(
@@ -199,22 +199,22 @@ class test_classes_Parser_Routine_Args extends \vc\Test\TestCase
     public function testParseArgs_Combined ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenOpenParens()
+            $this->oneTokenReader()->thenOpenParens
 
-                ->thenANamespacePath('\path\to\class')->thenSomeSpace()
-                ->thenAnAmpersand()->thenSomeSpace()
+                ->thenANamespacePath('\path\to\class')->thenSomeSpace
+                ->thenAnAmpersand->thenSomeSpace
                 ->thenAVariable('$test')
-                ->thenSomeSpace()->thenAnEquals()
-                ->thenSomeSpace()->thenAnInteger(123)
-                ->thenAComma()
+                ->thenSomeSpace->thenAnEquals
+                ->thenSomeSpace->thenAnInteger(123)
+                ->thenAComma
 
-                ->thenAnArray()->thenSomeSpace()
-                ->thenAnAmpersand()->thenSomeSpace()
+                ->thenAnArray->thenSomeSpace
+                ->thenAnAmpersand->thenSomeSpace
                 ->thenAVariable('$test2')
-                ->thenSomeSpace()->thenAnEquals()
-                ->thenSomeSpace()->thenAnArrayValue(array(1))
+                ->thenSomeSpace->thenAnEquals
+                ->thenSomeSpace->thenAnArrayValue(array(1))
 
-                ->thenCloseParens()
+                ->thenCloseParens
         );
 
         $this->assertEquals(

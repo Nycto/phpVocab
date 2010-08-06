@@ -57,9 +57,9 @@ class test_classes_Parser_IFace_Header extends \vc\Test\TestCase
         $access = $this->getAccessParserWithComment(
             new \vc\Data\Comment('Data'),
             $this->oneTokenReader()->thenAnInterface(25)
-                ->thenSomeSpace()->thenAName('MyIFace')
-                ->thenSomeSpace()->thenAnOpenBlock()
-                ->thenACloseBlock()
+                ->thenSomeSpace->thenAName('MyIFace')
+                ->thenSomeSpace->thenAnOpenBlock
+                ->thenACloseBlock
         );
 
         $this->assertEquals(
@@ -76,11 +76,11 @@ class test_classes_Parser_IFace_Header extends \vc\Test\TestCase
         $access = $this->getAccessParserWithComment(
             new \vc\Data\Comment('Data'),
             $this->oneTokenReader()->thenAnInterface(25)
-                ->thenSomeSpace()->thenAName('MyIFace')
-                ->thenSomeSpace()->thenAnExtends()
-                ->thenSomeSpace()->thenAPathList(array('\parent', 'relative'))
-                ->thenSomeSpace()->thenAnOpenBlock()
-                ->thenACloseBlock()
+                ->thenSomeSpace->thenAName('MyIFace')
+                ->thenSomeSpace->thenAnExtends
+                ->thenSomeSpace->thenAPathList(array('\parent', 'relative'))
+                ->thenSomeSpace->thenAnOpenBlock
+                ->thenACloseBlock
         );
 
         $this->assertEquals(

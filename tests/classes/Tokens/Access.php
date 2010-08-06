@@ -35,7 +35,7 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
     public function testTokenReader ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenAClass()
+            $this->oneTokenReader()->thenAClass
         );
 
         $this->assertTrue( $access->hasToken() );
@@ -48,9 +48,9 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
     {
         $access = \vc\Tokens\Access::buildAccess(
             $reader = $this->oneTokenReader()
-                ->thenAClass()->thenAnOpenBlock()
-                ->thenSomeSpace()->thenAFunction()
-                ->thenSomeSpace()->thenAName('Func')
+                ->thenAClass->thenAnOpenBlock
+                ->thenSomeSpace->thenAFunction
+                ->thenSomeSpace->thenAName('Func')
         );
 
         $this->assertIsTokenOf(
@@ -82,7 +82,7 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
     {
         $access = \vc\Tokens\Access::buildAccess(
             $reader = $this->oneTokenReader()
-                ->thenADocComment('test')->thenAClass()
+                ->thenADocComment('test')->thenAClass
         );
 
         $this->assertHasToken( Token::T_DOC_COMMENT, $access );
@@ -98,8 +98,8 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
     {
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()
-                ->thenAClass()->thenAnOpenBlock()
-                ->thenAFunction()->thenACloseBlock()
+                ->thenAClass->thenAnOpenBlock
+                ->thenAFunction->thenACloseBlock
         );
 
         $until = $access->untilTokens(array( Token::T_FUNCTION ));
@@ -114,7 +114,7 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
     {
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()
-                ->thenAFunction()->thenACloseBlock()->thenAClass()
+                ->thenAFunction->thenACloseBlock->thenAClass
         );
 
         $until = $access->untilBlockEnds();

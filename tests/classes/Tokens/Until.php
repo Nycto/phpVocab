@@ -47,7 +47,7 @@ class test_classes_Tokens_Until extends \vc\Test\TestCase
     {
         $reader = new \vc\Tokens\Until(
             array( Token::T_FUNCTION ),
-            $this->oneTokenReader()->thenAnOpenBlock()->thenACloseBlock()
+            $this->oneTokenReader()->thenAnOpenBlock->thenACloseBlock
         );
 
         $this->assertHasToken( Token::T_BLOCK_OPEN, $reader );
@@ -59,8 +59,8 @@ class test_classes_Tokens_Until extends \vc\Test\TestCase
     {
         $reader = new \vc\Tokens\Until(
             array( Token::T_FUNCTION ),
-            $this->oneTokenReader()->thenAnOpenBlock()
-                ->thenAFunction()->thenACloseBlock()
+            $this->oneTokenReader()->thenAnOpenBlock
+                ->thenAFunction->thenACloseBlock
         );
 
         $this->assertHasToken( Token::T_BLOCK_OPEN, $reader );
@@ -71,8 +71,8 @@ class test_classes_Tokens_Until extends \vc\Test\TestCase
     {
         $reader = new \vc\Tokens\Until(
             array( Token::T_FUNCTION, Token::T_CLASS ),
-            $this->oneTokenReader()->thenAnOpenBlock()
-                ->thenAClass()->thenACloseBlock()
+            $this->oneTokenReader()->thenAnOpenBlock
+                ->thenAClass->thenACloseBlock
         );
 
         $this->assertIsTokenOf( Token::T_BLOCK_OPEN, $reader->peekAtToken() );

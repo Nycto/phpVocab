@@ -51,10 +51,10 @@ class test_classes_Parser_Routine_Body extends \vc\Test\TestCase
     public function testParseReference_WithoutArgs ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenAFunction()
-                ->thenSomeSpace()->thenAName('MyFunc')
-                ->thenOpenParens()->thenCloseParens()
-                ->thenAnOpenBlock()->thenACloseBlock()
+            $this->oneTokenReader()->thenAFunction
+                ->thenSomeSpace->thenAName('MyFunc')
+                ->thenOpenParens->thenCloseParens
+                ->thenAnOpenBlock->thenACloseBlock
         );
 
         $routine = $this->getMockForAbstractClass('\vc\Data\Routine', array(1));
@@ -68,12 +68,12 @@ class test_classes_Parser_Routine_Body extends \vc\Test\TestCase
     public function testParseReference_WithArgs ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenAFunction()
-                ->thenSomeSpace()->thenAName('MyFunc')
-                ->thenOpenParens()->thenAVariable('$var')
-                ->thenCloseParens()->thenAnOpenBlock()
-                ->thenAnEcho()->thenSomeSpace()->thenAString('test')
-                ->thenASemicolon()->thenACloseBlock()
+            $this->oneTokenReader()->thenAFunction
+                ->thenSomeSpace->thenAName('MyFunc')
+                ->thenOpenParens->thenAVariable('$var')
+                ->thenCloseParens->thenAnOpenBlock
+                ->thenAnEcho->thenSomeSpace->thenAString('test')
+                ->thenASemicolon->thenACloseBlock
         );
 
         $routine = $this->getMockForAbstractClass('\vc\Data\Routine', array(1));
@@ -91,11 +91,11 @@ class test_classes_Parser_Routine_Body extends \vc\Test\TestCase
     public function testParseRoutine_ReturnReference ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenAFunction()
-                ->thenSomeSpace()->thenAnAmpersand()
+            $this->oneTokenReader()->thenAFunction
+                ->thenSomeSpace->thenAnAmpersand
                 ->thenAName('MyFunc')
-                ->thenOpenParens()->thenCloseParens()
-                ->thenAnOpenBlock()->thenACloseBlock()
+                ->thenOpenParens->thenCloseParens
+                ->thenAnOpenBlock->thenACloseBlock
         );
 
         $routine = $this->getMockForAbstractClass('\vc\Data\Routine', array(1));
@@ -110,10 +110,10 @@ class test_classes_Parser_Routine_Body extends \vc\Test\TestCase
     public function testParseReference_EndsWithASemiColon ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenAFunction()
-                ->thenSomeSpace()->thenAName('MyFunc')
-                ->thenOpenParens()->thenCloseParens()
-                ->thenASemicolon()
+            $this->oneTokenReader()->thenAFunction
+                ->thenSomeSpace->thenAName('MyFunc')
+                ->thenOpenParens->thenCloseParens
+                ->thenASemicolon
         );
 
         $routine = $this->getMockForAbstractClass('\vc\Data\Routine', array(1));

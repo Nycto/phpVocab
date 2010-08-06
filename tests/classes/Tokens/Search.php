@@ -45,9 +45,9 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
 
     public function testpeekToRequired_TokenGetsFound ()
     {
-        $reader = $this->oneTokenReader()->thenAnOpenTag()->thenAnEcho()
-                ->thenSomeSpace()->thenAString("content")
-                ->thenASemiColon()->thenACloseTag();
+        $reader = $this->oneTokenReader()->thenAnOpenTag->thenAnEcho
+                ->thenSomeSpace->thenAString("content")
+                ->thenASemiColon->thenACloseTag;
 
         $search = new \vc\Tokens\Search( $reader );
 
@@ -64,9 +64,9 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
 
     public function testpeekToRequired_UnexpectedToken ()
     {
-        $reader = $this->oneTokenReader()->thenAnOpenTag()->thenAnEcho()
-            ->thenSomeSpace()->thenAString("content")
-            ->thenASemiColon()->thenACloseTag();
+        $reader = $this->oneTokenReader()->thenAnOpenTag->thenAnEcho
+            ->thenSomeSpace->thenAString("content")
+            ->thenASemiColon->thenACloseTag;
 
         $access = new \vc\Tokens\Search( $reader );
 
@@ -95,9 +95,9 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
 
     public function testFindRequired_TokenGetsFound ()
     {
-        $reader = $this->oneTokenReader()->thenAnOpenTag()->thenAnEcho()
-                ->thenSomeSpace()->thenAString("content")
-                ->thenASemiColon()->thenACloseTag();
+        $reader = $this->oneTokenReader()->thenAnOpenTag->thenAnEcho
+                ->thenSomeSpace->thenAString("content")
+                ->thenASemiColon->thenACloseTag;
 
         $search = new \vc\Tokens\Search( $reader );
 
@@ -114,9 +114,9 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
 
     public function testFindRequired_UnexpectedToken ()
     {
-        $reader = $this->oneTokenReader()->thenAnOpenTag()->thenAnEcho()
-            ->thenSomeSpace()->thenAString("content")
-            ->thenASemiColon()->thenACloseTag();
+        $reader = $this->oneTokenReader()->thenAnOpenTag->thenAnEcho
+            ->thenSomeSpace->thenAString("content")
+            ->thenASemiColon->thenACloseTag;
 
         $access = new \vc\Tokens\Search( $reader );
 
@@ -134,9 +134,9 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
 
     public function testFind_TokenFound ()
     {
-        $reader = $this->oneTokenReader()->thenAnOpenTag()->thenAnEcho()
-            ->thenSomeSpace()->thenAString("content")
-            ->thenASemiColon()->thenACloseTag();
+        $reader = $this->oneTokenReader()->thenAnOpenTag->thenAnEcho
+            ->thenSomeSpace->thenAString("content")
+            ->thenASemiColon->thenACloseTag;
 
         $access = new \vc\Tokens\Search( $reader );
 
@@ -151,9 +151,9 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
 
     public function testFind_TokenNotFound ()
     {
-        $reader = $this->oneTokenReader()->thenAnOpenTag()->thenAnEcho()
-            ->thenSomeSpace()->thenAString("content")
-            ->thenASemiColon()->thenACloseTag();
+        $reader = $this->oneTokenReader()->thenAnOpenTag->thenAnEcho
+            ->thenSomeSpace->thenAString("content")
+            ->thenASemiColon->thenACloseTag;
 
         $access = new \vc\Tokens\Search( $reader );
 
