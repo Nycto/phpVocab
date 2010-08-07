@@ -52,7 +52,11 @@ class UnexpectedToken extends \r8\Exception
         array $search,
         array $allowed = array()
     ) {
-        parent::__construct("Unexpected Token: ". $token->getName());
+        parent::__construct(sprintf(
+            'Unexpected Token (%s) on line %d',
+            $token->getName(),
+            $token->getLine()
+        ));
         $this->addData( "Encountered Token", $token->getName() );
         $this->addData( "Token Line", $token->getLine() );
         $this->addData( "Token Content", $token->getContent() );
