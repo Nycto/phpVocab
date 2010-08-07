@@ -140,8 +140,12 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             "Token Reader should not have any tokens remaining"
         );
         $this->assertNull(
+            $tokens->peekAtToken(),
+            "peekAtToken should return NULL when it has no more tokens"
+        );
+        $this->assertNull(
             $tokens->popToken(),
-            "Token Reader should return NULL when it has no more tokens"
+            "popToken should return NULL when it has no more tokens"
         );
     }
 

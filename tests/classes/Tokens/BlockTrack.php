@@ -44,7 +44,6 @@ class test_classes_Tokens_BlockTrack extends \vc\Test\TestCase
         $this->assertHasToken( Token::T_BLOCK_OPEN, $reader );
         $this->assertHasToken( Token::T_FUNCTION, $reader );
         $this->assertHasToken( Token::T_BLOCK_CLOSE, $reader );
-        $this->assertHasToken( Token::T_BLOCK_CLOSE, $reader );
         $this->assertEndOfTokens( $reader );
     }
 
@@ -60,30 +59,15 @@ class test_classes_Tokens_BlockTrack extends \vc\Test\TestCase
         $this->assertHasToken( Token::T_FUNCTION, $reader );
         $this->assertHasToken( Token::T_BLOCK_OPEN, $reader );
         $this->assertHasToken( Token::T_BLOCK_CLOSE, $reader );
-        $this->assertHasToken( Token::T_BLOCK_CLOSE, $reader );
         $this->assertEndOfTokens( $reader );
     }
 
-    public function testPeekAtToken ()
+    public function test_FirstTokenIsACloseToken ()
     {
         $reader = new \vc\Tokens\BlockTrack(
-            $this->oneTokenReader()->thenAnOpenBlock->thenAFunction
-                ->thenACloseblock->thenACloseTag
+            $this->oneTokenReader()->thenACloseBlock
         );
 
-        $this->assertIsTokenOf( Token::T_BLOCK_OPEN, $reader->peekAtToken() );
-        $this->assertSame( $reader->peekAtToken(), $reader->peekAtToken() );
-        $this->assertHasToken( Token::T_BLOCK_OPEN, $reader );
-
-        $this->assertIsTokenOf( Token::T_FUNCTION, $reader->peekAtToken() );
-        $this->assertSame( $reader->peekAtToken(), $reader->peekAtToken() );
-        $this->assertHasToken( Token::T_FUNCTION, $reader );
-
-        $this->assertIsTokenOf( Token::T_BLOCK_CLOSE, $reader->peekAtToken() );
-        $this->assertSame( $reader->peekAtToken(), $reader->peekAtToken() );
-        $this->assertHasToken( Token::T_BLOCK_CLOSE, $reader );
-
-        $this->assertNull( $reader->peekAtToken() );
         $this->assertEndOfTokens( $reader );
     }
 

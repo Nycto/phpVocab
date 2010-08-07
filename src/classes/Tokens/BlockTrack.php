@@ -24,6 +24,8 @@
 
 namespace vc\Tokens;
 
+use \vc\Tokens\Token as Token;
+
 /**
  * Tracks the current curly block depth and artificially stops the token stream
  * when it has ended
@@ -72,7 +74,7 @@ class BlockTrack implements \vc\iface\Tokens\Reader
      */
     public function hasToken ()
     {
-        return $this->depth > 0 && $this->inner->hasToken();
+        return $this->peekAtToken() !== NULL;
     }
 
     /**
@@ -93,10 +95,10 @@ class BlockTrack implements \vc\iface\Tokens\Reader
         if ( $this->first )
             $this->first = FALSE;
 
-        else if ( $type == \vc\Tokens\Token::T_BLOCK_OPEN )
+        else if ( $type == Token::T_BLOCK_OPEN )
             $this->depth++;
 
-        else if ( $type == \vc\Tokens\Token::T_BLOCK_CLOSE )
+        else if ( $type == Token::T_BLOCK_CLOSE )
             $this->depth--;
 
         return $next;
@@ -112,7 +114,15 @@ class BlockTrack implements \vc\iface\Tokens\Reader
         if ( $this->depth <= 0 )
             return NULL;
 
-        return $this->inner->peekAtToken();
+        $token = $this->inner->peekAtToken();
+
+        if ( $token->is(Token::T_BLOCK_CLOSE) && $this->depth == 1 ) {
+            $this->depth--;
+            return NULL;
+        }
+        else {
+            return $token;
+        }
     }
 
 }
