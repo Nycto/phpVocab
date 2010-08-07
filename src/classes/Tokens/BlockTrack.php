@@ -116,7 +116,7 @@ class BlockTrack implements \vc\iface\Tokens\Reader
 
         $token = $this->inner->peekAtToken();
 
-        if ( $token->is(Token::T_BLOCK_CLOSE) && $this->depth == 1 ) {
+        if ($token && $token->is(Token::T_BLOCK_CLOSE) && $this->depth == 1) {
             $this->depth--;
             return NULL;
         }

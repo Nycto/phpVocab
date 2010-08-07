@@ -71,6 +71,12 @@ class test_classes_Tokens_BlockTrack extends \vc\Test\TestCase
         $this->assertEndOfTokens( $reader );
     }
 
+    public function test_EmptyTokenReader ()
+    {
+        $reader = new \vc\Tokens\BlockTrack( $this->oneTokenReader() );
+        $this->assertEndOfTokens( $reader );
+    }
+
 }
 
 ?>
