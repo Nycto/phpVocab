@@ -145,6 +145,20 @@ class test_classes_Tokens_Parser extends \vc\Test\TestCase
         $this->assertEndOfTokens($parser);
     }
 
+    public function testCustomToken_WhiteSpace ()
+    {
+        $parser = new \vc\Tokens\Parser(
+            new \r8\Stream\In\String("<?php \n  \r \n\n;")
+        );
+
+        $this->assertHasToken( \vc\Tokens\Token::T_OPEN_TAG, $parser );
+        $this->assertHasToken( \vc\Tokens\Token::T_WHITESPACE, $parser );
+
+        $semicolon = $parser->popToken();
+        $this->assertIsTokenOf( \vc\Tokens\Token::T_SEMICOLON, $semicolon );
+        $this->assertEquals( 5, $semicolon->getLine() );
+    }
+
     public function testPeekAtToken ()
     {
         $parser = new \vc\Tokens\Parser(

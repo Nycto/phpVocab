@@ -131,11 +131,9 @@ class Parser implements \vc\iface\Tokens\Reader
         // previous token. If the previous token contains a carriage return,
         // then we need to manually bump the value up
         $line = $this->current->getLine();
-        if (
-            $this->current->getType() == T_WHITESPACE
-            && stripos( $this->current->getContent(), "\n" ) !== FALSE
-        ) {
-            $line++;
+        if ( $this->current->is(\vc\Tokens\Token::T_WHITESPACE) ) {
+            $content = $this->current->getContent();
+            $line += substr_count($content, "\n") + substr_count($content, "\r");
         }
 
         return new \vc\Tokens\Token(
