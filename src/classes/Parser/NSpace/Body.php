@@ -93,7 +93,8 @@ class Body
     ) {
         $last = NULL;
 
-        while ( $access->hasToken() ) {
+        // Keep looking until we have consumed all the tokens in this namespace
+        while ( TRUE ) {
 
             $token = $access->peekToSkipping(array(
                 Token::T_CLASS, Token::T_ABSTRACT,
@@ -101,6 +102,9 @@ class Body
                 Token::T_INTERFACE,
                 Token::T_FUNCTION
             ));
+
+            if ( !$token )
+                break;
 
             if ( $token === $last ) {
                 throw new \RuntimeException(
