@@ -45,7 +45,8 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 
         return new \vc\Tokens\Access(
             $reader,
-            new \vc\Tokens\Search( $reader ),
+            r8(new \vc\Tokens\Search($reader))
+                ->setTokenMask(array(\vc\Tokens\Token::T_WHITESPACE)),
             $comParse
         );
     }

@@ -70,33 +70,26 @@ class Header
      */
     public function parseIFace ( \vc\Tokens\Access $access )
     {
-        $token = $access->findRequired(
-            array(Token::T_INTERFACE), array(Token::T_WHITESPACE)
-        );
+        $token = $access->findRequired( array(Token::T_INTERFACE) );
 
         $iface = new \vc\Data\Type\IFace(
             $token->getLine(), $access->getComment()
         );
 
         // Searches for the name of the interface
-        $token = $access->findRequired(
-            array(Token::T_STRING),array(Token::T_WHITESPACE)
-        );
+        $token = $access->findRequired( array(Token::T_STRING) );
         $iface->setName( $token->getContent() );
 
 
         // Look for any interfaces that this one extends
         $token = $access->findRequired(
-            array(Token::T_EXTENDS, Token::T_BLOCK_OPEN),
-            array(Token::T_WHITESPACE)
+            array(Token::T_EXTENDS, Token::T_BLOCK_OPEN)
         );
 
         if ( $token->is(Token::T_EXTENDS) ) {
             $iface->setExtends( $this->pathList->parsePathList($access) );
 
-            $access->findRequired(
-                array(Token::T_BLOCK_OPEN), array(Token::T_WHITESPACE)
-            );
+            $access->findRequired( array(Token::T_BLOCK_OPEN) );
         }
 
         // Finally, parse out the content of the class

@@ -108,10 +108,7 @@ class Value
      */
     private function parseArray ( \vc\Tokens\Access $access )
     {
-        $token = $access->findRequired(
-            array(Token::T_PARENS_OPEN),
-            array(Token::T_WHITESPACE)
-        );
+        $token = $access->findRequired( array(Token::T_PARENS_OPEN) );
 
         return new \vc\Data\Value(
             sprintf('array(%s)', $this->brackets->parseParens($access)),
@@ -133,7 +130,7 @@ class Value
                 Token::T_START_HEREDOC, Token::T_CONSTANT_ENCAPSED_STRING,
                 Token::T_ARRAY
             ),
-            array(Token::T_WHITESPACE, Token::T_EQUALS)
+            array(Token::T_EQUALS)
         );
 
         switch ( $token->getType() ) {

@@ -70,8 +70,7 @@ class Property
                 array(
                     Token::T_STATIC, Token::T_VAR, Token::T_VARIABLE,
                     Token::T_PUBLIC, Token::T_PROTECTED, Token::T_PRIVATE,
-                ),
-                array( Token::T_WHITESPACE )
+                )
             );
 
             if ( $token->is(
@@ -88,16 +87,13 @@ class Property
         $prop->setName( $token->getContent() );
 
         $token = $access->findRequired(
-            array( Token::T_SEMICOLON, Token::T_EQUALS ),
-            array( Token::T_WHITESPACE )
+            array( Token::T_SEMICOLON, Token::T_EQUALS )
         );
 
         // Look for any default value
         if ( $token->is( Token::T_EQUALS ) ) {
             $prop->setValue( $this->value->parseValue($access) );
-            $access->findRequired(
-                array( Token::T_SEMICOLON ),array( Token::T_WHITESPACE )
-            );
+            $access->findRequired( array( Token::T_SEMICOLON ) );
         }
 
         return $prop;

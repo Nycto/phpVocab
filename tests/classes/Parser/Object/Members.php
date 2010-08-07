@@ -118,7 +118,7 @@ class test_classes_Parser_Object_Members extends \vc\Test\TestCase
     public function testParseSignature_Function ()
     {
         $this->assertParsesToSignature(
-            $this->oneTokenReader()->thenSomeSpace->thenAFunction
+            $this->oneTokenReader()->thenAFunction
         );
     }
 

@@ -73,7 +73,7 @@ class Comment
             // First up, we look for the comment
             $token = $access->findRequired(
                 array( Token::T_DOC_COMMENT ),
-                array( Token::T_OPEN_TAG, Token::T_WHITESPACE )
+                array( Token::T_OPEN_TAG )
             );
 
             $comment = $this->comment->parse( $token->getContent() );

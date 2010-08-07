@@ -72,8 +72,7 @@ class Method
                     Token::T_STATIC, Token::T_ABSTRACT, Token::T_FINAL,
                     Token::T_PUBLIC, Token::T_PROTECTED, Token::T_PRIVATE,
                     Token::T_FUNCTION
-                ),
-                array(Token::T_WHITESPACE)
+                )
             );
 
             // We don't want to consume the function token because the routine

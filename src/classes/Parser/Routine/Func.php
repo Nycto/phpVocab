@@ -58,9 +58,7 @@ class Func
      */
     public function parseFunc ( \vc\Tokens\Access $access )
     {
-        $token = $access->peekToRequired(
-            array(Token::T_FUNCTION), array(Token::T_WHITESPACE)
-        );
+        $token = $access->peekToRequired( array(Token::T_FUNCTION) );
 
         $func = new \vc\Data\Routine\Func(
             $token->getLine(), $access->getComment()

@@ -84,8 +84,7 @@ class Signature
                     Token::T_PUBLIC, Token::T_PROTECTED, Token::T_PRIVATE,
                     Token::T_ABSTRACT, Token::T_FINAL, Token::T_FUNCTION,
                     Token::T_VAR, Token::T_VARIABLE
-                ),
-                array(Token::T_WHITESPACE)
+                )
             );
 
             // These tokens denote a definite method

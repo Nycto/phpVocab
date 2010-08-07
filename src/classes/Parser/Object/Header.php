@@ -82,8 +82,7 @@ class Header
     public function parseClass ( \vc\Tokens\Access $access )
     {
         $token = $access->findRequired(
-            array(Token::T_CLASS, Token::T_ABSTRACT),
-            array(Token::T_WHITESPACE)
+            array(Token::T_CLASS, Token::T_ABSTRACT)
         );
 
         $class = new \vc\Data\Type\Cls(
@@ -93,23 +92,18 @@ class Header
         // Extract the abstract flag from the class definition
         if ( $token->is(Token::T_ABSTRACT) ) {
             $class->setAbstract(TRUE);
-            $access->findRequired(
-                array(Token::T_CLASS), array(Token::T_WHITESPACE)
-            );
+            $access->findRequired( array(Token::T_CLASS) );
         }
 
         // Searches for the name of the class
-        $token = $access->findRequired(
-            array(Token::T_STRING),array(Token::T_WHITESPACE)
-        );
+        $token = $access->findRequired( array(Token::T_STRING) );
 
         // Set the name of the class
         $class->setName( $token->getContent() );
 
         // Look for parent classes and interfaces
         $token = $access->findRequired(
-            array(Token::T_EXTENDS, Token::T_IMPLEMENTS, Token::T_BLOCK_OPEN),
-            array(Token::T_WHITESPACE)
+            array(Token::T_EXTENDS, Token::T_IMPLEMENTS, Token::T_BLOCK_OPEN)
         );
 
         // Add the parent class
@@ -118,8 +112,7 @@ class Header
 
             // Look for any interfaces
             $token = $access->findRequired(
-                array(Token::T_IMPLEMENTS, Token::T_BLOCK_OPEN),
-                array(Token::T_WHITESPACE)
+                array(Token::T_IMPLEMENTS, Token::T_BLOCK_OPEN)
             );
         }
 
@@ -127,9 +120,7 @@ class Header
         if ( $token->is(Token::T_IMPLEMENTS) ) {
             $class->setIFaces( $this->pathList->parsePathList($access) );
 
-            $access->findRequired(
-                array(Token::T_BLOCK_OPEN), array(Token::T_WHITESPACE)
-            );
+            $access->findRequired( array(Token::T_BLOCK_OPEN) );
         }
 
         // Finally, parse out the content of the class

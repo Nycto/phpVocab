@@ -72,29 +72,23 @@ class Body
         \vc\Data\Routine $routine,
         \vc\Tokens\Access $access
     ) {
-        $access->findRequired(
-            array(Token::T_FUNCTION), array(Token::T_WHITESPACE)
-        );
+        $access->findRequired( array(Token::T_FUNCTION) );
 
         $token = $access->findRequired(
-            array(Token::T_STRING, Token::T_AMPERSAND),
-            array(Token::T_WHITESPACE)
+            array(Token::T_STRING, Token::T_AMPERSAND)
         );
 
         // Handle routines that return a reference
         if ( $token->is(Token::T_AMPERSAND) ) {
             $routine->setReturnRef(TRUE);
-            $token = $access->findRequired(
-                array(Token::T_STRING), array(Token::T_WHITESPACE)
-            );
+            $token = $access->findRequired( array(Token::T_STRING) );
         }
 
         $routine->setName( $token->getContent() );
         $routine->setArgs( $this->args->parseArgs($access) );
 
         $access->findRequired(
-            array(Token::T_BLOCK_OPEN, Token::T_SEMICOLON),
-            array(Token::T_WHITESPACE)
+            array(Token::T_BLOCK_OPEN, Token::T_SEMICOLON)
         );
 
         $this->brackets->parseCurlies( $access );

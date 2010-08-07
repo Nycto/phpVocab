@@ -24,6 +24,8 @@
 
 namespace vc\Tokens;
 
+use \vc\Tokens\Token as Token;
+
 /**
  * Bundles multiple token access implementations into a single interface
  */
@@ -64,13 +66,13 @@ class Access implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Search, \vc\if
             $reader
         );
 
-        $reader = \vc\Tokens\Mask::comments( $comments );
+        $search = new \vc\Tokens\Search( $comments );
+        $search->setTokenMask(array(
+            Token::T_WHITESPACE, Token::T_COMMENT,
+            Token::T_DOC_COMMENT, Token::T_ML_COMMENT
+        ));
 
-        return new \vc\Tokens\Access(
-            $reader,
-            new \vc\Tokens\Search( $reader ),
-            $comments
-        );
+        return new \vc\Tokens\Access( $comments, $search, $comments );
     }
 
     /**

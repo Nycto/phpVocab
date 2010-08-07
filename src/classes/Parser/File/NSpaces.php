@@ -70,7 +70,7 @@ class NSpaces
     {
         return NULL !== $access->find(
             array( Token::T_NAMESPACE ),
-            array( Token::T_OPEN_TAG, Token::T_WHITESPACE )
+            array( Token::T_OPEN_TAG )
         );
     }
 
@@ -90,8 +90,7 @@ class NSpaces
         $nspace->setNamespace( $this->path->parsePath( $access ) );
 
         $token = $access->findRequired(
-            array(Token::T_SEMICOLON, Token::T_BLOCK_OPEN),
-            array(Token::T_WHITESPACE)
+            array(Token::T_SEMICOLON, Token::T_BLOCK_OPEN)
         );
 
         if ( $token->is(Token::T_BLOCK_OPEN) )

@@ -82,8 +82,7 @@ class Args
             );
             $access->popToken();
             $token = $access->peekToRequired(
-                array(Token::T_AMPERSAND, Token::T_VARIABLE),
-                array(Token::T_WHITESPACE)
+                array(Token::T_AMPERSAND, Token::T_VARIABLE)
             );
         }
 
@@ -91,9 +90,7 @@ class Args
         if ( $token->is(Token::T_AMPERSAND) ) {
             $arg->setReference(TRUE);
             $access->popToken();
-            $token = $access->peekToRequired(
-                array(Token::T_VARIABLE), array(Token::T_WHITESPACE)
-            );
+            $token = $access->peekToRequired( array(Token::T_VARIABLE) );
         }
 
         // Grab the name of the argument. Up to this point, it has only been
@@ -102,14 +99,12 @@ class Args
         $access->popToken();
 
         // Look for a default value for this argument
-        $token = $access->find(
-            array(Token::T_EQUALS), array(Token::T_WHITESPACE)
-        );
+        $token = $access->find( array(Token::T_EQUALS) );
         if ( $token && $token->is(Token::T_EQUALS) )
             $arg->setDefault( $this->value->parseValue($access) );
 
         // Pop the comma off the list if one exists
-        $access->find( array(Token::T_COMMA), array(Token::T_WHITESPACE) );
+        $access->find( array(Token::T_COMMA) );
 
         return $arg;
     }
@@ -122,10 +117,7 @@ class Args
      */
     public function parseArgs ( \vc\Tokens\Access $access )
     {
-        $access->findRequired(
-            array(Token::T_PARENS_OPEN),
-            array(Token::T_WHITESPACE)
-        );
+        $access->findRequired( array(Token::T_PARENS_OPEN) );
 
         $args = array();
 
@@ -137,8 +129,7 @@ class Args
                     Token::T_ARRAY, Token::T_STRING, Token::T_NS_SEPARATOR,
                     Token::T_AMPERSAND, Token::T_VARIABLE,
                     Token::T_PARENS_CLOSE
-                ),
-                array(Token::T_WHITESPACE)
+                )
             );
 
             if ( $type->is(Token::T_PARENS_CLOSE) )

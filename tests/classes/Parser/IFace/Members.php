@@ -62,10 +62,10 @@ class test_classes_Parser_IFace_Members extends \vc\Test\TestCase
     public function testParseIFace_Constant ()
     {
         $access = \vc\Tokens\Access::buildAccess(
-            $this->oneTokenReader()->thenAConst()->thenSomeSpace()
-                ->thenAName('CONST')->thenSomeSpace()
-                ->thenAnEquals()->thenSomeSpace()->thenAnInteger(123)
-                ->thenASemicolon()
+            $this->oneTokenReader()
+                ->thenAConst->thenAName('CONST')
+                ->thenAnEquals->thenAnInteger(123)
+                ->thenASemicolon
         );
 
         $iface = new \vc\Data\Type\IFace(1);

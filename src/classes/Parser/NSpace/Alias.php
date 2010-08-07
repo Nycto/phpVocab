@@ -58,22 +58,16 @@ class Alias
      */
     public function parseAlias ( \vc\Tokens\Access $access )
     {
-        $access->findRequired(
-            array(Token::T_USE), array(Token::T_WHITESPACE)
-        );
+        $access->findRequired( array(Token::T_USE) );
 
         $alias = new \vc\Data\Alias( $this->path->parsePath($access) );
 
-        $as = $access->find(
-            array(Token::T_AS), array(Token::T_WHITESPACE)
-        );
+        $as = $access->find( array(Token::T_AS) );
 
         if ( $as )
             $alias->setAlias( $this->path->parsePath($access) );
 
-        $access->findRequired(
-            array(Token::T_SEMICOLON), array(Token::T_WHITESPACE)
-        );
+        $access->findRequired( array(Token::T_SEMICOLON) );
 
         return $alias;
     }

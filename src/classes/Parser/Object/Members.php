@@ -86,8 +86,7 @@ class Members
                     Token::T_STATIC, Token::T_ABSTRACT, Token::T_FINAL,
                     Token::T_PUBLIC, Token::T_PROTECTED, Token::T_PRIVATE,
                     Token::T_VAR, Token::T_FUNCTION
-                ),
-                array(Token::T_WHITESPACE)
+                )
             );
 
             // This loop doesn't itself pop any tokens off, so this check just

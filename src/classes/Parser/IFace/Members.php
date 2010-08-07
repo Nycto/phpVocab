@@ -84,8 +84,7 @@ class Members
                     Token::T_CONST,
                     Token::T_STATIC, Token::T_FUNCTION,
                     Token::T_PUBLIC, Token::T_PROTECTED, Token::T_PRIVATE,
-                ),
-                array(Token::T_WHITESPACE)
+                )
             );
 
             // This loop doesn't itself pop any tokens off, so this check just
