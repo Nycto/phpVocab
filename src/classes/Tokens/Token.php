@@ -352,6 +352,26 @@ class Token
         return array( $this->type, $this->content, $this->line );
     }
 
+    /**
+     * Outputs a dump of this token to the client
+     *
+     * @return NULL
+     */
+    public function dump ()
+    {
+        printf(
+            "Line %4d: %-26s (%4d): '%s'\n",
+            $this->line,
+            $this->getName(),
+            $this->type,
+            str_replace(
+                array("\n", "\r"),
+                array('\n', '\r'),
+                $this->content
+            )
+        );
+    }
+
 }
 
 ?>
