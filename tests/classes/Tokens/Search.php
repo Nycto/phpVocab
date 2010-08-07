@@ -82,6 +82,23 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
         $this->assertHasToken( Token::T_ECHO, $reader );
     }
 
+    public function testPeekToRequired_SharedTokenMask ()
+    {
+        $reader = $this->oneTokenReader()->thenAnOpenTag->thenAnEcho;
+
+        $search = new \vc\Tokens\Search( $reader );
+        $this->assertSame( $search, $search->setTokenMask(
+            array( Token::T_OPEN_TAG, Token::T_CONSTANT_ENCAPSED_STRING )
+        ) );
+
+        $this->assertIsTokenOf(
+            Token::T_ECHO,
+            $search->peekToRequired(array(Token::T_ECHO, Token::T_SEMICOLON))
+        );
+
+        $this->assertHasToken( Token::T_ECHO, $reader );
+    }
+
     public function testFindRequired_EmptyTokenSet ()
     {
         $reader = new \vc\Tokens\Search( $this->oneTokenReader() );
@@ -132,6 +149,23 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
         $this->assertHasToken( Token::T_ECHO, $reader );
     }
 
+    public function testFindRequired_SharedTokenMask ()
+    {
+        $reader = $this->oneTokenReader()->thenAnOpenTag->thenAnEcho;
+
+        $search = new \vc\Tokens\Search( $reader );
+        $this->assertSame( $search, $search->setTokenMask(
+            array( Token::T_OPEN_TAG, Token::T_CONSTANT_ENCAPSED_STRING )
+        ) );
+
+        $this->assertIsTokenOf(
+            Token::T_ECHO,
+            $search->findRequired(array(Token::T_ECHO, Token::T_SEMICOLON))
+        );
+
+        $this->assertEndOfTokens( $reader );
+    }
+
     public function testFind_TokenFound ()
     {
         $reader = $this->oneTokenReader()->thenAnOpenTag->thenAnEcho
@@ -165,6 +199,22 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
         );
 
         $this->assertHasToken( Token::T_ECHO, $reader );
+    }
+
+    public function testFind_SharedTokenMask ()
+    {
+        $reader = $this->oneTokenReader()->thenAnOpenTag->thenAnEcho;
+
+        $search = new \vc\Tokens\Search( $reader );
+        $this->assertSame( $search, $search->setTokenMask(
+            array( Token::T_OPEN_TAG, Token::T_CONSTANT_ENCAPSED_STRING )
+        ) );
+
+        $this->assertIsTokenOf(
+            Token::T_ECHO,
+            $search->find(array(Token::T_ECHO, Token::T_SEMICOLON))
+        );
+        $this->assertEndOfTokens( $reader );
     }
 
     public function testPeekToSkipping_TokenFound ()

@@ -38,6 +38,13 @@ class Search implements \vc\iface\Tokens\Search
     private $reader;
 
     /**
+     * Any tokens that should be skipped by default
+     *
+     * @var array
+     */
+    private $mask = array();
+
+    /**
      * Constructor...
      *
      * @param \vc\iface\Tokens\Reader $reader The token reader being wrapped
@@ -45,6 +52,18 @@ class Search implements \vc\iface\Tokens\Search
     public function __construct ( \vc\iface\Tokens\Reader $reader )
     {
         $this->reader = $reader;
+    }
+
+    /**
+     * Sets the list of general tokens to skip over
+     *
+     * @param Array $tokens The list of tokens to skip
+     * @return \vc\Tokens\Search Returns a self reference
+     */
+    public function setTokenMask ( array $mask )
+    {
+        $this->mask = $mask;
+        return $this;
     }
 
     /**
@@ -60,7 +79,7 @@ class Search implements \vc\iface\Tokens\Search
             if ( in_array($type, $types) )
                 return $token;
 
-            else if ( !in_array($type, $allowing) )
+            else if (!in_array($type, $allowing) && !in_array($type, $this->mask))
                 throw new \vc\Tokens\UnexpectedToken($token, $types, $allowing);
 
             $this->reader->popToken();
