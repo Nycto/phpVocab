@@ -31,6 +31,14 @@ interface Search
 {
 
     /**
+     * Copies this token searcher, but wrapped around a new token reader
+     *
+     * @param \vc\iface\Tokens\Reader $reader The new reader to wrap
+     * @return \vc\iface\Tokens\Search
+     */
+    public function copy ( \vc\iface\Tokens\Reader $reader );
+
+    /**
      * Returns the next token amongst the given type, skipping any tokens
      * listed in the allowing list
      *

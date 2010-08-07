@@ -32,6 +32,16 @@ require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 class test_classes_Tokens_Search extends \vc\Test\TestCase
 {
 
+    public function testCopy ()
+    {
+        $search = new \vc\Tokens\Search( $this->oneTokenReader() );
+
+        $this->assertThat(
+            $search->copy($this->oneTokenReader()),
+            $this->isInstanceOf( '\vc\Tokens\Search' )
+        );
+    }
+
     public function testpeekToRequired_EmptyTokenSet ()
     {
         $reader = new \vc\Tokens\Search( $this->oneTokenReader() );

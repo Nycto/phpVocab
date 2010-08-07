@@ -84,6 +84,18 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
         );
     }
 
+    public function testCopy ()
+    {
+        $access = \vc\Tokens\Access::buildAccess(
+            $reader = $this->oneTokenReader()
+        );
+
+        $this->assertThat(
+            $access->copy( $this->oneTokenReader() ),
+            $this->isInstanceOf( '\vc\Tokens\Access' )
+        );
+    }
+
     public function testTokenComments ()
     {
         $access = \vc\Tokens\Access::buildAccess(

@@ -67,6 +67,14 @@ class Search implements \vc\iface\Tokens\Search
     }
 
     /**
+     * @see \vc\iface\Tokens\Search::copy
+     */
+    public function copy ( \vc\iface\Tokens\Reader $reader )
+    {
+        return r8(new self($reader))->setTokenMask( $this->mask );
+    }
+
+    /**
      * @see \vc\iface\Tokens\Search::peekToRequired
      */
     public function peekToRequired ( array $types, array $allowing = array() )

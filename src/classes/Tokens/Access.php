@@ -117,6 +117,18 @@ class Access implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Search, \vc\if
     }
 
     /**
+     * @see \vc\iface\Tokens\Search::copy
+     */
+    public function copy ( \vc\iface\Tokens\Reader $reader )
+    {
+        return new self(
+            $reader,
+            $this->search->copy( $reader ),
+            $this->comments
+        );
+    }
+
+    /**
      * @see \vc\iface\Tokens\Search::findRequired()
      */
     public function findRequired ( array $types, array $allowing = array() )
@@ -168,7 +180,7 @@ class Access implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Search, \vc\if
         $reader = new \vc\Tokens\Until( $until, $this->reader );
         return new self(
             $reader,
-            new \vc\Tokens\Search( $reader ),
+            $this->search->copy( $reader ),
             $this->comments
         );
     }
@@ -184,7 +196,7 @@ class Access implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Search, \vc\if
         $reader = new \vc\Tokens\BlockTrack( $this->reader );
         return new self(
             $reader,
-            new \vc\Tokens\Search( $reader ),
+            $this->search->copy( $reader ),
             $this->comments
         );
     }
