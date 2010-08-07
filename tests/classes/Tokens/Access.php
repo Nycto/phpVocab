@@ -52,35 +52,41 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
                 ->thenSomeSpace->thenAFunction
                 ->thenSomeSpace->thenAName('Func')
                 ->thenSomeSpace->thenAClass
+                ->thenSomeSpace->thenASemicolon
         );
 
         $this->assertIsTokenOf(
             Token::T_BLOCK_OPEN,
             $access->findRequired(
-                array(Token::T_BLOCK_OPEN),
-                array(Token::T_CLASS)
+                array(Token::T_BLOCK_OPEN), array(Token::T_CLASS)
             )
         );
 
         $this->assertIsTokenOf(
             Token::T_FUNCTION,
             $access->find(
-                array(Token::T_FUNCTION),
-                array(Token::T_WHITESPACE)
+                array(Token::T_FUNCTION), array(Token::T_WHITESPACE)
             )
         );
 
         $this->assertIsTokenOf(
             Token::T_STRING,
             $access->peekToRequired(
-                array(Token::T_STRING),
-                array(Token::T_WHITESPACE)
+                array(Token::T_STRING), array(Token::T_WHITESPACE)
             )
         );
 
         $this->assertIsTokenOf(
             Token::T_CLASS,
             $access->peekToSkipping(array(Token::T_CLASS))
+        );
+
+        $this->assertIsTokenOf(
+            Token::T_SEMICOLON,
+            $access->peekTo(
+                array(Token::T_SEMICOLON),
+                array(Token::T_WHITESPACE, Token::T_CLASS)
+            )
         );
     }
 
@@ -139,7 +145,6 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
         $this->assertThat( $until, $this->isInstanceOf('\vc\Tokens\Access') );
 
         $this->assertHasToken( Token::T_FUNCTION, $until );
-        $this->assertHasToken( Token::T_BLOCK_CLOSE, $until );
         $this->assertEndOfTokens( $until );
     }
 

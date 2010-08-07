@@ -153,6 +153,14 @@ class Access implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Search, \vc\if
     }
 
     /**
+     * @see \vc\iface\Tokens\Search::peekTo
+     */
+    public function peekTo ( array $types, array $allowing = array() )
+    {
+        return $this->search->peekTo( $types, $allowing );
+    }
+
+    /**
      * @see \vc\iface\Tokens\Search::findSkipping
      */
     public function peekToSkipping ( array $types )

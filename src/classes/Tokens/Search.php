@@ -97,6 +97,22 @@ class Search implements \vc\iface\Tokens\Search
     }
 
     /**
+     * @see \vc\iface\Tokens\Search::peekTo
+     */
+    public function peekTo ( array $types, array $allowing = array() )
+    {
+        try {
+            return $this->peekToRequired( $types, $allowing );
+        }
+        catch ( \vc\Tokens\UnexpectedToken $err ) {
+            return NULL;
+        }
+        catch ( \vc\Tokens\UnexpectedEnd $err ) {
+            return NULL;
+        }
+    }
+
+    /**
      * @see \vc\iface\Tokens\Search::findRequired
      */
     public function findRequired ( array $types, array $allowing = array() )

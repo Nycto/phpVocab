@@ -109,6 +109,45 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
         $this->assertHasToken( Token::T_ECHO, $reader );
     }
 
+    public function testPeekTo_TokenFound ()
+    {
+        $reader = $this->oneTokenReader()->thenAnOpenTag->thenAnEcho;
+
+        $search = new \vc\Tokens\Search( $reader );
+
+        $this->assertIsTokenOf(
+            Token::T_ECHO,
+            $search->peekTo(
+                array( Token::T_ECHO, Token::T_SEMICOLON ),
+                array( Token::T_OPEN_TAG, Token::T_CONSTANT_ENCAPSED_STRING )
+            )
+        );
+
+        $this->assertHasToken( Token::T_ECHO, $reader );
+    }
+
+    public function testPeekTo_TokenNotFound ()
+    {
+        $reader = $this->oneTokenReader()->thenAnOpenTag->thenAnEcho
+            ->thenSomeSpace->thenAString("content")
+            ->thenASemiColon->thenACloseTag;
+
+        $access = new \vc\Tokens\Search( $reader );
+
+        $this->assertNull(
+            $access->peekTo(
+                array( Token::T_CLOSE_TAG, Token::T_SEMICOLON ),
+                array( Token::T_OPEN_TAG, Token::T_WHITESPACE )
+            )
+        );
+    }
+
+    public function testPeekTo_EmptyTokenSet ()
+    {
+        $reader = new \vc\Tokens\Search( $this->oneTokenReader() );
+        $this->assertNull( $reader->peekTo(array(Token::T_CLASS)) );
+    }
+
     public function testFindRequired_EmptyTokenSet ()
     {
         $reader = new \vc\Tokens\Search( $this->oneTokenReader() );

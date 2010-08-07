@@ -73,6 +73,16 @@ interface Search
     public function peekToRequired ( array $types, array $allowing = array() );
 
     /**
+     * Returns the next token amongst the given type, without consuming that
+     * token. This will skip any tokens listed in the allowing list.
+     *
+     * @param Array $types The list of types to search for
+     * @param Array $allowing The list of tokens to skip
+     * @return \vc\Tokens\Token|NULL Returns NULL if the token can't be found
+     */
+    public function peekTo ( array $types, array $allowing = array() );
+
+    /**
      * Searches for a token in the given list, passing by all other tokens
      *
      * This will not consume the token, but queue it up the be popped off next
