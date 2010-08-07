@@ -33,6 +33,13 @@ class Body
 {
 
     /**
+     * A parser for picking up aliases
+     *
+     * @var \vc\Parser\NSpace\Alias
+     */
+    private $alias;
+
+    /**
      * The parser for picking up namespace constants
      *
      * @var \vc\Parser\Constant
@@ -63,17 +70,20 @@ class Body
     /**
      * Constructor...
      *
+     * @param \vc\Parser\NSpace\Alias $alias
      * @param \vc\Parser\Constant $constant
      * @param \vc\Parser\Routine\Func $func
      * @param \vc\Parser\Object\Header $object
      * @param \vc\Parser\IFace\Header $iface
      */
     public function __construct (
+        \vc\Parser\NSpace\Alias $alias,
         \vc\Parser\Constant $constant,
         \vc\Parser\Routine\Func $func,
         \vc\Parser\Object\Header $object,
         \vc\Parser\IFace\Header $iface
     ) {
+        $this->alias = $alias;
         $this->constant = $constant;
         $this->func = $func;
         $this->object = $object;
@@ -100,7 +110,8 @@ class Body
                 Token::T_CLASS, Token::T_ABSTRACT,
                 Token::T_CONST,
                 Token::T_INTERFACE,
-                Token::T_FUNCTION
+                Token::T_FUNCTION,
+                Token::T_USE,
             ));
 
             if ( !$token )
@@ -126,6 +137,9 @@ class Body
 
             else if ( $token->is(Token::T_CONST) )
                 $nspace->addConstant( $this->constant->parseConstant($access) );
+
+            else if ( $token->is(Token::T_USE) )
+                $nspace->addAlias( $this->alias->parseAlias($access) );
         }
 
     }

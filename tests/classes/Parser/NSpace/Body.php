@@ -37,6 +37,13 @@ class test_classes_Parser_NSpace_Body extends \vc\Test\TestCase
      */
     public function getNSpaceParser ()
     {
+        $alias = $this->getStub('\vc\Parser\NSpace\Alias');
+        $alias->expects( $this->any() )->method( "parseAlias" )
+            ->will( $this->returnCallback( function ( $access ) {
+                $access->popToken();
+                return new \vc\Data\Alias('ns\path');
+            }) );
+
         $constant = $this->getStub('\vc\Parser\Constant');
         $constant->expects( $this->any() )->method( "parseConstant" )
             ->will( $this->returnCallback( function ( $access ) {
@@ -66,8 +73,21 @@ class test_classes_Parser_NSpace_Body extends \vc\Test\TestCase
             }) );
 
         return new \vc\Parser\NSpace\Body(
-            $constant, $func, $cls, $iface
+            $alias, $constant, $func, $cls, $iface
         );
+    }
+
+    public function testParseNSpace_Alias ()
+    {
+        $access = \vc\Tokens\Access::buildAccess(
+            $this->oneTokenReader()->thenAUse
+        );
+
+        $nspace = new \vc\Data\NSpace(1);
+        $this->getNSpaceParser()->parseNSpace( $nspace, $access );
+
+        $this->assertEquals(1, count($nspace->getAliases()));
+        $this->assertEndOfTokens( $access );
     }
 
     public function testParseNSpace_Constant ()
