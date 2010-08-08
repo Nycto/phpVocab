@@ -149,6 +149,15 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * Asserts that a value is an array with the given number of elements
+     */
+    public function assertArrayOfLength ( $length, $value )
+    {
+        $this->assertType('array', $value);
+        $this->assertEquals( (int) $length, count($value) );
+    }
+
 }
 
 ?>

@@ -36,6 +36,7 @@ class all
     {
         $suite = new \r8\Test\Suite;
         $suite->addFromFiles( "test_classes_", __DIR__ ."/classes", '' );
+        $suite->addFromFiles( "test_Parsing_", __DIR__ ."/Parsing", '' );
         return $suite;
     }
 
