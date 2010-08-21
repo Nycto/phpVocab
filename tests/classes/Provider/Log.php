@@ -27,7 +27,7 @@ require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 /**
  * Unit test
  */
-class test_classes_Provider extends \vc\Test\TestCase
+class test_classes_Provider_Log extends \vc\Test\TestCase
 {
 
     public function testGetLog ()
