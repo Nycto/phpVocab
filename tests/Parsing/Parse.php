@@ -31,55 +31,6 @@ class test_Parsing_Parse extends \vc\Test\TestCase
 {
 
     /**
-     * Returns a parser
-     *
-     * @return \vc\Parser\File\Comment
-     */
-    public function getParser ()
-    {
-        $brackets = new \vc\Parser\Brackets;
-        $value = new \vc\Parser\Value( $brackets );
-        $constant = new \vc\Parser\Constant($value);
-        $path = new \vc\Parser\Path;
-        $pathList = new \vc\Parser\PathList($path);
-        $routine = new \vc\Parser\Routine\Body(
-            new \vc\Parser\Routine\Args( $path, $value ),
-            $brackets
-        );
-        $method = new \vc\Parser\Routine\Method( $routine );
-
-        return new \vc\Parser\File\Comment(
-            new \vc\Parser\Comment,
-            new \vc\Parser\File\NSpaces(
-                $path,
-                new \vc\Parser\NSpace\Body(
-                    new \vc\Parser\NSpace\Alias( $path ),
-                    $constant,
-                    new \vc\Parser\Routine\Func( $routine ),
-                    new \vc\Parser\Object\Header(
-                        $path,
-                        $pathList,
-                        new \vc\Parser\Object\Members(
-                            $constant,
-                            new \vc\Parser\Object\Signature(
-                                new \vc\Parser\Object\Property( $value ),
-                                $method
-                            )
-                        )
-                    ),
-                    new \vc\Parser\IFace\Header(
-                        $pathList,
-                        new \vc\Parser\IFace\Members(
-                            $constant,
-                            $method
-                        )
-                    )
-                )
-            )
-        );
-    }
-
-    /**
      * Parses the given file
      *
      * @return \vc\Data\File
@@ -93,7 +44,7 @@ class test_Parsing_Parse extends \vc\Test\TestCase
         );
 
         $file = new \vc\Data\File( $path );
-        $this->getParser()->parse( $file, $reader );
+        \vc\Provider\Parser::getFileParser()->parse( $file, $reader );
         return $file;
     }
 
