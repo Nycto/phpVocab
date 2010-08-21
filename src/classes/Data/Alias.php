@@ -83,6 +83,9 @@ class Alias
      */
     public function getAlias ()
     {
+        if ( !isset($this->alias) )
+            $this->alias = \r8\ary\last( explode('\\', $this->path) );
+
         return $this->alias;
     }
 

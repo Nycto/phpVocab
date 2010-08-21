@@ -34,7 +34,7 @@ class test_classes_Data_Alias extends \vc\Test\TestCase
     {
         $alias = new \vc\Data\Alias('sub\\sub2');
         $this->assertSame( 'sub\\sub2', $alias->getPath() );
-        $this->assertNull( $alias->getAlias() );
+        $this->assertSame( 'sub2', $alias->getAlias() );
 
         $this->assertSame( $alias, $alias->setAlias('als') );
         $this->assertSame( 'als', $alias->getAlias() );
