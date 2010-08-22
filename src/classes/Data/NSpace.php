@@ -182,6 +182,37 @@ class NSpace
         return $this->types;
     }
 
+    /**
+     * Resolves a path relative to this namespace
+     *
+     * @param String $path
+     * @return String
+     */
+    public function resolve ( $path )
+    {
+        $path = (string) $path;
+
+        // If the path is global, no resolution necessary
+        if ( \substr($path, 0, 1) === '\\' )
+            return $path;
+
+        // if the first part of the namespace is registered as a namespace,
+        // then resolve it
+        $pathParts = explode('\\', $path);
+        $firstPart = array_shift($pathParts);
+        if ( isset($this->aliases[$firstPart]) ) {
+            $path = $this->aliases[$firstPart]->getPath()
+                .'\\'. implode('\\', $pathParts);
+        }
+
+        // Finally, resolve a path relative to this namespace
+        else if ( \substr($path, 0, 1) !== '\\' ) {
+            $path = $this->path .'\\'. $path;
+        }
+
+        return \r8\str\head($path, '\\');
+    }
+
 }
 
 ?>

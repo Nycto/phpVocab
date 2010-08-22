@@ -107,6 +107,50 @@ class test_classes_Data_NSpace extends \vc\Test\TestCase
         $this->assertSame( array($type1, $type2), $nspace->getTypes() );
     }
 
+    public function testResolve_GlobalPath ()
+    {
+        $nspace = new \vc\Data\NSpace;
+        $this->assertSame( '\some\ns', $nspace->resolve('\some\ns') );
+    }
+
+    public function testResolve_AliasedPath_WithLeadingSlash ()
+    {
+        $nspace = new \vc\Data\NSpace;
+        $nspace->addAlias(
+            \r8(new \vc\Data\Alias('\one\two'))->setAlias('english')
+        );
+
+        $this->assertSame( '\one\two\three', $nspace->resolve('english\three') );
+    }
+
+    public function testResolve_AliasedPath_WithoutLeadingSlash ()
+    {
+        $nspace = new \vc\Data\NSpace;
+        $nspace->addAlias(
+            \r8(new \vc\Data\Alias('one\two'))->setAlias('english')
+        );
+
+        $this->assertSame( '\one\two\three', $nspace->resolve('english\three') );
+    }
+
+    public function testResolve_RelativePath_WithLeadingSlash ()
+    {
+        $nspace = new \vc\Data\NSpace('\one\two');
+        $this->assertSame(
+            '\one\two\three\four',
+            $nspace->resolve('three\four')
+        );
+    }
+
+    public function testResolve_RelativePath_WithoutLeadingSlash ()
+    {
+        $nspace = new \vc\Data\NSpace('one\two');
+        $this->assertSame(
+            '\one\two\three\four',
+            $nspace->resolve('three\four')
+        );
+    }
+
 }
 
 ?>
