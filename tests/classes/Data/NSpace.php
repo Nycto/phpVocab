@@ -55,11 +55,14 @@ class test_classes_Data_NSpace extends \vc\Test\TestCase
 
         $alias1 = new \vc\Data\Alias('alias');
         $this->assertSame( $nspace, $nspace->addAlias($alias1) );
-        $this->assertSame( array($alias1), $nspace->getAliases() );
+        $this->assertSame( array('alias' => $alias1), $nspace->getAliases() );
 
-        $alias2 = new \vc\Data\Alias('alias');
+        $alias2 = new \vc\Data\Alias('another\one');
         $this->assertSame( $nspace, $nspace->addAlias($alias2) );
-        $this->assertSame( array($alias1, $alias2), $nspace->getAliases() );
+        $this->assertSame(
+            array( 'alias' => $alias1, 'one' => $alias2),
+            $nspace->getAliases()
+        );
     }
 
     public function testConstantAccess ()

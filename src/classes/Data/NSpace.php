@@ -102,7 +102,7 @@ class NSpace
      */
     public function addAlias ( \vc\Data\Alias $alias )
     {
-        $this->aliases[] = $alias;
+        $this->aliases[ $alias->getAlias() ] = $alias;
         return $this;
     }
 
