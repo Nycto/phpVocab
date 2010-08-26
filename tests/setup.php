@@ -30,7 +30,7 @@ require_once 'PHPUnit/Extensions/OutputTestCase.php';
 define("r8_SUPPRESS_HANDLERS", TRUE);
 define("vocab_TEST_DATA", __DIR__ .'/Data');
 
-require_once rtrim( __DIR__, "/" ) ."/../src/vocab.php";
+require_once rtrim( __DIR__, "/" ) ."/../src/include.php";
 
 // Set up the autoload structure for vocab specific classes
 \r8\Autoload::getInstance()

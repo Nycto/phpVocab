@@ -1,6 +1,6 @@
 <?php
 /**
- * Primary phpVocab include file
+ * Sets up the phpVocab environment
  *
  * @license Artistic License 2.0
  *
