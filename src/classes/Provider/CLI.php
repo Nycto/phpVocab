@@ -51,25 +51,45 @@ class CLI
             'Output Directory',
             $pathFilter,
             new \r8\Validator\All(
-                new \r8\Validator\NotEmpty,
+                \r8( new \r8\Validator\NotEmpty )
+                    ->addError('Output directory must not be empty'),
                 new \r8\Validator\Callback(function ($dir) {
                     return is_file($dir)
-                        ? NULL : 'Path must not be an existing file: '. $path;
+                        ? 'Path must not be an existing file: '. $dir : NULL;
                 })
             )
         ));
 
-        $cmd->addArg(new \r8\CLI\Arg\Many(
-            'Input Path',
-            $pathFilter,
-            new \r8\Validator\All(
-                new \r8\Validator\NotEmpty,
-                new \r8\Validator\Callback(function ($path) {
-                    return file_exists($path)
-                        ? NULL : 'Path does not exist: '. $path;
-                })
-            )
+        $inputValidator = new \r8\Validator\All(
+            \r8( new \r8\Validator\NotEmpty )
+                ->addError('Input path must not be empty'),
+            new \r8\Validator\Callback(function ($path) {
+                return file_exists($path)
+                    ? NULL : 'Path does not exist: '. $path;
+            })
+        );
+
+        $cmd->addArg(new \r8\CLI\Arg\One(
+            'Input Path', $pathFilter, $inputValidator
         ));
+
+        $cmd->addArg(new \r8\CLI\Arg\Many(
+            'Input Path', $pathFilter, $inputValidator
+        ));
+
+        // A command form for viewing help/version info
+        $info = new \r8\CLI\Form;
+        $cmd->addForm($info);
+
+        $info->addOption(
+            \r8( new \r8\CLI\Option('v', 'Outputs version information') )
+                ->addFlag('version')
+        );
+
+        $info->addOption(
+            \r8( new \r8\CLI\Option('h', 'Displays the help screen') )
+                ->addFlag('help')
+        );
 
         return $cmd;
     }
