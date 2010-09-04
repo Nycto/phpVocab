@@ -24,6 +24,8 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
+define("VOCAB_VERSION", '0.1.0dev');
+
 define("VOCAB_DIR", rtrim(__DIR__, "/"));
 
 // Round Eights for your library needs
