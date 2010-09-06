@@ -1,7 +1,5 @@
 <?php
 /**
- * Command-line entry-point for phpVocab
- *
  * @license Artistic License 2.0
  *
  * This file is part of phpVocab.
@@ -24,30 +22,39 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-// get the needed environment
-require_once __DIR__ .'/include.php';
+namespace vc\Input;
 
-$parser = \vc\Provider\CLI::getArgParser();
+/**
+ * Builds a Configuration given the command line input
+ */
+class Builder
+{
 
-try {
-    $result = $parser->process();
-}
-catch ( \r8\Exception\Data $err ) {
-    echo "Error!\n"
-        .$err->getMessage() ."\n"
-        ."For details about using this command, use the '--help' option\n\n";
-    exit;
-}
+    /**
+     * Builds the configuration
+     *
+     * @return \vc\Input\Config
+     */
+    public function build ( \r8\CLI\Result $cli )
+    {
+        if ( $cli->countArgs() < 2 ) {
+            throw new \r8\Exception\Argument(
+                0, 'CLI Args', 'Less than two arguments given'
+            );
+        }
 
-if ( $result->flagExists('v') ) {
-    echo "PHP Vocab, version ". VOCAB_VERSION ."\n\n";
-    exit;
-}
-else if ( $result->flagExists('h') || $result->countArgs() == 0 ) {
-    echo $parser->getHelp();
-    exit;
-}
+        $args = $cli->getArgs();
 
-$config = \r8(new \vc\Input\Builder)->build( $result );
+        $output = new \r8\FileSys\Dir( array_shift( $args ) );
+
+        $paths = new \vc\Input\Paths;
+        foreach ( $args as $path ) {
+            $paths->addInput( \r8\FileSys::create($path) );
+        }
+
+        return new \vc\Input\Config( $output, $paths );
+    }
+
+}
 
 ?>

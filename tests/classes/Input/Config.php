@@ -1,7 +1,5 @@
 <?php
 /**
- * Command-line entry-point for phpVocab
- *
  * @license Artistic License 2.0
  *
  * This file is part of phpVocab.
@@ -24,30 +22,24 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-// get the needed environment
-require_once __DIR__ .'/include.php';
+require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 
-$parser = \vc\Provider\CLI::getArgParser();
+/**
+ * Unit test
+ */
+class test_classes_Input_Config extends \r8\Test\TestCase\Dir
+{
 
-try {
-    $result = $parser->process();
-}
-catch ( \r8\Exception\Data $err ) {
-    echo "Error!\n"
-        .$err->getMessage() ."\n"
-        ."For details about using this command, use the '--help' option\n\n";
-    exit;
-}
+    public function testConstruct ()
+    {
+        $output = new \r8\FileSys\Dir;
+        $input = new \vc\Input\Paths;
+        $config = new \vc\Input\Config($output, $input);
 
-if ( $result->flagExists('v') ) {
-    echo "PHP Vocab, version ". VOCAB_VERSION ."\n\n";
-    exit;
-}
-else if ( $result->flagExists('h') || $result->countArgs() == 0 ) {
-    echo $parser->getHelp();
-    exit;
-}
+        $this->assertSame( $output, $config->getOutputDir() );
+        $this->assertSame( $input, $config->getInputPaths() );
+    }
 
-$config = \r8(new \vc\Input\Builder)->build( $result );
+}
 
 ?>
