@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+# Bash cli interface
+#
+
+if ! which php > /dev/null; then
+    echo "Unable to locate PHP"
+    exit 1
+fi
+
+vocab="$(dirname $0)/vocab.php"
+
+if [ ! -e "$vocab" ]; then
+    echo "Unable to locate vocab script: $vocab"
+    exit 1
+fi
+
+if [ ! -f "$vocab" ]; then
+    echo "Vocab is not a regular file: $vocab"
+    exit 1
+fi
+
+`which php` "$vocab" $*

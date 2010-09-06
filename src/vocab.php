@@ -1,6 +1,6 @@
 <?php
 /**
- * Primary phpVocab include file
+ * Command-line entry-point for phpVocab
  *
  * @license Artistic License 2.0
  *
@@ -24,14 +24,30 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-define("VOCAB_DIR", rtrim(__DIR__, "/"));
+// get the needed environment
+require_once __DIR__ .'/include.php';
 
-// Round Eights for your library needs
-require_once VOCAB_DIR .'/../lib/RoundEights.phar';
+$parser = \vc\Provider\CLI::getArgParser();
 
-// Set up the autoload structure for vocab specific classes
-\r8\Autoload::getInstance()
-    ->register('vc', VOCAB_DIR .'/classes')
-    ->register('vc\iface', VOCAB_DIR .'/ifaces');
+try {
+    $result = $parser->process();
+}
+catch ( \r8\Exception\Data $err ) {
+    echo "Error!\n"
+        .$err->getMessage() ."\n"
+        ."For details about using this command, use the '--help' option\n\n";
+    exit;
+}
+
+if ( $result->flagExists('v') ) {
+    echo "PHP Vocab, version ". VOCAB_VERSION ."\n\n";
+    exit;
+}
+else if ( $result->flagExists('h') || $result->countArgs() == 0 ) {
+    echo $parser->getHelp();
+    exit;
+}
+
+$config = \r8(new \vc\Input\Builder)->build( $result );
 
 ?>

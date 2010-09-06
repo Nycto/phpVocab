@@ -1,6 +1,6 @@
 <?php
 /**
- * Unit test configuration file
+ * Sets up the phpVocab environment
  *
  * @license Artistic License 2.0
  *
@@ -24,21 +24,16 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-require_once 'PHPUnit/Framework.php';
-require_once 'PHPUnit/Extensions/OutputTestCase.php';
+define("VOCAB_VERSION", '0.1.0dev');
 
-define("r8_SUPPRESS_HANDLERS", TRUE);
-define("vocab_TEST_DATA", __DIR__ .'/Data');
+define("VOCAB_DIR", rtrim(__DIR__, "/"));
 
-require_once rtrim( __DIR__, "/" ) ."/../src/include.php";
+// Round Eights for your library needs
+require_once VOCAB_DIR .'/../lib/RoundEights.phar';
 
 // Set up the autoload structure for vocab specific classes
 \r8\Autoload::getInstance()
-    ->register('vc\Test', rtrim( __DIR__, "/" ) .'/Test');
-
-error_reporting( E_ALL | E_STRICT );
-
-PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
-PHPUnit_Util_Filter::addDirectoryToFilter(rtrim( __DIR__, "/" ) .'/Test');
+    ->register('vc', VOCAB_DIR .'/classes')
+    ->register('vc\iface', VOCAB_DIR .'/ifaces');
 
 ?>

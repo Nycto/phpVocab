@@ -1,7 +1,5 @@
 <?php
 /**
- * Unit test configuration file
- *
  * @license Artistic License 2.0
  *
  * This file is part of phpVocab.
@@ -24,21 +22,24 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-require_once 'PHPUnit/Framework.php';
-require_once 'PHPUnit/Extensions/OutputTestCase.php';
+require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 
-define("r8_SUPPRESS_HANDLERS", TRUE);
-define("vocab_TEST_DATA", __DIR__ .'/Data');
+/**
+ * Unit test
+ */
+class test_classes_Input_Config extends \r8\Test\TestCase\Dir
+{
 
-require_once rtrim( __DIR__, "/" ) ."/../src/include.php";
+    public function testConstruct ()
+    {
+        $output = new \r8\FileSys\Dir;
+        $input = new \vc\Input\Paths;
+        $config = new \vc\Input\Config($output, $input);
 
-// Set up the autoload structure for vocab specific classes
-\r8\Autoload::getInstance()
-    ->register('vc\Test', rtrim( __DIR__, "/" ) .'/Test');
+        $this->assertSame( $output, $config->getOutputDir() );
+        $this->assertSame( $input, $config->getInputPaths() );
+    }
 
-error_reporting( E_ALL | E_STRICT );
-
-PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
-PHPUnit_Util_Filter::addDirectoryToFilter(rtrim( __DIR__, "/" ) .'/Test');
+}
 
 ?>

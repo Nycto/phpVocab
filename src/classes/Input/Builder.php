@@ -1,7 +1,5 @@
 <?php
 /**
- * Unit test configuration file
- *
  * @license Artistic License 2.0
  *
  * This file is part of phpVocab.
@@ -24,21 +22,39 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-require_once 'PHPUnit/Framework.php';
-require_once 'PHPUnit/Extensions/OutputTestCase.php';
+namespace vc\Input;
 
-define("r8_SUPPRESS_HANDLERS", TRUE);
-define("vocab_TEST_DATA", __DIR__ .'/Data');
+/**
+ * Builds a Configuration given the command line input
+ */
+class Builder
+{
 
-require_once rtrim( __DIR__, "/" ) ."/../src/include.php";
+    /**
+     * Builds the configuration
+     *
+     * @return \vc\Input\Config
+     */
+    public function build ( \r8\CLI\Result $cli )
+    {
+        if ( $cli->countArgs() < 2 ) {
+            throw new \r8\Exception\Argument(
+                0, 'CLI Args', 'Less than two arguments given'
+            );
+        }
 
-// Set up the autoload structure for vocab specific classes
-\r8\Autoload::getInstance()
-    ->register('vc\Test', rtrim( __DIR__, "/" ) .'/Test');
+        $args = $cli->getArgs();
 
-error_reporting( E_ALL | E_STRICT );
+        $output = new \r8\FileSys\Dir( array_shift( $args ) );
 
-PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
-PHPUnit_Util_Filter::addDirectoryToFilter(rtrim( __DIR__, "/" ) .'/Test');
+        $paths = new \vc\Input\Paths;
+        foreach ( $args as $path ) {
+            $paths->addInput( \r8\FileSys::create($path) );
+        }
+
+        return new \vc\Input\Config( $output, $paths );
+    }
+
+}
 
 ?>
