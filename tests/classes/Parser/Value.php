@@ -32,7 +32,7 @@ use \vc\Tokens\Token as Token;
 class test_classes_Parser_Value extends \vc\Test\TestCase
 {
 
-    public function testParseValue_Integer ()
+    public function testParseValue_PositiveInteger ()
     {
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()->thenSomeSpace->thenAnInteger('1')
@@ -46,8 +46,22 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
         );
     }
 
+    public function testParseValue_NegiativeInteger ()
+    {
+        $access = \vc\Tokens\Access::buildAccess(
+            $this->oneTokenReader()->thenSomeSpace
+                ->then(Token::T_MINUS, '-')->thenAnInteger('1')
+        );
 
-    public function testParseValue_Float ()
+        $parser = new \vc\Parser\Value( new \vc\Parser\Brackets );
+
+        $this->assertEquals(
+            new \vc\Data\Value('-1', 'int'),
+            $parser->parseValue( $access )
+        );
+    }
+
+    public function testParseValue_PositiveFloat ()
     {
         $access = \vc\Tokens\Access::buildAccess(
             $this->oneTokenReader()->thenSomeSpace->thenAFloat('1.23')
@@ -57,6 +71,21 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
 
         $this->assertEquals(
             new \vc\Data\Value('1.23', 'float'),
+            $parser->parseValue( $access )
+        );
+    }
+
+    public function testParseValue_NegativeFloat ()
+    {
+        $access = \vc\Tokens\Access::buildAccess(
+            $this->oneTokenReader()->thenSomeSpace
+                ->then(Token::T_MINUS, '-')->thenAFloat('1.23')
+        );
+
+        $parser = new \vc\Parser\Value( new \vc\Parser\Brackets );
+
+        $this->assertEquals(
+            new \vc\Data\Value('-1.23', 'float'),
             $parser->parseValue( $access )
         );
     }

@@ -117,6 +117,26 @@ class Value
     }
 
     /**
+     * Parses a number
+     *
+     * @param Boolean $positive Whether this value is positive
+     * @param \vc\Tokens\Token $token The token to examine
+     * @return \vc\Data\Value
+     */
+    private function parseNumber ( $positive, \vc\Tokens\Token $token )
+    {
+        $content = $token->getContent();
+
+        if ( !$positive )
+            $content = "-". $content;
+
+        return new \vc\Data\Value(
+            $content,
+            $token->getType() == Token::T_LNUMBER ? "int" : "float"
+        );
+    }
+
+    /**
      * Parses a value from a token stream
      *
      * @param \vc\Tokens\Access $access
@@ -128,7 +148,7 @@ class Value
             array(
                 Token::T_LNUMBER, Token::T_DNUMBER, Token::T_STRING,
                 Token::T_START_HEREDOC, Token::T_CONSTANT_ENCAPSED_STRING,
-                Token::T_ARRAY
+                Token::T_ARRAY, Token::T_MINUS
             ),
             array(Token::T_EQUALS)
         );
@@ -143,13 +163,17 @@ class Value
             case Token::T_START_HEREDOC:
                 return $this->parseHereDoc( $access );
 
-            // Integers
-            case Token::T_LNUMBER:
-                return new \vc\Data\Value( $token->getContent(), "int" );
+            // Negative numbers
+            case Token::T_MINUS:
+                $token = $access->findRequired(array(
+                    Token::T_LNUMBER, Token::T_DNUMBER
+                ));
+                return $this->parseNumber(FALSE, $token);
 
-            // Floats
+            // Positive Numbers
+            case Token::T_LNUMBER:
             case Token::T_DNUMBER:
-                return new \vc\Data\Value( $token->getContent(), "float" );
+                return $this->parseNumber(TRUE, $token);
 
             // Keywords like true, false or null
             case Token::T_STRING:
