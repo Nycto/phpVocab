@@ -40,13 +40,24 @@ class Value
     private $brackets;
 
     /**
+     * The parser for extracting constants
+     *
+     * @var \vc\Parser\Path
+     */
+    private $path;
+
+    /**
      * Constructor...
      *
      * @param \vc\Parser\Brackets $brackets
+     * @param \vc\Parser\Path $path
      */
-    public function __construct ( \vc\Parser\Brackets $brackets )
-    {
+    public function __construct (
+        \vc\Parser\Brackets $brackets,
+        \vc\Parser\Path $path
+    ) {
         $this->brackets = $brackets;
+        $this->path = $path;
     }
 
     /**
@@ -84,20 +95,28 @@ class Value
      *
      * @return \vc\Data\Value
      */
-    private function parseKeyword ( \vc\Tokens\Token $token )
-    {
+    private function parseKeyword (
+        \vc\Tokens\Access $access,
+        \vc\Tokens\Token $token
+    ) {
         $type = strtolower( $token->getContent() );
 
+        // Parse out boolean
         if ( $type == "true" ||  $type == "false" ) {
-            $type = "bool";
-        }
-        else if ( $type != "null" ) {
-            throw r8(new \r8\Exception\Data("Invalid String token value"))
-                ->addData("Type", $type)
-                ->addData("Token", $token);
+            $access->popToken();
+            return new \vc\Data\Value( $type, 'bool' );
         }
 
-        return new \vc\Data\Value( $token->getContent(), $type );
+        // Parse out null
+        else if ( $type == "null" ) {
+            $access->popToken();
+            return new \vc\Data\Value( 'null', 'null' );
+        }
+
+        return new \vc\Data\Value(
+            $this->path->parsePath( $access ),
+            'constant'
+        );
     }
 
     /**
@@ -144,11 +163,11 @@ class Value
      */
     public function parseValue ( \vc\Tokens\Access $access )
     {
-        $token = $access->findRequired(
+        $token = $access->peekToRequired(
             array(
                 Token::T_LNUMBER, Token::T_DNUMBER, Token::T_STRING,
                 Token::T_START_HEREDOC, Token::T_CONSTANT_ENCAPSED_STRING,
-                Token::T_ARRAY, Token::T_MINUS
+                Token::T_ARRAY, Token::T_MINUS, Token::T_NS_SEPARATOR
             ),
             array(Token::T_EQUALS)
         );
@@ -157,14 +176,17 @@ class Value
 
             // Strings
             case Token::T_CONSTANT_ENCAPSED_STRING:
+                $access->popToken();
                 return $this->parseString( $token );
 
             // HereDocs
             case Token::T_START_HEREDOC:
+                $access->popToken();
                 return $this->parseHereDoc( $access );
 
             // Negative numbers
             case Token::T_MINUS:
+                $access->popToken();
                 $token = $access->findRequired(array(
                     Token::T_LNUMBER, Token::T_DNUMBER
                 ));
@@ -173,14 +195,23 @@ class Value
             // Positive Numbers
             case Token::T_LNUMBER:
             case Token::T_DNUMBER:
+                $access->popToken();
                 return $this->parseNumber(TRUE, $token);
 
-            // Keywords like true, false or null
+            // Keywords like true, false, null and relative constants
             case Token::T_STRING:
-                return $this->parseKeyword( $token );
+                return $this->parseKeyword( $access, $token );
+
+            // Absolute Constants
+            case Token::T_NS_SEPARATOR:
+                return new \vc\Data\Value(
+                    $this->path->parsePath( $access ),
+                    'constant'
+                );
 
             // Arrays
             case Token::T_ARRAY:
+                $access->popToken();
                 return $this->parseArray( $access );
 
             default:

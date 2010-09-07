@@ -247,11 +247,17 @@ class TokenReader implements \vc\iface\Tokens\Reader
     public function thenANamespacePath ( $namespace, $line = 1 )
     {
         $namespace = explode('\\', $namespace);
-        $this->then( Token::T_STRING, array_shift($namespace), $line );
+
+        $first = array_shift($namespace);
+
+        if ( $first !== "" )
+            $this->then( Token::T_STRING, $first, $line );
+
         foreach ( $namespace AS $path ) {
             $this->then( Token::T_NS_SEPARATOR, '\\', $line )
                 ->thenAName( $path );
         }
+
         return $this;
     }
 
