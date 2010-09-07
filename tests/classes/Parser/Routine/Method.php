@@ -44,7 +44,8 @@ class test_classes_Parser_Routine_Method extends \vc\Test\TestCase
                 new \vc\Parser\Routine\Args(
                     new \vc\Parser\Path,
                     new \vc\Parser\Value(
-                        new \vc\Parser\Brackets
+                        new \vc\Parser\Brackets,
+                        new \vc\Parser\Path
                     )
                 ),
                 new \vc\Parser\Brackets

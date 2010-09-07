@@ -72,7 +72,10 @@ class test_classes_Parser_IFace_Members extends \vc\Test\TestCase
 
         $parser = new \vc\Parser\IFace\Members(
             new \vc\Parser\Constant(
-                new \vc\Parser\Value( new \vc\Parser\Brackets )
+                new \vc\Parser\Value(
+                    new \vc\Parser\Brackets,
+                    new \vc\Parser\Path
+                )
             ),
             $this->getStub('\vc\Parser\Routine\Method')
         );

@@ -41,7 +41,8 @@ class test_classes_Parser_Object_Property extends \vc\Test\TestCase
     {
         return new \vc\Parser\Object\Property(
             new \vc\Parser\Value(
-                new \vc\Parser\Brackets
+                new \vc\Parser\Brackets,
+                new \vc\Parser\Path
             )
         );
     }

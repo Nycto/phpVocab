@@ -32,6 +32,21 @@ use \vc\Tokens\Token as Token;
 class test_classes_Parser_Constant extends \vc\Test\TestCase
 {
 
+    /**
+     * Returns a constant parser
+     *
+     * @return \vc\Parser\Constant
+     */
+    public function getConstantParser ()
+    {
+        return new \vc\Parser\Constant(
+            new \vc\Parser\Value(
+                new \vc\Parser\Brackets,
+                new \vc\Parser\Path
+            )
+        );
+    }
+
     public function testParseConstant ()
     {
         $access = \vc\Tokens\Access::buildAccess(
@@ -43,9 +58,7 @@ class test_classes_Parser_Constant extends \vc\Test\TestCase
                 ->thenAClass
         );
 
-        $parser = new \vc\Parser\Constant(
-            new \vc\Parser\Value( new \vc\Parser\Brackets )
-        );
+        $parser = $this->getConstantParser();
 
         $this->assertEquals(
             r8(new \vc\Data\Constant('CONSTANT'))
@@ -67,9 +80,7 @@ class test_classes_Parser_Constant extends \vc\Test\TestCase
                 ->thenAClass
         );
 
-        $parser = new \vc\Parser\Constant(
-            new \vc\Parser\Value( new \vc\Parser\Brackets )
-        );
+        $parser = $this->getConstantParser();
 
         $this->assertEquals(
             r8(new \vc\Data\Constant('NAME'))
@@ -91,9 +102,7 @@ class test_classes_Parser_Constant extends \vc\Test\TestCase
                 ->thenAClass
         );
 
-        $parser = new \vc\Parser\Constant(
-            new \vc\Parser\Value( new \vc\Parser\Brackets )
-        );
+        $parser = $this->getConstantParser();
 
         $this->assertEquals(
             r8(new \vc\Data\Constant('NAME'))
@@ -115,9 +124,7 @@ class test_classes_Parser_Constant extends \vc\Test\TestCase
                 ->thenAClass
         );
 
-        $parser = new \vc\Parser\Constant(
-            new \vc\Parser\Value( new \vc\Parser\Brackets )
-        );
+        $parser = $this->getConstantParser();
 
         $this->assertEquals(
             r8(new \vc\Data\Constant('NAME'))
@@ -139,13 +146,11 @@ class test_classes_Parser_Constant extends \vc\Test\TestCase
                 ->thenAClass
         );
 
-        $parser = new \vc\Parser\Constant(
-            new \vc\Parser\Value( new \vc\Parser\Brackets )
-        );
+        $parser = $this->getConstantParser();
 
         $this->assertEquals(
             r8(new \vc\Data\Constant('NAME'))
-                ->setValue(new \vc\Data\Value('NULL', 'null')),
+                ->setValue(new \vc\Data\Value('null', 'null')),
             $parser->parseConstant( $access )
         );
 
@@ -163,9 +168,7 @@ class test_classes_Parser_Constant extends \vc\Test\TestCase
                 ->thenAClass
         );
 
-        $parser = new \vc\Parser\Constant(
-            new \vc\Parser\Value( new \vc\Parser\Brackets )
-        );
+        $parser = $this->getConstantParser();
 
         $this->assertEquals(
             r8(new \vc\Data\Constant('NAME'))

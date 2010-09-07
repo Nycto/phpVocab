@@ -38,9 +38,9 @@ class Parser
     static public function getFileParser ()
     {
         $brackets = new \vc\Parser\Brackets;
-        $value = new \vc\Parser\Value( $brackets );
-        $constant = new \vc\Parser\Constant($value);
         $path = new \vc\Parser\Path;
+        $value = new \vc\Parser\Value( $brackets, $path );
+        $constant = new \vc\Parser\Constant($value);
         $pathList = new \vc\Parser\PathList($path);
         $routine = new \vc\Parser\Routine\Body(
             new \vc\Parser\Routine\Args( $path, $value ),
