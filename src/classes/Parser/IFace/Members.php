@@ -79,13 +79,18 @@ class Members
         // Keep looking until we have consumed all the members of this class
         while ( $access->hasToken() ) {
 
-            $token = $access->peekToRequired(
-                array(
-                    Token::T_CONST,
-                    Token::T_STATIC, Token::T_FUNCTION,
-                    Token::T_PUBLIC, Token::T_PROTECTED, Token::T_PRIVATE,
-                )
-            );
+            try {
+                $token = $access->peekToRequired(
+                    array(
+                        Token::T_CONST,
+                        Token::T_STATIC, Token::T_FUNCTION,
+                        Token::T_PUBLIC, Token::T_PROTECTED, Token::T_PRIVATE,
+                    )
+                );
+            }
+            catch ( \vc\Tokens\UnexpectedEnd $err ) {
+                return NULL;
+            }
 
             // This loop doesn't itself pop any tokens off, so this check just
             // ensures that the parsers below this one don't do anything

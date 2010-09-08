@@ -59,6 +59,28 @@ class test_classes_Parser_IFace_Members extends \vc\Test\TestCase
         $this->assertEndOfTokens( $reader );
     }
 
+    public function testParseIFace_EmptyInterface ()
+    {
+        $access = \vc\Tokens\Access::buildAccess(
+            $this->oneTokenReader()->thenSomeSpace
+        );
+
+        $iface = new \vc\Data\Type\IFace(1);
+
+        $parser = new \vc\Parser\IFace\Members(
+            new \vc\Parser\Constant(
+                new \vc\Parser\Value(
+                    new \vc\Parser\Brackets,
+                    new \vc\Parser\Path
+                )
+            ),
+            $this->getStub('\vc\Parser\Routine\Method')
+        );
+
+        $parser->parseMembers( $iface, $access );
+        $this->assertEndOfTokens( $access );
+    }
+
     public function testParseIFace_Constant ()
     {
         $access = \vc\Tokens\Access::buildAccess(
