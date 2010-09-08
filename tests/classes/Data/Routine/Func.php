@@ -22,22 +22,21 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-namespace vc\Data\Routine;
+require_once rtrim( __DIR__, "/" ) ."/../../../setup.php";
 
 /**
- * A global function
+ * Unit test
  */
-class Func extends \vc\Data\Routine
+class test_classes_Data_Routine_Func extends \vc\Test\TestCase
 {
 
-    /**
-     * Returns whether this function is considered anonymous
-     *
-     * @return Boolean
-     */
-    public function isAnonymous ()
+    public function testIsAnonymous ()
     {
-        return $this->getName() === NULL;
+        $func = new \vc\Data\Routine\Func(123);
+        $this->assertTrue( $func->isAnonymous() );
+
+        $func->setName('abc');
+        $this->assertFalse( $func->isAnonymous() );
     }
 
 }
