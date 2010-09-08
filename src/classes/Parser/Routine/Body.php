@@ -66,7 +66,7 @@ class Body
      *
      * @param \vc\Data\Routine $routine The object to fill with data
      * @param \vc\Tokens\Access $access The token access
-     * @return \vc\Data\Routine\Func
+     * @return NULL
      */
     public function parseRoutine (
         \vc\Data\Routine $routine,
@@ -74,17 +74,25 @@ class Body
     ) {
         $access->findRequired( array(Token::T_FUNCTION) );
 
-        $token = $access->findRequired(
-            array(Token::T_STRING, Token::T_AMPERSAND)
+        $token = $access->peekToRequired(
+            array(Token::T_STRING, Token::T_AMPERSAND, Token::T_PARENS_OPEN)
         );
 
         // Handle routines that return a reference
         if ( $token->is(Token::T_AMPERSAND) ) {
             $routine->setReturnRef(TRUE);
-            $token = $access->findRequired( array(Token::T_STRING) );
+            $access->popToken();
+            $token = $access->peekToRequired(
+                array(Token::T_STRING, Token::T_PARENS_OPEN)
+            );
         }
 
-        $routine->setName( $token->getContent() );
+        // Names are optional because of anonymous methods
+        if ( $token->is(Token::T_STRING) ) {
+            $access->popToken();
+            $routine->setName( $token->getContent() );
+        }
+
         $routine->setArgs( $this->args->parseArgs($access) );
 
         $access->findRequired(

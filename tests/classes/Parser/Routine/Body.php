@@ -125,6 +125,40 @@ class test_classes_Parser_Routine_Body extends \vc\Test\TestCase
         $this->assertEndOfTokens( $access );
     }
 
+    public function testParseAnonymousFunc ()
+    {
+        $access = \vc\Tokens\Access::buildAccess(
+            $this->oneTokenReader()->thenAFunction
+                ->thenSomeSpace->thenOpenParens->thenCloseParens
+                ->thenASemicolon
+        );
+
+        $routine = $this->getMockForAbstractClass('\vc\Data\Routine', array(1));
+
+        $this->getFuncParser()->parseRoutine( $routine, $access );
+
+        $this->assertNull($routine->getName());
+        $this->assertEndOfTokens( $access );
+    }
+
+    public function testParseAnonymousFunc_ReturnsReference ()
+    {
+        $access = \vc\Tokens\Access::buildAccess(
+            $this->oneTokenReader()->thenAFunction
+                ->thenSomeSpace->thenAnAmpersand
+                ->thenOpenParens->thenCloseParens
+                ->thenASemicolon
+        );
+
+        $routine = $this->getMockForAbstractClass('\vc\Data\Routine', array(1));
+
+        $this->getFuncParser()->parseRoutine( $routine, $access );
+
+        $this->assertNull( $routine->getName() );
+        $this->assertTrue( $routine->getReturnRef() );
+        $this->assertEndOfTokens( $access );
+    }
+
 }
 
 ?>
