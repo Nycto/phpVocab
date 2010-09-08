@@ -33,9 +33,11 @@ class test_classes_Parser_NSpace_Body extends \vc\Test\TestCase
     /**
      * Returns a test Namespace body parser
      *
+     * @param String $funcName Controls the name of the function returned
+     *      by the routine parser
      * @return \vc\Parser\NSpace\Body
      */
-    public function getNSpaceParser ()
+    public function getNSpaceParser ( $funcName = 'abc' )
     {
         $alias = $this->getStub('\vc\Parser\NSpace\Alias');
         $alias->expects( $this->any() )->method( "parseAlias" )
@@ -53,9 +55,11 @@ class test_classes_Parser_NSpace_Body extends \vc\Test\TestCase
 
         $func = $this->getStub('\vc\Parser\Routine\Func');
         $func->expects( $this->any() )->method( "parseFunc" )
-            ->will( $this->returnCallback( function ( $access ) {
+            ->will( $this->returnCallback( function ($access) use ($funcName) {
                 $access->popToken();
-                return new \vc\Data\Routine\Func(1);
+                $routine = new \vc\Data\Routine\Func(1);
+                $routine->setName($funcName);
+                return $routine;
             }) );
 
         $cls = $this->getStub('\vc\Parser\Object\Header');
@@ -139,6 +143,19 @@ class test_classes_Parser_NSpace_Body extends \vc\Test\TestCase
         $this->getNSpaceParser()->parseNSpace( $nspace, $access );
 
         $this->assertEquals(1, count($nspace->getFunctions()));
+        $this->assertEndOfTokens( $access );
+    }
+
+    public function testParseNSpace_AnonymousFunction ()
+    {
+        $access = \vc\Tokens\Access::buildAccess(
+            $this->oneTokenReader()->thenAFunction
+        );
+
+        $nspace = new \vc\Data\NSpace(1);
+        $this->getNSpaceParser(NULL)->parseNSpace( $nspace, $access );
+
+        $this->assertEquals(0, count($nspace->getFunctions()));
         $this->assertEndOfTokens( $access );
     }
 

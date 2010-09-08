@@ -126,20 +126,30 @@ class Body
 
             $last = $token;
 
-            if ( $token->is(array(Token::T_CLASS, Token::T_ABSTRACT)) )
+            if ( $token->is(array(Token::T_CLASS, Token::T_ABSTRACT)) ) {
                 $nspace->addType( $this->object->parseClass($access) );
+            }
 
-            else if ( $token->is(Token::T_FUNCTION) )
-                $nspace->addFunction( $this->func->parseFunc($access) );
+            else if ( $token->is(Token::T_FUNCTION) ) {
+                $func = $this->func->parseFunc($access);
 
-            else if ( $token->is(Token::T_INTERFACE) )
+                // Anonymous functions have a very limited scope, so we don't
+                // care about documenting them
+                if ( !$func->isAnonymous() )
+                    $nspace->addFunction( $func );
+            }
+
+            else if ( $token->is(Token::T_INTERFACE) ) {
                 $nspace->addType( $this->iface->parseIFace($access) );
+            }
 
-            else if ( $token->is(Token::T_CONST) )
+            else if ( $token->is(Token::T_CONST) ) {
                 $nspace->addConstant( $this->constant->parseConstant($access) );
+            }
 
-            else if ( $token->is(Token::T_USE) )
+            else if ( $token->is(Token::T_USE) ) {
                 $nspace->addAlias( $this->alias->parseAlias($access) );
+            }
         }
 
     }
