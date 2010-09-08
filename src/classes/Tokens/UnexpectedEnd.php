@@ -40,6 +40,31 @@ class UnexpectedEnd extends \r8\Exception
      */
     const DESCRIPTION = "A token reader expects more tokens but none are available";
 
+    /**
+     * Constructor...
+     *
+     * @param \vc\Tokens\Token $token The token that was encountered
+     * @param Array $search The list of tokens being searched for
+     * @param Array $allowed The list of allowed tokens
+     */
+    public function __construct ( array $search, array $allowed = array() )
+    {
+        $this->addData(
+            "Searching for Tokens",
+            implode(", ", array_map(
+                array('\vc\Tokens\Token', 'getTokenName'),
+                $search
+            ))
+        );
+        $this->addData(
+            "Allowed Tokens",
+            implode(", ", array_map(
+                array('\vc\Tokens\Token', 'getTokenName'),
+                $allowed
+            ))
+        );
+    }
+
 }
 
 ?>
