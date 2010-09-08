@@ -273,6 +273,25 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
         $this->assertEndOfTokens($access);
     }
 
+    public function testParseValue_ClassConstant ()
+    {
+        $access = \vc\Tokens\Access::buildAccess(
+            $this->oneTokenReader()
+                ->thenSomeSpace->thenAnEquals->thenSomeSpace
+                ->thenANamespacePath('\path')
+                ->then( Token::T_DOUBLE_COLON, '::' )
+                ->thenAName('CONSTANT')
+        );
+
+        $parser = $this->getValueParser();
+
+        $this->assertEquals(
+            new \vc\Data\Value('\path::CONSTANT', 'constant'),
+            $parser->parseValue( $access )
+        );
+        $this->assertEndOfTokens($access);
+    }
+
 }
 
 ?>

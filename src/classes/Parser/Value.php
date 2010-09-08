@@ -91,6 +91,30 @@ class Value
     }
 
     /**
+     * Parses a constant
+     *
+     * @param \vc\Tokens\Access $access
+     * @return \vc\Data\Value
+     */
+    private function parseConstant ( \vc\Tokens\Access $access )
+    {
+        $path = $this->path->parsePath( $access );
+
+        $token = $access->peekTo(array(
+            Token::T_SEMICOLON, Token::T_DOUBLE_COLON
+        ));
+
+        if ( $token && $token->is(Token::T_DOUBLE_COLON) ) {
+            $access->popToken();
+            $path .= '::';
+            $token = $access->findRequired(array(Token::T_STRING));
+            $path .= $token->getContent();
+        }
+
+        return new \vc\Data\Value( $path, 'constant' );
+    }
+
+    /**
      * Parses a keyword
      *
      * @return \vc\Data\Value
@@ -113,10 +137,9 @@ class Value
             return new \vc\Data\Value( 'null', 'null' );
         }
 
-        return new \vc\Data\Value(
-            $this->path->parsePath( $access ),
-            'constant'
-        );
+        else {
+            return $this->parseConstant( $access );
+        }
     }
 
     /**
@@ -204,10 +227,7 @@ class Value
 
             // Absolute Constants
             case Token::T_NS_SEPARATOR:
-                return new \vc\Data\Value(
-                    $this->path->parsePath( $access ),
-                    'constant'
-                );
+                return $this->parseConstant( $access );
 
             // Arrays
             case Token::T_ARRAY:
