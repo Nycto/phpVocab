@@ -22,7 +22,7 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-namespace vc\Input;
+namespace vc\App;
 
 /**
  * Provides access to the configuration data for the current scan
@@ -40,7 +40,7 @@ class Config
     /**
      * The input files to read
      *
-     * @var \vc\Input\Paths
+     * @var \vc\App\Paths
      */
     private $paths;
 
@@ -48,11 +48,11 @@ class Config
      * Constructor...
      *
      * @param \r8\FileSys\Dir $output The output directory
-     * @param \vc\Input\Paths $paths The input files to read
+     * @param \vc\App\Paths $paths The input files to read
      */
     public function __construct (
         \r8\FileSys\Dir $output,
-        \vc\Input\Paths $paths
+        \vc\App\Paths $paths
     ) {
         $this->output = $output;
         $this->paths = $paths;

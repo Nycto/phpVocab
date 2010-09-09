@@ -27,18 +27,18 @@ require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 /**
  * Unit test
  */
-class test_classes_Input_Paths extends \r8\Test\TestCase\Dir
+class test_classes_App_Paths extends \r8\Test\TestCase\Dir
 {
 
     public function testIterate_Empty ()
     {
-        $input = new \vc\Input\Paths;
+        $input = new \vc\App\Paths;
         \r8\Test\Constraint\Iterator::assert(array(), $input);
     }
 
     public function testAddInput_Files ()
     {
-        $input = new \vc\Input\Paths;
+        $input = new \vc\App\Paths;
 
         $this->assertSame(
             $input,
@@ -61,7 +61,7 @@ class test_classes_Input_Paths extends \r8\Test\TestCase\Dir
 
     public function testAddInput_Directories ()
     {
-        $input = new \vc\Input\Paths;
+        $input = new \vc\App\Paths;
 
         $this->assertSame(
             $input,
@@ -82,7 +82,7 @@ class test_classes_Input_Paths extends \r8\Test\TestCase\Dir
 
     public function testAddInput_NonFile ()
     {
-        $input = new \vc\Input\Paths;
+        $input = new \vc\App\Paths;
 
 
         try {

@@ -22,37 +22,22 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-namespace vc\Input;
+require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 
 /**
- * Builds a Configuration given the command line input
+ * Unit test
  */
-class Builder
+class test_classes_App_Config extends \r8\Test\TestCase\Dir
 {
 
-    /**
-     * Builds the configuration
-     *
-     * @return \vc\Input\Config
-     */
-    public function build ( \r8\CLI\Result $cli )
+    public function testConstruct ()
     {
-        if ( $cli->countArgs() < 2 ) {
-            throw new \r8\Exception\Argument(
-                0, 'CLI Args', 'Less than two arguments given'
-            );
-        }
+        $output = new \r8\FileSys\Dir;
+        $input = new \vc\App\Paths;
+        $config = new \vc\App\Config($output, $input);
 
-        $args = $cli->getArgs();
-
-        $output = new \r8\FileSys\Dir( array_shift( $args ) );
-
-        $paths = new \vc\Input\Paths;
-        foreach ( $args as $path ) {
-            $paths->addInput( \r8\FileSys::create($path) );
-        }
-
-        return new \vc\Input\Config( $output, $paths );
+        $this->assertSame( $output, $config->getOutputDir() );
+        $this->assertSame( $input, $config->getInputPaths() );
     }
 
 }

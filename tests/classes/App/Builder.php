@@ -27,7 +27,7 @@ require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 /**
  * Unit test
  */
-class test_classes_Input_Builder extends \r8\Test\TestCase\Dir
+class test_classes_App_Builder extends \r8\Test\TestCase\Dir
 {
 
     /**
@@ -44,7 +44,7 @@ class test_classes_Input_Builder extends \r8\Test\TestCase\Dir
 
     public function testInsufficientArguments ()
     {
-        $builder = new \vc\Input\Builder;
+        $builder = new \vc\App\Builder;
 
         try {
             $builder->build( new \r8\CLI\Result );
@@ -56,10 +56,10 @@ class test_classes_Input_Builder extends \r8\Test\TestCase\Dir
 
     public function testInputOutputPaths ()
     {
-        $builder = new \vc\Input\Builder;
+        $builder = new \vc\App\Builder;
 
         $result = $builder->build( $this->getCLIResult() );
-        $this->assertThat( $result, $this->isInstanceOf( '\vc\Input\Config' ) );
+        $this->assertThat( $result, $this->isInstanceOf( '\vc\App\Config' ) );
 
         $this->assertThat(
             $result->getOutputDir(),
@@ -68,7 +68,7 @@ class test_classes_Input_Builder extends \r8\Test\TestCase\Dir
 
         $this->assertThat(
             $result->getInputPaths(),
-            $this->isInstanceOf( '\vc\Input\Paths' )
+            $this->isInstanceOf( '\vc\App\Paths' )
         );
         \r8\Test\Constraint\Iterator::assertCount( 2, $result->getInputPaths() );
     }

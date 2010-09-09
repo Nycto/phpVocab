@@ -22,7 +22,7 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-namespace vc\Input;
+namespace vc\App;
 
 /**
  * Collects the list of inputs and provides an iterator over them
@@ -56,7 +56,7 @@ class Paths implements \Iterator
      * Adds an input path
      *
      * @param \r8\FileSys $input
-     * @return \vc\Input\Paths Returns a self reference
+     * @return \vc\App\Paths Returns a self reference
      */
     public function addInput ( \r8\FileSys $input )
     {
