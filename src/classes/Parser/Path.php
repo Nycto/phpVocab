@@ -48,8 +48,11 @@ class Path
             $reader->popToken();
         }
 
-        if ( !$reader->hasToken() )
-            throw new \vc\Tokens\UnexpectedEnd;
+        if ( !$reader->hasToken() ) {
+            throw new \vc\Tokens\UnexpectedEnd(array(
+                Token::T_STRING, Token::T_NS_SEPARATOR
+            ));
+        }
 
         $reader->peekAtToken()->expect(array(
             Token::T_STRING, Token::T_NS_SEPARATOR
