@@ -22,48 +22,21 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-namespace vc\Parser\File;
+namespace vc\iface;
 
 /**
- * Parses a file path
+ * Parses a path into a set of structured objects
  */
-class Path implements \vc\iface\Parser
+interface Parser
 {
 
     /**
-     * The file comment parser
+     * Parses the given file
      *
-     * @var \vc\Parser\File\Comment
-     */
-    private $comment;
-
-    /**
-     * Constructor...
-     *
-     * @param \vc\Parser\File\Comment $comment The file comment parser
-     */
-    public function __construct ( \vc\Parser\File\Comment $comment )
-    {
-        $this->comment = $comment;
-    }
-
-    /**
-     * Parses the given token reader
-     *
-     * @param \r8\FileSys\File $path The file to parse
+     * @param \r8\FileSys\File $file
      * @return \vc\Data\File
      */
-    public function parse ( \r8\FileSys\File $path )
-    {
-        $file = new \vc\Data\File( $path->getPath() );
-        $tokens = \vc\Tokens\Access::buildAccess(
-            new \vc\Tokens\Parser( new \r8\Stream\In\File( $path ) )
-        );
-
-        $this->comment->parse( $file, $tokens );
-
-        return $file;
-    }
+    public function parse ( \r8\FileSys\File $file );
 
 }
 
