@@ -22,18 +22,47 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
+namespace vc\Parser\File;
 
 /**
- * Unit test
+ * Parses a file path
  */
-class test_classes_Provider_Parser extends \vc\Test\TestCase
+class Path
 {
 
-    public function testGetFileParser ()
+    /**
+     * The file comment parser
+     *
+     * @var \vc\Parser\File\Comment
+     */
+    private $comment;
+
+    /**
+     * Constructor...
+     *
+     * @param \vc\Parser\File\Comment $comment The file comment parser
+     */
+    public function __construct ( \vc\Parser\File\Comment $comment )
     {
-        $parser = \vc\Provider\Parser::getFileParser();
-        $this->assertThat( $parser, $this->isInstanceOf('\vc\Parser\File\Path') );
+        $this->comment = $comment;
+    }
+
+    /**
+     * Parses the given token reader
+     *
+     * @param \r8\FileSys\File $path The file to parse
+     * @return \vc\Data\File
+     */
+    public function parse ( \r8\FileSys\File $path )
+    {
+        $file = new \vc\Data\File( $path->getPath() );
+        $tokens = \vc\Tokens\Access::buildAccess(
+            new \vc\Tokens\Parser( new \r8\Stream\In\File( $path ) )
+        );
+
+        $this->comment->parse( $file, $tokens );
+
+        return $file;
     }
 
 }

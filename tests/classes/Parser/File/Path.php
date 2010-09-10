@@ -22,18 +22,28 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
+require_once rtrim( __DIR__, "/" ) ."/../../../setup.php";
 
 /**
- * Unit test
+ * Unit test for running all the tests
  */
-class test_classes_Provider_Parser extends \vc\Test\TestCase
+class test_classes_Parser_File_Path extends \vc\Test\TestCase
 {
 
-    public function testGetFileParser ()
+    public function testParse ()
     {
-        $parser = \vc\Provider\Parser::getFileParser();
-        $this->assertThat( $parser, $this->isInstanceOf('\vc\Parser\File\Path') );
+        $commentParser = $this->getStub('\vc\Parser\File\Comment');
+        $commentParser->expects( $this->once() )->method( "parse" )
+            ->with(
+                $this->isInstanceOf('\vc\Data\File'),
+                $this->isInstanceOf('\vc\Tokens\Access')
+            );
+
+        $parser = new \vc\Parser\File\Path( $commentParser );
+
+        $result = $parser->parse( new \r8\FileSys\File(__FILE__) );
+
+        $this->assertThat( $result, $this->isInstanceOf( '\vc\Data\File' ) );
     }
 
 }

@@ -37,15 +37,9 @@ class test_Parsing_Parse extends \vc\Test\TestCase
      */
     public function parseFile ( $path )
     {
-        $reader = \vc\Tokens\Access::buildAccess(
-            new \vc\Tokens\Parser(
-                new \r8\Stream\In\URI( $path )
-            )
+        return \vc\Provider\Parser::getFileParser()->parse(
+            new \r8\FileSys\File( $path )
         );
-
-        $file = new \vc\Data\File( $path );
-        \vc\Provider\Parser::getFileParser()->parse( $file, $reader );
-        return $file;
     }
 
     public function testParse ()

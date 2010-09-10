@@ -33,7 +33,7 @@ class Parser
     /**
      * Returns a parser for reading a file into an object structure
      *
-     * @return \vc\Parser\File\Comment
+     * @return \vc\Parser\File\Path
      */
     static public function getFileParser ()
     {
@@ -48,30 +48,32 @@ class Parser
         );
         $method = new \vc\Parser\Routine\Method( $routine );
 
-        return new \vc\Parser\File\Comment(
-            new \vc\Parser\Comment,
-            new \vc\Parser\File\NSpaces(
-                $path,
-                new \vc\Parser\NSpace\Body(
-                    new \vc\Parser\NSpace\Alias( $path ),
-                    $constant,
-                    new \vc\Parser\Routine\Func( $routine ),
-                    new \vc\Parser\Object\Header(
-                        $path,
-                        $pathList,
-                        new \vc\Parser\Object\Members(
-                            $constant,
-                            new \vc\Parser\Object\Signature(
-                                new \vc\Parser\Object\Property( $value ),
+        return new \vc\Parser\File\Path(
+            new \vc\Parser\File\Comment(
+                new \vc\Parser\Comment,
+                new \vc\Parser\File\NSpaces(
+                    $path,
+                    new \vc\Parser\NSpace\Body(
+                        new \vc\Parser\NSpace\Alias( $path ),
+                        $constant,
+                        new \vc\Parser\Routine\Func( $routine ),
+                        new \vc\Parser\Object\Header(
+                            $path,
+                            $pathList,
+                            new \vc\Parser\Object\Members(
+                                $constant,
+                                new \vc\Parser\Object\Signature(
+                                    new \vc\Parser\Object\Property( $value ),
+                                    $method
+                                )
+                            )
+                        ),
+                        new \vc\Parser\IFace\Header(
+                            $pathList,
+                            new \vc\Parser\IFace\Members(
+                                $constant,
                                 $method
                             )
-                        )
-                    ),
-                    new \vc\Parser\IFace\Header(
-                        $pathList,
-                        new \vc\Parser\IFace\Members(
-                            $constant,
-                            $method
                         )
                     )
                 )
