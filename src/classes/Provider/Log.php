@@ -63,6 +63,16 @@ class Log
         return self::$log;
     }
 
+    /**
+     * Returns a Logger specialized for the parsing phase
+     *
+     * @return \vc\Log\Parse
+     */
+    static public function getParseLogger ()
+    {
+        return new \vc\Log\Parse( self::getLog() );
+    }
+
 }
 
 ?>

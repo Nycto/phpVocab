@@ -24,14 +24,18 @@
 
 namespace vc\App;
 
-use \vc\iface\Parser;
-use \vc\iface\Storage;
-
 /**
  * Scans through a set of inputs and saves them to a storage container
  */
 class Scanner
 {
+
+    /**
+     * The logger to report back to
+     *
+     * @var \vc\Log\Parser
+     */
+    private $log;
 
     /**
      * The file parser
@@ -50,11 +54,16 @@ class Scanner
     /**
      * Constructor...
      *
+     * @param \vc\Log\Parse $log The logger to report back to
      * @param \vc\iface\Parser $parser The file parser
      * @param \vc\iface\Storage $storage the storage mechanism
      */
-    public function __construct ( Parser $parser, Storage $storage )
-    {
+    public function __construct (
+        \vc\Log\Parse $log,
+        \vc\iface\Parser $parser,
+        \vc\iface\Storage $storage
+    ) {
+        $this->log = $log;
         $this->parser = $parser;
         $this->storage = $storage;
     }
@@ -68,6 +77,8 @@ class Scanner
     public function scan ( \vc\App\Paths $pathList )
     {
         foreach ( $pathList as $path ) {
+
+            $this->log->parsingFile($path);
 
             $this->storage->store(
                 $this->parser->parse( $path )

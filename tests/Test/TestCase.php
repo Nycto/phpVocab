@@ -31,6 +31,16 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     * Returns a test parse logger that sends it's reports into the void
+     *
+     * @return \vc\Log\Parse
+     */
+    public function getParseLogger ()
+    {
+        return new \vc\Log\Parse( new \r8\Log( new \r8\Log\Node\Void ) );
+    }
+
+    /**
      * Returns an access object loaded with the given reader and comment
      *
      * @return \vc\Tokens\Access

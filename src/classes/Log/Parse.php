@@ -22,34 +22,42 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
+namespace vc\Log;
 
 /**
- * Unit test
+ * A logger targetted at the parsing phase
  */
-class test_classes_App_Scanner extends \vc\Test\TestCase
+class Parse
 {
 
-    public function testScan ()
+    /**
+     * The logger to report back to
+     *
+     * @var \r8\Log
+     */
+    private $log;
+
+    /**
+     * Constructor...
+     *
+     * @param \r8\Log $log The logger to report back to
+     */
+    public function __construct ( \r8\Log $log )
     {
-        $file = new \r8\FileSys\File(__FILE__);
-        $result = new \vc\Data\File(__FILE__);
+        $this->log = $log;
+    }
 
-        $parser = $this->getMock('\vc\iface\Parser');
-        $parser->expects( $this->once() )->method( "parse" )
-            ->with( $this->equalTo( $file ) )
-            ->will( $this->returnValue( $result ) );
-
-        $storage = $this->getMock('\vc\iface\Storage');
-        $storage->expects( $this->once() )->method( "store" )
-            ->with( $this->equalTo( $result ) );
-
-        $scanner = new \vc\App\Scanner(
-            $this->getParseLogger(), $parser, $storage
-        );
-
-        $scanner->scan(
-            \r8(new \vc\App\Paths)->addInput($file)
+    /**
+     * Logs that a new file is being parsed
+     *
+     * @param \r8\FileSys\File $file The file being parsed
+     * @return NULL
+     */
+    public function parsingFile ( \r8\FileSys\File $file )
+    {
+        $this->log->info(
+            sprintf('Parsing File: %s', $file->getPath()),
+            'PARSE_FILE'
         );
     }
 
