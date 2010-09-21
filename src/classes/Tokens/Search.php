@@ -88,12 +88,12 @@ class Search implements \vc\iface\Tokens\Search
                 return $token;
 
             else if (!in_array($type, $allowing) && !in_array($type, $this->mask))
-                throw new \vc\Tokens\UnexpectedToken($token, $types, $allowing);
+                throw new \vc\Tokens\Exception\UnexpectedToken($token, $types, $allowing);
 
             $this->reader->popToken();
         }
 
-        throw new \vc\Tokens\UnexpectedEnd($types, $allowing);
+        throw new \vc\Tokens\Exception\UnexpectedEnd($types, $allowing);
     }
 
     /**
@@ -104,10 +104,10 @@ class Search implements \vc\iface\Tokens\Search
         try {
             return $this->peekToRequired( $types, $allowing );
         }
-        catch ( \vc\Tokens\UnexpectedToken $err ) {
+        catch ( \vc\Tokens\Exception\UnexpectedToken $err ) {
             return NULL;
         }
-        catch ( \vc\Tokens\UnexpectedEnd $err ) {
+        catch ( \vc\Tokens\Exception\UnexpectedEnd $err ) {
             return NULL;
         }
     }
@@ -130,10 +130,10 @@ class Search implements \vc\iface\Tokens\Search
         try {
             return $this->findRequired( $types, $allowing );
         }
-        catch ( \vc\Tokens\UnexpectedToken $err ) {
+        catch ( \vc\Tokens\Exception\UnexpectedToken $err ) {
             return NULL;
         }
-        catch ( \vc\Tokens\UnexpectedEnd $err ) {
+        catch ( \vc\Tokens\Exception\UnexpectedEnd $err ) {
             return NULL;
         }
     }

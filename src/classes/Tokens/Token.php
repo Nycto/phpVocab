@@ -337,7 +337,7 @@ class Token
     public function expect ( $type )
     {
         if ( !$this->is( $type ) )
-            throw new \vc\Tokens\UnexpectedToken( $this, (array) $type );
+            throw new \vc\Tokens\Exception\UnexpectedToken( $this, (array) $type );
         return $this;
     }
 

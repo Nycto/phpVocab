@@ -49,7 +49,7 @@ class Path
         }
 
         if ( !$reader->hasToken() ) {
-            throw new \vc\Tokens\UnexpectedEnd(array(
+            throw new \vc\Tokens\Exception\UnexpectedEnd(array(
                 Token::T_STRING, Token::T_NS_SEPARATOR
             ));
         }

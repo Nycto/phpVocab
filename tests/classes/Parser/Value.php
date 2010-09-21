@@ -219,7 +219,7 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
             $parser->parseValue( $access );
             $this->fail("An expected exception was not thrown");
         }
-        catch ( \vc\Tokens\UnexpectedToken $err ) {}
+        catch ( \vc\Tokens\Exception\UnexpectedToken $err ) {}
     }
 
     public function testParseValue_WithEquals ()

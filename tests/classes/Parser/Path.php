@@ -65,7 +65,7 @@ class test_classes_Parser_Path extends \vc\Test\TestCase
             $parser->parsePath( $reader );
             $this->fail("An expected exception was not thrown");
         }
-        catch ( \vc\Tokens\UnexpectedEnd $err ) {}
+        catch ( \vc\Tokens\Exception\UnexpectedEnd $err ) {}
     }
 
     public function testParsePath_UnexpectedTokenWithoutANamespace ()
@@ -78,7 +78,7 @@ class test_classes_Parser_Path extends \vc\Test\TestCase
             $parser->parsePath( $reader );
             $this->fail("An expected exception was not thrown");
         }
-        catch ( \vc\Tokens\UnexpectedToken $err ) {}
+        catch ( \vc\Tokens\Exception\UnexpectedToken $err ) {}
     }
 
 }

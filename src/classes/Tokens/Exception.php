@@ -25,41 +25,22 @@
 namespace vc\Tokens;
 
 /**
- * Thrown when a parser encounters an unexpected token
+ * Errors thrown while traversing a token stream
  */
-class UnexpectedToken extends \r8\Exception
+abstract class Exception extends \r8\Exception
 {
-
-    /**
-     * The name of the exception
-     */
-    const TITLE = "Unexpected Token Exception";
-
-    /**
-     * A description of this Exception
-     */
-    const DESCRIPTION = "A parser encountered an unexpected token";
 
     /**
      * Constructor...
      *
-     * @param \vc\Tokens\Token $token The token that was encountered
+     * @param String $message The error message to pass on
      * @param Array $search The list of tokens being searched for
      * @param Array $allowed The list of allowed tokens
      */
-    public function __construct (
-        \vc\Tokens\Token $token,
-        array $search,
-        array $allowed = array()
-    ) {
-        parent::__construct(sprintf(
-            'Unexpected Token (%s) on line %d',
-            $token->getName(),
-            $token->getLine()
-        ));
-        $this->addData( "Encountered Token", $token->getName() );
-        $this->addData( "Token Line", $token->getLine() );
-        $this->addData( "Token Content", $token->getContent() );
+    public function __construct ( $message, array $search, array $allowed = array() )
+    {
+        parent::__construct($message);
+
         $this->addData(
             "Searching for Tokens",
             implode(", ", array_map(

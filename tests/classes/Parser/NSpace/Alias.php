@@ -89,7 +89,7 @@ class test_classes_Parser_NSpace_Alias extends \vc\Test\TestCase
             $parser->parseAlias( $access );
             $this->fail("An expected exception was not thrown");
         }
-        catch ( \vc\Tokens\UnexpectedEnd $err ) {}
+        catch ( \vc\Tokens\Exception\UnexpectedEnd $err ) {}
     }
 
 }

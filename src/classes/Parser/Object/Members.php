@@ -88,7 +88,7 @@ class Members
                     Token::T_VAR, Token::T_FUNCTION
                 ));
             }
-            catch ( \vc\Tokens\UnexpectedEnd $err ) {
+            catch ( \vc\Tokens\Exception\UnexpectedEnd $err ) {
                 return NULL;
             }
 

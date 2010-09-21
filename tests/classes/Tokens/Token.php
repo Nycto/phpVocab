@@ -97,13 +97,13 @@ class test_classes_Tokens_Token extends \vc\Test\TestCase
             $token->expect( Token::T_CLASS );
             $this->fail("An expected exception was not thrown");
         }
-        catch ( \vc\Tokens\UnexpectedToken $err ) {}
+        catch ( \vc\Tokens\Exception\UnexpectedToken $err ) {}
 
         try {
             $token->expect(array(Token::T_USE, Token::T_CLASS));
             $this->fail("An expected exception was not thrown");
         }
-        catch ( \vc\Tokens\UnexpectedToken $err ) {}
+        catch ( \vc\Tokens\Exception\UnexpectedToken $err ) {}
     }
 
     public function testToArray ()

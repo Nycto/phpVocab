@@ -22,12 +22,12 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-namespace vc\Tokens;
+namespace vc\Tokens\Exception;
 
 /**
  * Thrown when a reader needs more tokens but none are available
  */
-class UnexpectedEnd extends \r8\Exception
+class UnexpectedEnd extends \vc\Tokens\Exception
 {
 
     /**
@@ -43,25 +43,13 @@ class UnexpectedEnd extends \r8\Exception
     /**
      * Constructor...
      *
-     * @param \vc\Tokens\Token $token The token that was encountered
      * @param Array $search The list of tokens being searched for
      * @param Array $allowed The list of allowed tokens
      */
     public function __construct ( array $search, array $allowed = array() )
     {
-        $this->addData(
-            "Searching for Tokens",
-            implode(", ", array_map(
-                array('\vc\Tokens\Token', 'getTokenName'),
-                $search
-            ))
-        );
-        $this->addData(
-            "Allowed Tokens",
-            implode(", ", array_map(
-                array('\vc\Tokens\Token', 'getTokenName'),
-                $allowed
-            ))
+        parent::__construct(
+            "Unexpected End of Tokens", $search, $allowed
         );
     }
 

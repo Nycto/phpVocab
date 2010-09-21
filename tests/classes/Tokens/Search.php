@@ -50,7 +50,7 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
             $reader->peekToRequired(array(Token::T_CLASS));
             $this->fail("An expected exception was not thrown");
         }
-        catch ( \vc\Tokens\UnexpectedEnd $err ) {}
+        catch ( \vc\Tokens\Exception\UnexpectedEnd $err ) {}
     }
 
     public function testpeekToRequired_TokenGetsFound ()
@@ -87,7 +87,7 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
             );
             $this->fail("An expected exception was not thrown");
         }
-        catch ( \vc\Tokens\UnexpectedToken $err ) {}
+        catch ( \vc\Tokens\Exception\UnexpectedToken $err ) {}
 
         $this->assertHasToken( Token::T_ECHO, $reader );
     }
@@ -156,7 +156,7 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
             $reader->findRequired(array(Token::T_CLASS));
             $this->fail("An expected exception was not thrown");
         }
-        catch ( \vc\Tokens\UnexpectedEnd $err ) {}
+        catch ( \vc\Tokens\Exception\UnexpectedEnd $err ) {}
     }
 
     public function testFindRequired_TokenGetsFound ()
@@ -193,7 +193,7 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
             );
             $this->fail("An expected exception was not thrown");
         }
-        catch ( \vc\Tokens\UnexpectedToken $err ) {}
+        catch ( \vc\Tokens\Exception\UnexpectedToken $err ) {}
 
         $this->assertHasToken( Token::T_ECHO, $reader );
     }

@@ -88,7 +88,7 @@ class Members
                     )
                 );
             }
-            catch ( \vc\Tokens\UnexpectedEnd $err ) {
+            catch ( \vc\Tokens\Exception\UnexpectedEnd $err ) {
                 return NULL;
             }
 

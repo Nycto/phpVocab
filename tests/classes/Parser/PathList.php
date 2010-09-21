@@ -54,7 +54,7 @@ class test_classes_Parser_PathList extends \vc\Test\TestCase
             $this->getPathListParser()->parsePathList( $access );
             $this->fail("An expected exception was not thrown");
         }
-        catch ( \vc\Tokens\UnexpectedToken $err ) {}
+        catch ( \vc\Tokens\Exception\UnexpectedToken $err ) {}
     }
 
     public function testParsePathList_OnePath ()
