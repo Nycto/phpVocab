@@ -108,7 +108,7 @@ class Parser implements \vc\iface\Tokens\Reader
      */
     public function __construct ( \r8\iface\Stream\In $input )
     {
-        $this->tokens = \token_get_all( $input->readAll() );
+        $this->tokens = @\token_get_all( $input->readAll() );
     }
 
     /**
