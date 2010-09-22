@@ -42,7 +42,7 @@ interface Search
      * Returns the next token amongst the given type, skipping any tokens
      * listed in the allowing list
      *
-     * @throws \vc\Tokens\UnexpectedToken If a token does not exist in either
+     * @throws \vc\Tokens\Exception\UnexpectedToken If a token does not exist in either
      *      input list an exception will be thrown
      * @param Array $types The list of types to search for
      * @param Array $allowing The list of tokens to skip
@@ -64,7 +64,7 @@ interface Search
      * Returns the next token amongst the given type, without consuming that
      * token. This will skip any tokens listed in the allowing list.
      *
-     * @throws \vc\Tokens\UnexpectedToken If a token does not exist in either
+     * @throws \vc\Tokens\Exception\UnexpectedToken If a token does not exist in either
      *      input list an exception will be thrown
      * @param Array $types The list of types to search for
      * @param Array $allowing The list of tokens to skip
