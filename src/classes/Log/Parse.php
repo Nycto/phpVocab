@@ -61,6 +61,27 @@ class Parse
         );
     }
 
+    /**
+     * Logs that a file could not be parsed
+     *
+     * @param \r8\FileSys\File $file The file that was parsed
+     * @param \vc\Tokens\Exception $err The error that occurred
+     * @return NULL
+     */
+    public function errorParsingFile (
+        \r8\FileSys\File $file,
+        \vc\Tokens\Exception $err
+    ) {
+        $this->log->warning(
+            sprintf(
+                'Unable to parse file (%s) becase of error: %s',
+                $file->getPath(),
+                $err->getMessage()
+            ),
+            'PARSE_ERR'
+        );
+    }
+
 }
 
 ?>

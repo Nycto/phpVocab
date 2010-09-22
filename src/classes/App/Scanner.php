@@ -80,9 +80,14 @@ class Scanner
 
             $this->log->parsingFile($path);
 
-            $this->storage->store(
-                $this->parser->parse( $path )
-            );
+            try {
+                $this->storage->store(
+                    $this->parser->parse( $path )
+                );
+            }
+            catch ( \vc\Tokens\Exception $err ) {
+                $this->log->errorParsingFile( $path, $err );
+            }
         }
     }
 

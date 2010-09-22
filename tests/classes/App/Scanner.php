@@ -53,6 +53,29 @@ class test_classes_App_Scanner extends \vc\Test\TestCase
         );
     }
 
+    public function testScan_ParseError ()
+    {
+        $file = new \r8\FileSys\File(__FILE__);
+
+        $parser = $this->getMock('\vc\iface\Parser');
+        $parser->expects( $this->once() )->method( "parse" )
+            ->with( $this->equalTo( $file ) )
+            ->will( $this->throwException(
+                $this->getMock('\vc\Tokens\Exception')
+            ));
+
+        $storage = $this->getMock('\vc\iface\Storage');
+        $storage->expects( $this->never() )->method( "store" );
+
+        $scanner = new \vc\App\Scanner(
+            $this->getParseLogger(), $parser, $storage
+        );
+
+        $scanner->scan(
+            \r8(new \vc\App\Paths)->addInput($file)
+        );
+    }
+
 }
 
 ?>
