@@ -96,7 +96,7 @@ class Parser implements \vc\iface\Tokens\Reader
         // the token. To normalize this, we have created new token values and
         // mapped them to the appropriate stirngs
         if ( !isset(self::$tokenMap[$symbol]) )
-            throw new \r8\Exception\Data($symbol, "Token", "Unrecognized Token");
+            throw new \vc\Tokens\Exception\UnrecognizedToken($symbol);
 
         return self::$tokenMap[$symbol];
     }

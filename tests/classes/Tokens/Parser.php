@@ -41,7 +41,7 @@ class test_classes_Tokens_Parser extends \vc\Test\TestCase
             \vc\Tokens\Parser::lookupToken('blah');
             $this->fail("An expected exception was not thrown");
         }
-        catch ( \r8\Exception\Data $err ) {}
+        catch ( \vc\Tokens\Exception\UnrecognizedToken $err ) {}
     }
 
     public function test_EmptyInput ()

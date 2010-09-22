@@ -48,8 +48,21 @@ class UnexpectedEnd extends \vc\Tokens\Exception
      */
     public function __construct ( array $search, array $allowed = array() )
     {
-        parent::__construct(
-            "Unexpected End of Tokens", $search, $allowed
+        parent::__construct("Unexpected End of Tokens");
+
+        $this->addData(
+            "Searching for Tokens",
+            implode(", ", array_map(
+                array('\vc\Tokens\Token', 'getTokenName'),
+                $search
+            ))
+        );
+        $this->addData(
+            "Allowed Tokens",
+            implode(", ", array_map(
+                array('\vc\Tokens\Token', 'getTokenName'),
+                $allowed
+            ))
         );
     }
 

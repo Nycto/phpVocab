@@ -52,18 +52,29 @@ class UnexpectedToken extends \vc\Tokens\Exception
         array $search,
         array $allowed = array()
     ) {
-        parent::__construct(
-            sprintf(
-                'Unexpected Token (%s) on line %d',
-                $token->getName(),
-                $token->getLine()
-            ),
-            $search,
-            $allowed
-        );
+        parent::__construct(sprintf(
+            'Unexpected Token (%s) on line %d',
+            $token->getName(),
+            $token->getLine()
+        ));
         $this->addData( "Encountered Token", $token->getName() );
         $this->addData( "Token Line", $token->getLine() );
         $this->addData( "Token Content", $token->getContent() );
+
+        $this->addData(
+            "Searching for Tokens",
+            implode(", ", array_map(
+                array('\vc\Tokens\Token', 'getTokenName'),
+                $search
+            ))
+        );
+        $this->addData(
+            "Allowed Tokens",
+            implode(", ", array_map(
+                array('\vc\Tokens\Token', 'getTokenName'),
+                $allowed
+            ))
+        );
     }
 
 }

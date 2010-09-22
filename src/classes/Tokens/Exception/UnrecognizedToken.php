@@ -22,11 +22,35 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-namespace vc\Tokens;
+namespace vc\Tokens\Exception;
 
 /**
- * Errors thrown while interacting with a token stream
+ * Thrown when a new token is encountered
  */
-abstract class Exception extends \r8\Exception {}
+class UnrecognizedToken extends \vc\Tokens\Exception
+{
+
+    /**
+     * The name of the exception
+     */
+    const TITLE = "Unrecognized Token";
+
+    /**
+     * A description of this Exception
+     */
+    const DESCRIPTION = "An unrecognized token was encountered";
+
+    /**
+     * Constructor...
+     *
+     * @param String $symbol The token value that was encountered
+     */
+    public function __construct ( $symbol )
+    {
+        parent::__construct("Unrecognized Token");
+        $this->addData("Symbol", $symbol);
+    }
+
+}
 
 ?>
