@@ -24,13 +24,17 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
-// get the needed environment
+// Set up the environment
 require_once __DIR__ .'/include.php';
 
-$parser = \vc\Provider\CLI::getArgParser();
 
+// Get the command line argument parser
+$cliParser = \vc\Provider\CLI::getArgParser();
+
+
+// Attempt to parse the input arguments
 try {
-    $result = $parser->process();
+    $result = $cliParser->process();
 }
 catch ( \r8\Exception\Data $err ) {
     echo "Error!\n"
@@ -39,15 +43,26 @@ catch ( \r8\Exception\Data $err ) {
     exit;
 }
 
+
+// If they requested version...
 if ( $result->flagExists('v') ) {
     echo "PHP Vocab, version ". VOCAB_VERSION ."\n\n";
     exit;
 }
+
+// If they requested the help screen...
 else if ( $result->flagExists('h') || $result->countArgs() == 0 ) {
-    echo $parser->getHelp();
+    echo $cliParser->getHelp();
     exit;
 }
 
-$config = \r8(new \vc\Input\Builder)->build( $result );
+$config = \r8(new \vc\App\Builder)->build( $result );
+
+$parser = \vc\Provider\Parser::getFileParser();
+$logger = \vc\Provider\Log::getParseLogger();
+$storage = new \vc\Storage\Memory;
+$scanner = new \vc\App\Scanner($logger, $parser, $storage);
+
+$scanner->scan( $config->getInputPaths() );
 
 ?>
