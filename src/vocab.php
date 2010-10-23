@@ -46,7 +46,8 @@ catch ( \r8\Exception\Data $err ) {
 
 // If they requested version...
 if ( $result->flagExists('v') ) {
-    echo "PHP Vocab, version ". VOCAB_VERSION ."\n\n";
+    echo "PHP Vocab, version ". VOCAB_VERSION ." - http://vocab.roundeights.com\n"
+      ."Round Eights, version ". r8_VERSION ." - http://www.roundeights.com\n\n";
     exit;
 }
 
