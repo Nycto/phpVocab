@@ -32,4 +32,3 @@ class test_classes_Storage_Memory extends \vc\Test\TestCase
     
 }
 
-?>

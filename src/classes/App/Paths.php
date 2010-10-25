@@ -132,4 +132,3 @@ class Paths implements \Iterator
 
 }
 
-?>

@@ -102,4 +102,3 @@ class test_classes_Parser_Comment extends \vc\Test\TestCase
 
 }
 
-?>

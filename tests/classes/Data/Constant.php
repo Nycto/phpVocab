@@ -43,4 +43,3 @@ class test_classes_Data_Constant extends \vc\Test\TestCase
 
 }
 
-?>

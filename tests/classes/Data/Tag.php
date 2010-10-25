@@ -39,4 +39,3 @@ class test_classes_Data_Tag extends \vc\Test\TestCase
 
 }
 
-?>

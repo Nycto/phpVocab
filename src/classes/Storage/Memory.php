@@ -40,4 +40,3 @@ class Memory implements \vc\iface\Storage
 
 }
 
-?>

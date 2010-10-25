@@ -104,4 +104,3 @@ class test_classes_Parser_PathList extends \vc\Test\TestCase
 
 }
 
-?>

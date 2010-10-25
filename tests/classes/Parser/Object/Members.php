@@ -124,4 +124,3 @@ class test_classes_Parser_Object_Members extends \vc\Test\TestCase
 
 }
 
-?>

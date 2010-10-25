@@ -66,4 +66,3 @@ $scanner = new \vc\App\Scanner($logger, $parser, $storage);
 
 $scanner->scan( $config->getInputPaths() );
 
-?>

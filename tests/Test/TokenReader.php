@@ -557,4 +557,3 @@ class TokenReader implements \vc\iface\Tokens\Reader
 
 }
 
-?>

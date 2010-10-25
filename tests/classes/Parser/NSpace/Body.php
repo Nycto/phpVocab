@@ -190,4 +190,3 @@ class test_classes_Parser_NSpace_Body extends \vc\Test\TestCase
 
 }
 
-?>

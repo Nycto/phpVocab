@@ -41,4 +41,3 @@ class test_classes_Data_Routine_Func extends \vc\Test\TestCase
 
 }
 
-?>

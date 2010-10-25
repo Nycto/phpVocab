@@ -66,4 +66,3 @@ class test_classes_Data_Visibility extends \vc\Test\TestCase
 
 }
 
-?>

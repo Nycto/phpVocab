@@ -99,4 +99,3 @@ class test_classes_Tokens_Comments extends \vc\Test\TestCase
 
 }
 
-?>

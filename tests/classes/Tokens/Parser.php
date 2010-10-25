@@ -180,4 +180,3 @@ class test_classes_Tokens_Parser extends \vc\Test\TestCase
 
 }
 
-?>

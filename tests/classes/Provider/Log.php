@@ -39,4 +39,3 @@ class test_classes_Provider_Log extends \vc\Test\TestCase
 
 }
 
-?>

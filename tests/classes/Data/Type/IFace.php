@@ -44,4 +44,3 @@ class test_classes_Data_Type_IFace extends \vc\Test\TestCase
 
 }
 
-?>

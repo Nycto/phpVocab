@@ -94,4 +94,3 @@ class test_classes_Parser_IFace_Header extends \vc\Test\TestCase
 
 }
 
-?>

@@ -84,4 +84,3 @@ class test_Parsing_Parse extends \vc\Test\TestCase
 
 }
 
-?>

@@ -69,4 +69,3 @@ class test_classes_Data_Arg extends \vc\Test\TestCase
 
 }
 
-?>

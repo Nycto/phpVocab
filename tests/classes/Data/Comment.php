@@ -55,4 +55,3 @@ class test_classes_Data_Comment extends \vc\Test\TestCase
 
 }
 
-?>

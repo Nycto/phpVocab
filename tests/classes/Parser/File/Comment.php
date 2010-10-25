@@ -73,4 +73,3 @@ class test_classes_Parser_File_Comment extends \vc\Test\TestCase
 
 }
 
-?>

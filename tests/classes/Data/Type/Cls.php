@@ -82,4 +82,3 @@ class test_classes_Data_Type_Cls extends \vc\Test\TestCase
 
 }
 
-?>

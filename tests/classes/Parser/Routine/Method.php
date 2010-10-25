@@ -136,4 +136,3 @@ class test_classes_Parser_Routine_Method extends \vc\Test\TestCase
 
 }
 
-?>

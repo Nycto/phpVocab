@@ -94,4 +94,3 @@ class test_classes_App_Paths extends \r8\Test\TestCase\Dir
 
 }
 
-?>

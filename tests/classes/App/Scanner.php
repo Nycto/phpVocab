@@ -78,4 +78,3 @@ class test_classes_App_Scanner extends \vc\Test\TestCase
 
 }
 
-?>

@@ -81,4 +81,3 @@ class SampleClass extends SampleParent implements \SampleIFace, \SampleIFace2
 
 }
 
-?>

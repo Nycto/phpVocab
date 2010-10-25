@@ -177,4 +177,3 @@ class Cls extends \vc\Data\Type
 
 }
 
-?>

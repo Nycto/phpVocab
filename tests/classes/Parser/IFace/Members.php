@@ -135,4 +135,3 @@ class test_classes_Parser_IFace_Members extends \vc\Test\TestCase
 
 }
 
-?>

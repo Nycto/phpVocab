@@ -139,4 +139,3 @@ class Comments implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Comments
 
 }
 
-?>

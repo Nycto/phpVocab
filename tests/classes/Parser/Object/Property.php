@@ -168,4 +168,3 @@ class test_classes_Parser_Object_Property extends \vc\Test\TestCase
 
 }
 
-?>

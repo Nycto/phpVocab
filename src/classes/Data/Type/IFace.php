@@ -61,4 +61,3 @@ class IFace extends \vc\Data\Type
 
 }
 
-?>

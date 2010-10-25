@@ -181,4 +181,3 @@ class test_classes_Parser_Constant extends \vc\Test\TestCase
 
 }
 
-?>

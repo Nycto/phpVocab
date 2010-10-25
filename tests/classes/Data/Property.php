@@ -78,4 +78,3 @@ class test_classes_Data_Property extends \vc\Test\TestCase
 
 }
 
-?>

@@ -72,4 +72,3 @@ class test_classes_Parser_Routine_Func extends \vc\Test\TestCase
 
 }
 
-?>

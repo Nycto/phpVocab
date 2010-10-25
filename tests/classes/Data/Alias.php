@@ -42,4 +42,3 @@ class test_classes_Data_Alias extends \vc\Test\TestCase
 
 }
 
-?>

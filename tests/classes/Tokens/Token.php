@@ -117,4 +117,3 @@ class test_classes_Tokens_Token extends \vc\Test\TestCase
 
 }
 
-?>

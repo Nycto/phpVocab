@@ -29,4 +29,3 @@ namespace vc\Tokens;
  */
 abstract class Exception extends \r8\Exception {}
 
-?>

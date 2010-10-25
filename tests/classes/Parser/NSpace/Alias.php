@@ -94,4 +94,3 @@ class test_classes_Parser_NSpace_Alias extends \vc\Test\TestCase
 
 }
 
-?>

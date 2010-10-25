@@ -66,4 +66,3 @@ class test_classes_Data_Routine_Method extends \vc\Test\TestCase
 
 }
 
-?>

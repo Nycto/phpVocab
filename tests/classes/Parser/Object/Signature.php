@@ -244,4 +244,3 @@ class test_classes_Parser_Object_Signature extends \vc\Test\TestCase
 
 }
 
-?>

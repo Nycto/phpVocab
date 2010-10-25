@@ -153,4 +153,3 @@ class test_classes_Data_NSpace extends \vc\Test\TestCase
 
 }
 
-?>

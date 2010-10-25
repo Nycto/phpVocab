@@ -41,4 +41,3 @@ class test_classes_Data_Value extends \vc\Test\TestCase
 
 }
 
-?>

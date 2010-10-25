@@ -77,4 +77,3 @@ class test_classes_Tokens_Mask extends \vc\Test\TestCase
 
 }
 
-?>

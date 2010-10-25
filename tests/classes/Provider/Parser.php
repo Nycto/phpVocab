@@ -38,4 +38,3 @@ class test_classes_Provider_Parser extends \vc\Test\TestCase
 
 }
 
-?>

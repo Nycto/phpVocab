@@ -48,4 +48,3 @@ class test_classes_Parser_File_Path extends \vc\Test\TestCase
 
 }
 
-?>

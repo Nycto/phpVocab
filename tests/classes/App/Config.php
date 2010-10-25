@@ -42,4 +42,3 @@ class test_classes_App_Config extends \r8\Test\TestCase\Dir
 
 }
 
-?>

@@ -160,4 +160,3 @@ class Method extends \vc\Data\Routine
 
 }
 
-?>

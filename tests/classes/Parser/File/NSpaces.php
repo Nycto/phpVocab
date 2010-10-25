@@ -177,4 +177,3 @@ class test_classes_Parser_File_NSpaces extends \vc\Test\TestCase
 
 }
 
-?>

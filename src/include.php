@@ -36,4 +36,3 @@ require_once VOCAB_DIR .'/../lib/RoundEights.phar';
     ->register('vc', VOCAB_DIR .'/classes')
     ->register('vc\iface', VOCAB_DIR .'/ifaces');
 
-?>

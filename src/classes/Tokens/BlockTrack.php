@@ -127,4 +127,3 @@ class BlockTrack implements \vc\iface\Tokens\Reader
 
 }
 
-?>

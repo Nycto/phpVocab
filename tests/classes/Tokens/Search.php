@@ -297,4 +297,3 @@ class test_classes_Tokens_Search extends \vc\Test\TestCase
 
 }
 
-?>

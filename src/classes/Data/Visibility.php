@@ -55,4 +55,3 @@ class Visibility extends \r8\Enum
 
 }
 
-?>

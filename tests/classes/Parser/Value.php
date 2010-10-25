@@ -294,4 +294,3 @@ class test_classes_Parser_Value extends \vc\Test\TestCase
 
 }
 
-?>

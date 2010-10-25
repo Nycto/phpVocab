@@ -42,4 +42,3 @@ class Func extends \vc\Data\Routine
 
 }
 
-?>

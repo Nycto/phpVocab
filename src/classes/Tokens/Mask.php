@@ -114,4 +114,3 @@ class Mask implements \vc\iface\Tokens\Reader
 
 }
 
-?>

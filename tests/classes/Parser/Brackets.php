@@ -89,4 +89,3 @@ class test_classes_Parser_Brackets extends \vc\Test\TestCase
 
 }
 
-?>

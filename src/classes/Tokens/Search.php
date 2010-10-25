@@ -157,4 +157,3 @@ class Search implements \vc\iface\Tokens\Search
 
 }
 
-?>

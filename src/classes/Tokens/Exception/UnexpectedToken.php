@@ -79,4 +79,3 @@ class UnexpectedToken extends \vc\Tokens\Exception
 
 }
 
-?>
