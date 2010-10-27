@@ -68,7 +68,7 @@ class test_classes_Parser_IFace_Header extends \vc\Test\TestCase
             $this->getIFaceParser()->parseIFace( $access )
         );
 
-        $this->assertHasToken( Token::T_BLOCK_CLOSE, $access );
+        $this->assertHasToken( Token::T_CURLY_CLOSE, $access );
     }
 
     public function testParseIFace_WithExtends ()
@@ -89,7 +89,7 @@ class test_classes_Parser_IFace_Header extends \vc\Test\TestCase
             $this->getIFaceParser()->parseIFace( $access )
         );
 
-        $this->assertHasToken( Token::T_BLOCK_CLOSE, $access );
+        $this->assertHasToken( Token::T_CURLY_CLOSE, $access );
     }
 
 }

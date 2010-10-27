@@ -222,4 +222,3 @@ class Access implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Search, \vc\if
     }
 
 }
-

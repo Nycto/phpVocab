@@ -41,9 +41,9 @@ class test_classes_Tokens_BlockTrack extends \vc\Test\TestCase
         );
 
         $this->assertHasToken( Token::T_CLASS, $reader );
-        $this->assertHasToken( Token::T_BLOCK_OPEN, $reader );
+        $this->assertHasToken( Token::T_CURLY_OPEN, $reader );
         $this->assertHasToken( Token::T_FUNCTION, $reader );
-        $this->assertHasToken( Token::T_BLOCK_CLOSE, $reader );
+        $this->assertHasToken( Token::T_CURLY_CLOSE, $reader );
         $this->assertEndOfTokens( $reader );
     }
 
@@ -55,10 +55,10 @@ class test_classes_Tokens_BlockTrack extends \vc\Test\TestCase
                 ->thenACloseTag
         );
 
-        $this->assertHasToken( Token::T_BLOCK_OPEN, $reader );
+        $this->assertHasToken( Token::T_CURLY_OPEN, $reader );
         $this->assertHasToken( Token::T_FUNCTION, $reader );
-        $this->assertHasToken( Token::T_BLOCK_OPEN, $reader );
-        $this->assertHasToken( Token::T_BLOCK_CLOSE, $reader );
+        $this->assertHasToken( Token::T_CURLY_OPEN, $reader );
+        $this->assertHasToken( Token::T_CURLY_CLOSE, $reader );
         $this->assertEndOfTokens( $reader );
     }
 
@@ -77,5 +77,22 @@ class test_classes_Tokens_BlockTrack extends \vc\Test\TestCase
         $this->assertEndOfTokens( $reader );
     }
 
-}
+    public function test_StreamContainsADollarCurlyOpen ()
+    {
+        $reader = new \vc\Tokens\BlockTrack(
+            $this->oneTokenReader()->thenAnOpenBlock
+                ->thenAQuote->thenADollarCurly("var")->thenAQuote
+                ->thenACloseblock
+                ->thenACloseTag
+        );
 
+        $this->assertHasToken( Token::T_CURLY_OPEN, $reader );
+        $this->assertHasToken( Token::T_QUOTE, $reader );
+        $this->assertHasToken( Token::T_DOLLAR_OPEN_CURLY_BRACES, $reader );
+        $this->assertHasToken( Token::T_STRING_VARNAME, $reader );
+        $this->assertHasToken( Token::T_CURLY_CLOSE, $reader );
+        $this->assertHasToken( Token::T_QUOTE, $reader );
+        $this->assertEndOfTokens( $reader );
+    }
+
+}

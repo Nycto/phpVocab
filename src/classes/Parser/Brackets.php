@@ -42,7 +42,7 @@ class Brackets
      */
     private function parse (
         \vc\iface\Tokens\Reader $reader,
-        $open,
+        array $open,
         $close
     ) {
         $depth = 0;
@@ -56,11 +56,11 @@ class Brackets
             if ( $first )
             {
                 $first = FALSE;
-                if ( $type == $open )
+                if ( in_array($type, $open) )
                     continue;
             }
 
-            if ( $type == $open )
+            if ( in_array($type, $open) )
                 $depth++;
             else if ( $type == $close )
                 $depth--;
@@ -82,7 +82,7 @@ class Brackets
     {
         return $this->parse(
             $reader,
-            Token::T_PARENS_OPEN,
+            array(Token::T_PARENS_OPEN),
             Token::T_PARENS_CLOSE
         );
     }
@@ -97,10 +97,9 @@ class Brackets
     {
         return $this->parse(
             $reader,
-            Token::T_BLOCK_OPEN,
-            Token::T_BLOCK_CLOSE
+            array(Token::T_CURLY_OPEN, Token::T_DOLLAR_OPEN_CURLY_BRACES),
+            Token::T_CURLY_CLOSE
         );
     }
 
 }
-

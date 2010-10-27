@@ -50,8 +50,8 @@ class test_classes_Tokens_Until extends \vc\Test\TestCase
             $this->oneTokenReader()->thenAnOpenBlock->thenACloseBlock
         );
 
-        $this->assertHasToken( Token::T_BLOCK_OPEN, $reader );
-        $this->assertHasToken( Token::T_BLOCK_CLOSE, $reader );
+        $this->assertHasToken( Token::T_CURLY_OPEN, $reader );
+        $this->assertHasToken( Token::T_CURLY_CLOSE, $reader );
         $this->assertEndOfTokens( $reader );
     }
 
@@ -63,7 +63,7 @@ class test_classes_Tokens_Until extends \vc\Test\TestCase
                 ->thenAFunction->thenACloseBlock
         );
 
-        $this->assertHasToken( Token::T_BLOCK_OPEN, $reader );
+        $this->assertHasToken( Token::T_CURLY_OPEN, $reader );
         $this->assertEndOfTokens( $reader );
     }
 
@@ -75,8 +75,8 @@ class test_classes_Tokens_Until extends \vc\Test\TestCase
                 ->thenAClass->thenACloseBlock
         );
 
-        $this->assertIsTokenOf( Token::T_BLOCK_OPEN, $reader->peekAtToken() );
-        $this->assertHasToken( Token::T_BLOCK_OPEN, $reader );
+        $this->assertIsTokenOf( Token::T_CURLY_OPEN, $reader->peekAtToken() );
+        $this->assertHasToken( Token::T_CURLY_OPEN, $reader );
 
         $this->assertNull( $reader->peekAtToken() );
         $this->assertEndOfTokens( $reader );

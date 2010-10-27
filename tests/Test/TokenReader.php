@@ -111,7 +111,7 @@ class TokenReader implements \vc\iface\Tokens\Reader
      */
     public function thenAnOpenBlock ( $line = 1 )
     {
-        return $this->then( Token::T_BLOCK_OPEN, '{', $line );
+        return $this->then( Token::T_CURLY_OPEN, '{', $line );
     }
 
     /**
@@ -121,7 +121,7 @@ class TokenReader implements \vc\iface\Tokens\Reader
      */
     public function thenACloseBlock ( $line = 1 )
     {
-        return $this->then( Token::T_BLOCK_CLOSE, '}', $line );
+        return $this->then( Token::T_CURLY_CLOSE, '}', $line );
     }
 
     /**
@@ -555,5 +555,27 @@ class TokenReader implements \vc\iface\Tokens\Reader
         return $this->then( Token::T_COMMENT, '// '. $comment, $line );
     }
 
-}
+    /**
+     * Adds a regular inline comment
+     *
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenAQuote ( $line = 1 )
+    {
+        return $this->then( Token::T_QUOTE, '"', $line );
+    }
 
+    /**
+     * Adds a dollar curly variable injection
+     *
+     * @param String $varName
+     * @return \vc\iface\Tokens\Reader Returns a self reference
+     */
+    public function thenADollarCurly ( $varName, $line = 1)
+    {
+        return $this->then( Token::T_DOLLAR_OPEN_CURLY_BRACES, '${', $line )
+            ->then( Token::T_STRING_VARNAME, $varName, $line )
+            ->thenACloseblock( $line );
+    }
+
+}

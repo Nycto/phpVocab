@@ -103,7 +103,7 @@ class Header
 
         // Look for parent classes and interfaces
         $token = $access->findRequired(
-            array(Token::T_EXTENDS, Token::T_IMPLEMENTS, Token::T_BLOCK_OPEN)
+            array(Token::T_EXTENDS, Token::T_IMPLEMENTS, Token::T_CURLY_OPEN)
         );
 
         // Add the parent class
@@ -112,7 +112,7 @@ class Header
 
             // Look for any interfaces
             $token = $access->findRequired(
-                array(Token::T_IMPLEMENTS, Token::T_BLOCK_OPEN)
+                array(Token::T_IMPLEMENTS, Token::T_CURLY_OPEN)
             );
         }
 
@@ -120,7 +120,7 @@ class Header
         if ( $token->is(Token::T_IMPLEMENTS) ) {
             $class->setIFaces( $this->pathList->parsePathList($access) );
 
-            $access->findRequired( array(Token::T_BLOCK_OPEN) );
+            $access->findRequired( array(Token::T_CURLY_OPEN) );
         }
 
         // Finally, parse out the content of the class

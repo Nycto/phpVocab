@@ -53,17 +53,16 @@ class Token
     const T_PARENS_CLOSE = -114;
     const T_BRACKET_OPEN = -115;
     const T_BRACKET_CLOSE = -116;
-    const T_BLOCK_OPEN = -117;
-    const T_BLOCK_CLOSE = -118;
-    const T_SUPPRESS = -119;
-    const T_MULTIPLY = -120;
-    const T_AMPERSAND = -121;
-    const T_MODULO = -122;
-    const T_ADD = -123;
-    const T_VAR_VARIABLE = -124;
-    const T_BIT_NOT = -125;
-    const T_BIT_XOR = -126;
-    const T_BACKTICK = -127;
+    const T_CURLY_CLOSE = -117;
+    const T_SUPPRESS = -118;
+    const T_MULTIPLY = -119;
+    const T_AMPERSAND = -120;
+    const T_MODULO = -121;
+    const T_ADD = -122;
+    const T_VAR_VARIABLE = -123;
+    const T_BIT_NOT = -124;
+    const T_BIT_XOR = -125;
+    const T_BACKTICK = -126;
     const T_ABSTRACT = \T_ABSTRACT;
     const T_AND_EQUAL = \T_AND_EQUAL;
     const T_ARRAY = \T_ARRAY;
@@ -373,4 +372,3 @@ class Token
     }
 
 }
-

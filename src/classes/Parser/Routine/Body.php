@@ -96,7 +96,7 @@ class Body
         $routine->setArgs( $this->args->parseArgs($access) );
 
         $access->findRequired(
-            array(Token::T_BLOCK_OPEN, Token::T_SEMICOLON)
+            array(Token::T_CURLY_OPEN, Token::T_SEMICOLON)
         );
 
         $this->brackets->parseCurlies( $access );

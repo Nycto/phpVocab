@@ -37,8 +37,8 @@ class Comments implements \vc\iface\Tokens\Reader, \vc\iface\Tokens\Comments
      */
     static private $invalidate = array(
         \vc\Tokens\Token::T_SEMICOLON,
-        \vc\Tokens\Token::T_BLOCK_OPEN,
-        \vc\Tokens\Token::T_BLOCK_CLOSE,
+        \vc\Tokens\Token::T_CURLY_OPEN,
+        \vc\Tokens\Token::T_CURLY_CLOSE,
         \vc\Tokens\Token::T_CLOSE_TAG,
     );
 

@@ -56,9 +56,9 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
         );
 
         $this->assertIsTokenOf(
-            Token::T_BLOCK_OPEN,
+            Token::T_CURLY_OPEN,
             $access->findRequired(
-                array(Token::T_BLOCK_OPEN), array(Token::T_CLASS)
+                array(Token::T_CURLY_OPEN), array(Token::T_CLASS)
             )
         );
 
@@ -130,7 +130,7 @@ class test_classes_Tokens_Access extends \vc\Test\TestCase
         $this->assertThat( $until, $this->isInstanceOf('\vc\Tokens\Access') );
 
         $this->assertHasToken( Token::T_CLASS, $until );
-        $this->assertHasToken( Token::T_BLOCK_OPEN, $until );
+        $this->assertHasToken( Token::T_CURLY_OPEN, $until );
         $this->assertEndOfTokens( $until );
     }
 

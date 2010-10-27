@@ -22,6 +22,8 @@
  * @copyright Copyright 2009, James Frasca, All Rights Reserved
  */
 
+use \vc\Tokens\Token;
+
 require_once rtrim( __DIR__, "/" ) ."/../../setup.php";
 
 /**
@@ -33,7 +35,7 @@ class test_classes_Tokens_Parser extends \vc\Test\TestCase
     public function testLookupToken ()
     {
         $this->assertEquals(
-           \vc\Tokens\Token::T_AMPERSAND,
+           Token::T_AMPERSAND,
            \vc\Tokens\Parser::lookupToken('&')
         );
 
@@ -62,37 +64,37 @@ class test_classes_Tokens_Parser extends \vc\Test\TestCase
 
         $this->assertTrue( $parser->hasToken() );
         $this->assertEquals(
-            new \vc\Tokens\Token(368, '<?php ', 1),
+            new Token(Token::T_OPEN_TAG, '<?php ', 1),
             $parser->popToken()
         );
 
         $this->assertTrue( $parser->hasToken() );
         $this->assertEquals(
-            new \vc\Tokens\Token(316, 'echo', 1),
+            new Token(Token::T_ECHO, 'echo', 1),
             $parser->popToken()
         );
 
         $this->assertTrue( $parser->hasToken() );
         $this->assertEquals(
-            new \vc\Tokens\Token(371, ' ', 1),
+            new Token(Token::T_WHITESPACE, ' ', 1),
             $parser->popToken()
         );
 
         $this->assertTrue( $parser->hasToken() );
         $this->assertEquals(
-            new \vc\Tokens\Token(315, "'content'", 1),
+            new Token(Token::T_CONSTANT_ENCAPSED_STRING, "'content'", 1),
             $parser->popToken()
         );
 
         $this->assertTrue( $parser->hasToken() );
         $this->assertEquals(
-            new \vc\Tokens\Token(-106, ';', 1),
+            new Token(Token::T_SEMICOLON, ';', 1),
             $parser->popToken()
         );
 
         $this->assertTrue( $parser->hasToken() );
         $this->assertEquals(
-            new \vc\Tokens\Token(370, '?>', 1),
+            new Token(Token::T_CLOSE_TAG, '?>', 1),
             $parser->popToken()
         );
     }
@@ -108,26 +110,34 @@ class test_classes_Tokens_Parser extends \vc\Test\TestCase
         );
 
         $result = array (
-            array(368, '<?php ', 1), array(301, 'if', 1), array(-113, '(', 1),
-            array(-108, '!', 1), array(-124, '$', 1), array(309, '$v', 1),
-            array(-115, '[', 1), array(305, '0', 1), array(-116, ']', 1),
-            array(-101, '=', 1), array(305, '1', 1), array(-100, '<', 1),
-            array(305, '5', 1), array(-114, ')', 1), array(-117, '{', 1),
-            array(371, "\n", 1),
-            array(-125, '~', 2), array(305, '1', 2), array(-122, '%', 2),
-            array(305, '1', 2), array(-120, '*', 2), array(305, '1', 2),
-            array(-123, '+', 2), array(305, '1', 2), array(-104, '-', 2),
-            array(305, '1', 2), array(-110, '/', 2), array(305, '1', 2),
-            array(-121, '&', 2), array(305, '1', 2), array(-126, '^', 2),
-            array(305, '1', 2), array(-103, '|', 2), array(305, '1', 2),
-            array(-102, '>', 2), array(305, '0', 2), array(-109, '?', 2),
-            array(-107, ':', 2), array(-127, '`', 2), array(314, 'w', 2),
-            array(-127, '`', 2), array(-111, '.', 2), array(-119, '@', 2),
-            array(307, 'a', 2), array(-113, '(', 2), array(-112, '"', 2),
-            array(309, '$a', 2), array(-112, '"', 2), array(-105, ',', 2),
-            array(305, '1', 2), array(-114, ')', 2), array(-106, ';', 2),
-            array(371, "\n", 2),
-            array(-118, '}', 3), array(370, '?>', 3),
+            array(Token::T_OPEN_TAG, '<?php ', 1), array(Token::T_IF, 'if', 1),
+            array(Token::T_PARENS_OPEN, '(', 1), array(Token::T_LOGICAL_NOT, '!', 1),
+            array(Token::T_VAR_VARIABLE, '$', 1), array(Token::T_VARIABLE, '$v', 1),
+            array(Token::T_BRACKET_OPEN, '[', 1), array(Token::T_LNUMBER, '0', 1),
+            array(Token::T_BRACKET_CLOSE, ']', 1), array(Token::T_EQUALS, '=', 1),
+            array(Token::T_LNUMBER, '1', 1), array(Token::T_LESS_THAN, '<', 1),
+            array(Token::T_LNUMBER, '5', 1), array(Token::T_PARENS_CLOSE, ')', 1),
+            array(Token::T_CURLY_OPEN, '{', 1), array(Token::T_WHITESPACE, "\n", 1),
+            array(Token::T_BIT_NOT, '~', 2), array(Token::T_LNUMBER, '1', 2),
+            array(Token::T_MODULO, '%', 2), array(Token::T_LNUMBER, '1', 2),
+            array(Token::T_MULTIPLY, '*', 2), array(Token::T_LNUMBER, '1', 2),
+            array(Token::T_ADD, '+', 2), array(Token::T_LNUMBER, '1', 2),
+            array(Token::T_MINUS, '-', 2), array(Token::T_LNUMBER, '1', 2),
+            array(Token::T_DIVIDE, '/', 2), array(Token::T_LNUMBER, '1', 2),
+            array(Token::T_AMPERSAND, '&', 2), array(Token::T_LNUMBER, '1', 2),
+            array(Token::T_BIT_XOR, '^', 2), array(Token::T_LNUMBER, '1', 2),
+            array(Token::T_BIT_OR, '|', 2), array(Token::T_LNUMBER, '1', 2),
+            array(Token::T_GREATER_THAN, '>', 2), array(Token::T_LNUMBER, '0', 2),
+            array(Token::T_TERNARY, '?', 2), array(Token::T_TERNARY_ELSE, ':', 2),
+            array(Token::T_BACKTICK, '`', 2), array(Token::T_ENCAPSED_AND_WHITESPACE, 'w', 2),
+            array(Token::T_BACKTICK, '`', 2), array(Token::T_CONCAT, '.', 2),
+            array(Token::T_SUPPRESS, '@', 2), array(Token::T_STRING, 'a', 2),
+            array(Token::T_PARENS_OPEN, '(', 2), array(Token::T_QUOTE, '"', 2),
+            array(Token::T_VARIABLE, '$a', 2), array(Token::T_QUOTE, '"', 2),
+            array(Token::T_COMMA, ',', 2), array(Token::T_LNUMBER, '1', 2),
+            array(Token::T_PARENS_CLOSE, ')', 2), array(Token::T_SEMICOLON, ';', 2),
+            array(Token::T_WHITESPACE, "\n", 2), array(Token::T_CURLY_CLOSE, '}', 3),
+            array(Token::T_CLOSE_TAG, '?>', 3),
         );
 
         foreach( $result AS $offset => $token ) {
@@ -136,7 +146,7 @@ class test_classes_Tokens_Parser extends \vc\Test\TestCase
                 "Ran out of tokens at offset #$offset"
             );
             $this->assertEquals(
-                \vc\Tokens\Token::fromArray( $token ),
+                Token::fromArray( $token ),
                 $parser->popToken(),
                 "Token mismatch at offset #$offset"
             );
@@ -151,11 +161,11 @@ class test_classes_Tokens_Parser extends \vc\Test\TestCase
             new \r8\Stream\In\String("<?php \n  \r \n\n;")
         );
 
-        $this->assertHasToken( \vc\Tokens\Token::T_OPEN_TAG, $parser );
-        $this->assertHasToken( \vc\Tokens\Token::T_WHITESPACE, $parser );
+        $this->assertHasToken( Token::T_OPEN_TAG, $parser );
+        $this->assertHasToken( Token::T_WHITESPACE, $parser );
 
         $semicolon = $parser->popToken();
-        $this->assertIsTokenOf( \vc\Tokens\Token::T_SEMICOLON, $semicolon );
+        $this->assertIsTokenOf( Token::T_SEMICOLON, $semicolon );
         $this->assertEquals( 5, $semicolon->getLine() );
     }
 
@@ -168,15 +178,14 @@ class test_classes_Tokens_Parser extends \vc\Test\TestCase
         );
 
         $peek = $parser->peekAtToken();
-        $this->assertIsTokenOf( T_OPEN_TAG, $peek );
+        $this->assertIsTokenOf( Token::T_OPEN_TAG, $peek );
         $this->assertSame( $peek, $parser->peekAtToken() );
         $this->assertSame( $peek, $parser->popToken() );
 
         $peek2 = $parser->peekAtToken();
-        $this->assertIsTokenOf( T_ECHO, $peek2 );
+        $this->assertIsTokenOf( Token::T_ECHO, $peek2 );
         $this->assertSame( $peek2, $parser->peekAtToken() );
         $this->assertSame( $peek2, $parser->popToken() );
     }
 
 }
-

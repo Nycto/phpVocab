@@ -66,5 +66,3 @@ class Path implements \vc\iface\Parser
     }
 
 }
-
-

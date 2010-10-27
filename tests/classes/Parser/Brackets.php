@@ -87,5 +87,19 @@ class test_classes_Parser_Brackets extends \vc\Test\TestCase
         );
     }
 
-}
+    public function testParseCurliesContainingADollarCurly ()
+    {
+        $reader = $this->oneTokenReader()
+            ->then( Token::T_ECHO, 'echo' )->thenSomeSpace
+            ->thenAQuote->thenADollarCurly('var')->thenSomeSpace
+            ->thenAnOpenBlock->thenAVariable('$var')->thenACloseBlock
+            ->thenAQuote->thenASemicolon
+            ->thenACloseBlock;
 
+        $this->assertSame(
+            'echo "${var} {$var}";',
+            r8(new \vc\Parser\Brackets)->parseCurlies( $reader )
+        );
+    }
+
+}

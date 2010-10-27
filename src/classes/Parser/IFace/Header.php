@@ -83,13 +83,13 @@ class Header
 
         // Look for any interfaces that this one extends
         $token = $access->findRequired(
-            array(Token::T_EXTENDS, Token::T_BLOCK_OPEN)
+            array(Token::T_EXTENDS, Token::T_CURLY_OPEN)
         );
 
         if ( $token->is(Token::T_EXTENDS) ) {
             $iface->setExtends( $this->pathList->parsePathList($access) );
 
-            $access->findRequired( array(Token::T_BLOCK_OPEN) );
+            $access->findRequired( array(Token::T_CURLY_OPEN) );
         }
 
         // Finally, parse out the content of the class

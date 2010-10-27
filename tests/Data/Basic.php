@@ -76,8 +76,7 @@ class SampleClass extends SampleParent implements \SampleIFace, \SampleIFace2
      */
     public function dump ( &$ref, StdClass $arg1, \Anoth\erClass $arg2 = NULL )
     {
-        var_dump( $ref, $arg1, $arg2 );
+        echo "To String: {$ref}, ${arg1}, {$arg2}";
     }
 
 }
-

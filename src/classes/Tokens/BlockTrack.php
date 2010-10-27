@@ -95,10 +95,10 @@ class BlockTrack implements \vc\iface\Tokens\Reader
         if ( $this->first )
             $this->first = FALSE;
 
-        else if ( $type == Token::T_BLOCK_OPEN )
+        else if ( $type == Token::T_CURLY_OPEN || $type == Token::T_DOLLAR_OPEN_CURLY_BRACES )
             $this->depth++;
 
-        else if ( $type == Token::T_BLOCK_CLOSE )
+        else if ( $type == Token::T_CURLY_CLOSE )
             $this->depth--;
 
         return $next;
@@ -116,7 +116,7 @@ class BlockTrack implements \vc\iface\Tokens\Reader
 
         $token = $this->inner->peekAtToken();
 
-        if ($token && $token->is(Token::T_BLOCK_CLOSE) && $this->depth == 1) {
+        if ($token && $token->is(Token::T_CURLY_CLOSE) && $this->depth == 1) {
             $this->depth--;
             return NULL;
         }
@@ -126,4 +126,3 @@ class BlockTrack implements \vc\iface\Tokens\Reader
     }
 
 }
-

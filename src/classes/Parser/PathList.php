@@ -66,7 +66,7 @@ class PathList
             $paths[] = $this->path->parsePath($access);
 
             $token = $access->peekToRequired(
-                array(Token::T_COMMA, Token::T_BLOCK_OPEN)
+                array(Token::T_COMMA, Token::T_CURLY_OPEN)
             );
 
             if ( $token->is(Token::T_COMMA) )

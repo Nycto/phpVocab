@@ -90,10 +90,10 @@ class NSpaces
         $nspace->setNamespace( $this->path->parsePath( $access ) );
 
         $token = $access->findRequired(
-            array(Token::T_SEMICOLON, Token::T_BLOCK_OPEN)
+            array(Token::T_SEMICOLON, Token::T_CURLY_OPEN)
         );
 
-        if ( $token->is(Token::T_BLOCK_OPEN) )
+        if ( $token->is(Token::T_CURLY_OPEN) )
             return $access->untilBlockEnds();
         else
             return $access->untilTokens(array(Token::T_NAMESPACE));
